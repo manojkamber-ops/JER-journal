@@ -12,42 +12,40 @@ export function ArticleCard({ article, compact = false }: { article: Article; co
 
   return (
     <article
-      className="group bg-card border border-border rounded-md p-5 hover:border-accent hover:shadow-md transition-all cursor-pointer"
+      className="group bg-white border border-gray-200 rounded-sm p-4 hover:border-accent hover:shadow-md transition-all cursor-pointer"
       onClick={() => navigate("article", { articleId: article.id })}
     >
-      <div className="flex items-center gap-2 mb-2 flex-wrap">
+      <div className="flex items-center gap-2 mb-1.5 flex-wrap">
         <Badge variant="outline" className="font-sans text-[10px] uppercase tracking-wide border-accent text-accent">
           {article.type}
         </Badge>
-        <span className="font-sans text-[11px] text-muted-foreground">
-          Vol. {article.volume}, No. {article.issue} ({article.year}), pp. {article.pages}
+        <span className="font-sans text-[11px] text-gray-500">
+          Vol. {article.volume}, No. {article.issue} ({article.year}) · pp. {article.pages}
         </span>
       </div>
 
-      <h3 className="font-serif text-lg font-semibold leading-snug text-primary mb-2 group-hover:text-accent transition-colors">
+      <h3 className="font-serif text-base font-semibold leading-snug text-primary mb-1.5 group-hover:text-accent transition-colors">
         {article.title}
       </h3>
 
       {!compact && (
-        <p className="font-sans text-sm text-muted-foreground mb-2">
+        <p className="font-sans text-xs text-gray-600 mb-2 line-clamp-1">
           {authorList}
           {correspondingAuthor && (
-            <span className="text-accent ml-1" title={`Corresponding author: ${correspondingAuthor.email}`}>
-              *
-            </span>
+            <span className="text-accent ml-1">*</span>
           )}
         </p>
       )}
 
-      <p className="font-serif text-sm leading-relaxed text-foreground/85 mb-3 line-clamp-3">
+      <p className="font-serif text-sm leading-relaxed text-gray-700 mb-3 line-clamp-3">
         {article.abstract}
       </p>
 
-      <div className="flex items-center justify-between text-xs text-muted-foreground font-sans">
+      <div className="flex items-center justify-between text-xs text-gray-500 font-sans pt-2 border-t border-gray-100">
         <div className="flex items-center gap-3">
           <span className="flex items-center gap-1">
             <Quote className="w-3 h-3" />
-            {article.citations} citations
+            {article.citations} cited
           </span>
           <span className="flex items-center gap-1">
             <Download className="w-3 h-3" />
@@ -55,7 +53,7 @@ export function ArticleCard({ article, compact = false }: { article: Article; co
           </span>
         </div>
         <span className="flex items-center gap-1 text-accent group-hover:gap-2 transition-all">
-          Read more <ChevronRight className="w-3 h-3" />
+          Read <ChevronRight className="w-3 h-3" />
         </span>
       </div>
     </article>
@@ -68,25 +66,25 @@ export function ArticleListItem({ article }: { article: Article }) {
 
   return (
     <article
-      className="py-4 border-b border-border last:border-0 cursor-pointer hover:bg-secondary/40 transition-colors px-3 -mx-3 rounded-sm"
+      className="py-4 border-b border-gray-200 last:border-0 cursor-pointer hover:bg-gray-50 transition-colors px-4 -mx-4"
       onClick={() => navigate("article", { articleId: article.id })}
     >
-      <div className="flex items-baseline gap-3 mb-1.5 flex-wrap">
+      <div className="flex items-baseline gap-3 mb-1 flex-wrap">
         <Badge variant="outline" className="font-sans text-[10px] uppercase tracking-wide border-accent text-accent">
           {article.type}
         </Badge>
-        <span className="font-sans text-[11px] text-muted-foreground">
+        <span className="font-sans text-[11px] text-gray-500">
           Vol. {article.volume}, No. {article.issue} · pp. {article.pages}
         </span>
       </div>
       <h3 className="font-serif text-base font-semibold leading-snug text-primary hover:text-accent transition-colors mb-1">
         {article.title}
       </h3>
-      <p className="font-sans text-sm text-muted-foreground mb-2">{authorList}</p>
-      <p className="font-serif text-sm leading-relaxed text-foreground/80 line-clamp-2">
+      <p className="font-sans text-xs text-gray-600 mb-2">{authorList}</p>
+      <p className="font-serif text-sm leading-relaxed text-gray-700 line-clamp-2">
         {article.abstract}
       </p>
-      <div className="flex items-center gap-4 mt-2 text-xs font-sans text-muted-foreground">
+      <div className="flex items-center gap-4 mt-2 text-xs font-sans text-gray-500">
         <span className="flex items-center gap-1">
           <FileText className="w-3 h-3" /> DOI: {article.doi}
         </span>
@@ -138,7 +136,7 @@ export function IssueHeader({
 
 export function JELBadge({ code }: { code: string }) {
   return (
-    <span className="inline-block font-mono text-[11px] px-1.5 py-0.5 bg-secondary border border-border rounded text-foreground">
+    <span className="inline-block font-mono text-[11px] px-2 py-0.5 bg-gray-100 border border-gray-300 rounded-sm text-gray-700">
       {code}
     </span>
   );

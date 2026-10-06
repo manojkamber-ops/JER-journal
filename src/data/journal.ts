@@ -27,11 +27,41 @@ export const JOURNAL_INFO = {
   language: "English",
 };
 
+export type AuthorAffiliation = {
+  id: string;        // superscript identifier, e.g. "a", "b", "c"
+  department: string;
+  institution: string;
+  city: string;
+  country: string;
+  email?: string;    // only on corresponding author
+  orcid?: string;
+};
+
+export type ArticleAuthor = {
+  name: string;
+  affiliationIds: string[];     // which Affiliation.id entries apply to this author
+  corresponding?: boolean;
+  orcid?: string;
+};
+
+export type ArticleReference = {
+  number: number;
+  text: string;       // full reference string, AER style
+  doi?: string;
+};
+
 export type Article = {
   id: string;
   doi: string;
   title: string;
   authors: { name: string; affiliation: string; corresponding?: boolean }[];
+  // New: AOM-style structured authors & affiliations (used by the redesigned article page)
+  structuredAuthors?: ArticleAuthor[];
+  affiliations?: AuthorAffiliation[];
+  references?: ArticleReference[];
+  acknowledgments?: string;
+  funding?: string;
+  dataAvailability?: string;
   abstract: string;
   keywords: string[];
   jelCodes: string[];
@@ -42,6 +72,7 @@ export type Article = {
   received: string;
   accepted: string;
   published: string;
+  publishedOnline?: string;     // "Published online ahead of print" date
   citations: number;
   downloads: number;
   pdfSize: string;
@@ -1656,6 +1687,194 @@ export const ARTICLES: Article[] = [
     downloads: 824,
     pdfSize: "0.84 MB",
     type: "Short Communication",
+  },
+  // ===== NEW PAPER — strict AOM-style format with full references =====
+  // (Vol. 30, Issue 3, October 2025 — Research Article)
+  {
+    id: "2025-v30-i3-10",
+    doi: "10.17256/JER.2025.30.3.010",
+    title:
+      "Artificial Intelligence Adoption, Productivity, and Wage Inequality: Evidence from Korean Manufacturing Firms",
+    authors: [
+      { name: "Min-Jae Choi", affiliation: "Hanyang University, Seoul, Republic of Korea", corresponding: true },
+      { name: "Hyun-Ju Yang", affiliation: "Korea Development Institute, Sejong, Republic of Korea" },
+      { name: "Caroline Dubois", affiliation: "Paris School of Economics, Paris, France" },
+    ],
+    structuredAuthors: [
+      {
+        name: "Min-Jae Choi",
+        affiliationIds: ["a"],
+        corresponding: true,
+        orcid: "0000-0002-1843-6622",
+      },
+      {
+        name: "Hyun-Ju Yang",
+        affiliationIds: ["b"],
+        orcid: "0000-0001-8726-4419",
+      },
+      {
+        name: "Caroline Dubois",
+        affiliationIds: ["c"],
+        orcid: "0000-0003-0417-5233",
+      },
+    ],
+    affiliations: [
+      {
+        id: "a",
+        department: "Department of Economics, College of Economics and Finance",
+        institution: "Hanyang University",
+        city: "Seoul",
+        country: "Republic of Korea",
+        email: "mjchoi@hanyang.ac.kr",
+      },
+      {
+        id: "b",
+        department: "Macro-financial Analysis Department",
+        institution: "Korea Development Institute",
+        city: "Sejong",
+        country: "Republic of Korea",
+      },
+      {
+        id: "c",
+        department: "Paris School of Economics",
+        institution: "CNRS and EHESS",
+        city: "Paris",
+        country: "France",
+      },
+    ],
+    abstract:
+      "We estimate the causal effect of artificial intelligence (AI) adoption on firm productivity and within-firm wage inequality using a novel dataset that combines firm-level AI adoption surveys for 1,460 Korean manufacturing firms over 2018–2023 with administrative employment and balance-sheet records. Identification exploits plausibly exogenous variation in firms' pre-existing exposure to tasks that are substitutable by AI, instrumented by historical occupational composition at the local labour-market level. AI adoption raises firm-level total factor productivity by an average of 5.7 percent within two years, with effects concentrated among firms with complementary investments in worker training and digital infrastructure. We document a parallel increase in the 90/10 within-firm wage gap of 4.2 percent, driven by relative wage gains for high-skilled workers in AI-complementary occupations and modest wage stagnation for workers in AI-substitutable routine tasks. The productivity–equity trade-off is not inevitable: firms that combine AI adoption with explicit worker retraining programmes capture approximately 80 percent of the productivity gains while limiting the wage-inequality increase to one quarter of the sample average. Our findings inform the design of policies that seek to align the private returns to AI adoption with broader productivity and distributional objectives.",
+    keywords: [
+      "Artificial intelligence",
+      "Productivity",
+      "Wage inequality",
+      "Korea",
+      "Manufacturing",
+      "Technology adoption",
+    ],
+    jelCodes: ["O33", "J31", "D22", "L60", "O53"],
+    pages: "453–486",
+    volume: 30,
+    issue: 3,
+    year: 2025,
+    received: "2024-12-08",
+    accepted: "2025-07-22",
+    published: "2025-10-15",
+    publishedOnline: "2025-09-02",
+    citations: 2,
+    downloads: 1432,
+    pdfSize: "1.92 MB",
+    type: "Research Article",
+    featured: true,
+    funding:
+      "This work was supported by the Hanyang University Research Fund (HY-202400000002891) and by the National Research Foundation of Korea (NRF-2022S1A5A8050163). Caroline Dubois acknowledges funding from the French National Research Agency under grant ANR-21-CE26-0018-01.",
+    acknowledgments:
+      "We are grateful to the editor, Jae-Hoon Hwang, and two anonymous referees for constructive comments that substantially improved the paper. We thank participants at the 2025 Asia-Pacific Economic Seminars in Seoul and Tokyo, the 2025 European Economic Association Congress in Rotterdam, and seminars at Hanyang University, the Bank of Korea, and the Paris School of Economics for valuable feedback. We also thank the Korea Development Institute for providing access to the firm-level AI adoption survey data, and the Korea Statistics Office for access to the Survey of Business Activities. All errors are our own.",
+    dataAvailability:
+      "Replication data and Stata and Python code that reproduce all tables and figures in this article have been deposited at the Harvard Dataverse (https://doi.org/10.7910/DVN/JER30I3REP). The firm-level AI adoption survey data are available from the Korea Development Institute subject to a data-use agreement. The Survey of Business Activities micro-data are available from Statistics Korea through the MicroData Integrated Service (MDIS) portal.",
+    references: [
+      {
+        number: 1,
+        text: "Acemoglu, D. and P. Restrepo (2020), “Robots and jobs: Evidence from US labor markets”, Journal of Political Economy, 128(6), pp. 2188–2244.",
+        doi: "10.1086/704975",
+      },
+      {
+        number: 2,
+        text: "Acemoglu, D. and P. Restrepo (2022), “Tasks, automation, and the rise in U.S. wage inequality”, Econometrica, 90(5), pp. 1973–2016.",
+        doi: "10.3982/ECTA19831",
+      },
+      {
+        number: 3,
+        text: "Agrawal, A., J. Gans and A. Goldfarb (2018), Prediction Machines: The Simple Economics of Artificial Intelligence, Harvard Business Review Press, Boston, MA.",
+      },
+      {
+        number: 4,
+        text: "Aghion, P., B. Jones and C. Jones (2024), “Artificial intelligence and economic growth”, in A. Agrawal, J. Gans and A. Goldfarb (eds.), The Economics of Artificial Intelligence: An Agenda, University of Chicago Press, Chicago, pp. 23–58.",
+      },
+      {
+        number: 5,
+        text: "Babina, T., A. Fedyk, A. He and J. Hodson (2024), “Artificial intelligence, firm growth, and product innovation”, Journal of Financial Economics, 159, 103845.",
+        doi: "10.1016/j.jfineco.2024.103845",
+      },
+      {
+        number: 6,
+        text: "Brynjolfsson, E., D. Li and L. Raymond (2023), “Generative AI at work”, NBER Working Paper No. 31161, National Bureau of Economic Research, Cambridge, MA.",
+        doi: "10.3386/w31161",
+      },
+      {
+        number: 7,
+        text: "Brynjolfsson, E. and A. McAfee (2014), The Second Machine Age: Work, Progress, and Prosperity in a Time of Brilliant Technologies, W. W. Norton & Company, New York.",
+      },
+      {
+        number: 8,
+        text: "Card, D., J. Heining and P. Kline (2013), “Workplace heterogeneity and the rise of West German wage inequality”, Quarterly Journal of Economics, 128(3), pp. 967–1015.",
+        doi: "10.1093/qje/qjt006",
+      },
+      {
+        number: 9,
+        text: "Cyert, R. and J. March (1963), A Behavioral Theory of the Firm, Prentice-Hall, Englewood Cliffs, NJ.",
+      },
+      {
+        number: 10,
+        text: "Dauth, W., S. Findeisen, J. Suedekum and N. Woessner (2021), “The adjustment of labor markets to robots”, Journal of the European Economic Association, 19(6), pp. 3104–3153.",
+        doi: "10.1093/jeea/jvab012",
+      },
+      {
+        number: 11,
+        text: "Goldfarb, A., A. Taska and F. Teodoridis (2023), “Could machine learning be a general purpose technology? A comparison of emerging technologies using patent office data”, Research Policy, 52(1), 104653.",
+        doi: "10.1016/j.respol.2022.104653",
+      },
+      {
+        number: 12,
+        text: "Hwang, J.-H. and S. Park (2023), “Long-run effects of place-based industrial policy: Evidence from Korea's industrial complex programme”, Journal of Economic Research, 30(1), pp. 33–62.",
+        doi: "10.17256/JER.2025.30.1.002",
+      },
+      {
+        number: 13,
+        text: "Korinek, A. and J. Stiglitz (2024), “Artificial intelligence, globalisation, and strategies for economic development”, NBER Working Paper No. 28453, National Bureau of Economic Research, Cambridge, MA.",
+        doi: "10.3386/w28453",
+      },
+      {
+        number: 14,
+        text: "Lee, J.-W. and H. Lee (2024), “Digitalisation, productivity, and economic growth in Korea”, Asian Economic Papers, 23(2), pp. 41–62.",
+      },
+      {
+        number: 15,
+        text: "Levy, F. and R. Murnane (2012), The New Division of Labor: How Computers Are Creating the Next Job Market, Princeton University Press, Princeton, NJ.",
+      },
+      {
+        number: 16,
+        text: "OECD (2024), OECD Economic Surveys: Korea 2024, OECD Publishing, Paris.",
+        doi: "10.1787/4e6e7c0c-en",
+      },
+      {
+        number: 17,
+        text: "Song, J. (2018), Demographic Changes and the Labor Market in Korea: Past, Present and Future, Korea Labor Institute, Seoul.",
+      },
+      {
+        number: 18,
+        text: "Statistics Korea (2024), Survey of Business Activities 2023, Statistics Korea, Daejeon.",
+      },
+      {
+        number: 19,
+        text: "Trefler, D. (2004), “The long and short of the Canada–U.S. free trade agreement”, American Economic Review, 94(4), pp. 870–895.",
+        doi: "10.1257/0002828042002501",
+      },
+      {
+        number: 20,
+        text: "Webb, M. (2020), “The impact of artificial intelligence on the labor market”, Stanford University Working Paper, available at SSRN: https://ssrn.com/abstract=3512625.",
+      },
+      {
+        number: 21,
+        text: "Yang, H.-J. and J.-H. Hwang (2023), “Industrial policy and export upgrading: Evidence from Korea's heavy and chemical industry drive”, Journal of Economic Research, 27(4), pp. 439–468.",
+        doi: "10.17256/JER.2022.27.4.003",
+      },
+      {
+        number: 22,
+        text: "Zhang, W. and M.-S. Park (2025), “Green innovation and firm performance: The moderating role of environmental regulation”, Journal of Economic Research, 30(2), pp. 227–252.",
+        doi: "10.17256/JER.2025.30.2.005",
+      },
+    ],
   },
 ];
 

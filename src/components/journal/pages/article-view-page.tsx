@@ -7,7 +7,6 @@ import { Badge } from "@/components/ui/badge";
 import {
   ArticleListItem,
   JELBadge,
-  CorrespondingAuthorNote,
 } from "../article-components";
 import {
   Download,
@@ -22,6 +21,16 @@ import {
   Calendar,
   CheckCircle2,
   AlertCircle,
+  User,
+  ChevronRight,
+  ShieldCheck,
+  Database,
+  Award,
+  ScrollText,
+  Heart,
+  FileDown,
+  Link2,
+  Eye,
 } from "lucide-react";
 
 export function ArticleViewPage({ articleId }: { articleId: string | null }) {
@@ -38,326 +47,500 @@ export function ArticleViewPage({ articleId }: { articleId: string | null }) {
         a.jelCodes.some((c) => article.jelCodes.includes(c)))
   ).slice(0, 4);
 
+  const hasStructured = !!(article.structuredAuthors && article.affiliations);
+  const correspondingAffiliation = hasStructured
+    ? article.affiliations!.find((af) =>
+        article.structuredAuthors!.find((au) => au.corresponding)?.affiliationIds.includes(af.id)
+      )
+    : null;
+
   return (
-    <div>
-      {/* Article header */}
-      <section className="bg-primary text-primary-foreground">
+    <div className="bg-white">
+      {/* === Breadcrumb === */}
+      <div className="border-b border-gray-200 bg-gray-50">
+        <div className="container mx-auto px-4 py-2.5 font-sans text-xs text-gray-600">
+          <button onClick={() => navigate("home")} className="hover:text-accent">Journal Home</button>
+          <ChevronRight className="inline w-3 h-3 mx-1.5" />
+          <button onClick={() => navigate("current-issue")} className="hover:text-accent">Current Issue</button>
+          <ChevronRight className="inline w-3 h-3 mx-1.5" />
+          <span className="text-primary font-medium">
+            Vol. {article.volume}, No. {article.issue} ({article.year})
+          </span>
+        </div>
+      </div>
+
+      {/* === Article header === */}
+      <section className="border-b border-gray-200 bg-white">
         <div className="container mx-auto px-4 py-8">
-          <button
-            onClick={() => navigate("current-issue")}
-            className="font-sans text-xs flex items-center gap-1 opacity-80 hover:opacity-100 hover:text-accent mb-3"
-          >
-            <ChevronLeft className="w-3 h-3" />
-            Back to Volume {article.volume}, Issue {article.issue}
-          </button>
-          <div className="flex items-center gap-2 mb-3 flex-wrap">
-            <Badge className="bg-accent text-accent-foreground hover:bg-accent font-sans text-[10px] uppercase tracking-wider">
-              {article.type}
-            </Badge>
-            <span className="font-sans text-xs opacity-80">
-              Volume {article.volume}, Issue {article.issue} ({article.year}) · pp. {article.pages}
-            </span>
-          </div>
-          <h1 className="font-serif text-2xl sm:text-3xl lg:text-4xl font-bold leading-tight mb-4">
-            {article.title}
-          </h1>
-          <p className="font-serif text-base sm:text-lg opacity-90 mb-3">
-            {authorList}
-          </p>
-          <div className="flex items-center gap-4 font-sans text-xs opacity-80 flex-wrap">
-            <span className="flex items-center gap-1.5">
-              <Calendar className="w-3.5 h-3.5" />
-              Published {new Date(article.published).toLocaleDateString("en-GB", {
-                day: "numeric",
-                month: "long",
-                year: "numeric",
-              })}
-            </span>
-            <span className="flex items-center gap-1.5">
-              <FileText className="w-3.5 h-3.5" />
-              DOI: {article.doi}
-            </span>
-            <span className="flex items-center gap-1.5">
-              <Quote className="w-3.5 h-3.5" />
-              {article.citations} citations
-            </span>
-            <span className="flex items-center gap-1.5">
-              <Download className="w-3.5 h-3.5" />
-              {article.downloads.toLocaleString()} downloads
-            </span>
+          <div className="grid lg:grid-cols-12 gap-8">
+            {/* Main article column */}
+            <article className="lg:col-span-9">
+              <div className="flex items-center gap-2 mb-3 flex-wrap">
+                <Badge className="bg-accent text-white hover:bg-accent font-sans text-[10px] uppercase tracking-wider">
+                  {article.type}
+                </Badge>
+                <span className="font-sans text-xs text-gray-500">
+                  Volume {article.volume}, Issue {article.issue} ({article.year}) · pp. {article.pages}
+                </span>
+                <span className="text-gray-300">|</span>
+                <a
+                  href={`https://doi.org/${article.doi}`}
+                  className="font-mono text-xs text-accent hover:underline flex items-center gap-1"
+                  target="_blank"
+                  rel="noopener noreferrer"
+                >
+                  <Link2 className="w-3 h-3" />
+                  {article.doi}
+                </a>
+              </div>
+
+              <h1 className="font-serif text-2xl sm:text-3xl lg:text-4xl font-bold text-primary leading-tight mb-4">
+                {article.title}
+              </h1>
+
+              {/* AOM-style authors with affiliation superscripts */}
+              {hasStructured ? (
+                <div className="mb-3">
+                  <p className="font-serif text-base text-gray-800">
+                    {article.structuredAuthors!.map((au, idx) => (
+                      <span key={idx}>
+                        {idx > 0 && ", "}
+                        <span className="font-medium">{au.name}</span>
+                        <sup className="text-accent ml-0.5">
+                          {au.affiliationIds.map((id) => id).join(",")}
+                        </sup>
+                        {au.corresponding && <sup className="text-accent">*</sup>}
+                      </span>
+                    ))}
+                  </p>
+                  {/* Affiliations list */}
+                  <div className="mt-3 space-y-1">
+                    {article.affiliations!.map((af) => (
+                      <p key={af.id} className="font-sans text-xs text-gray-600">
+                        <sup className="text-accent">{af.id}</sup>{" "}
+                        {af.department}, {af.institution}, {af.city}, {af.country}
+                        {af.email && (
+                          <>
+                            {" — "}
+                            <a
+                              href={`mailto:${af.email}`}
+                              className="text-accent hover:underline"
+                            >
+                              {af.email}
+                            </a>
+                          </>
+                        )}
+                      </p>
+                    ))}
+                    {correspondingAffiliation && (
+                      <p className="font-sans text-xs text-gray-500 mt-1">
+                        <sup className="text-accent">*</sup> Corresponding author.
+                        {correspondingAffiliation.email && (
+                          <>
+                            {" "}Email:{" "}
+                            <a href={`mailto:${correspondingAffiliation.email}`} className="text-accent hover:underline">
+                              {correspondingAffiliation.email}
+                            </a>
+                          </>
+                        )}
+                      </p>
+                    )}
+                  </div>
+                  {/* ORCID strip */}
+                  <div className="mt-3 flex flex-wrap items-center gap-3 font-sans text-[11px] text-gray-500">
+                    {article.structuredAuthors!.filter((au) => au.orcid).map((au) => (
+                      <span key={au.orcid} className="flex items-center gap-1">
+                        <User className="w-3 h-3" />
+                        {au.name}: ORCID <span className="font-mono">{au.orcid}</span>
+                      </span>
+                    ))}
+                  </div>
+                </div>
+              ) : (
+                <p className="font-serif text-base text-gray-800 mb-2">
+                  {article.authors.map((a, idx) => (
+                    <span key={idx}>
+                      {idx > 0 && ", "}
+                      <span className="font-medium">{a.name}</span>
+                      {a.corresponding && <sup className="text-accent">*</sup>}
+                    </span>
+                  ))}
+                </p>
+              )}
+
+              {/* Article history block — AOM style */}
+              <div className="bg-gray-50 border border-gray-200 rounded-sm p-4 my-5 font-sans text-xs text-gray-700 grid sm:grid-cols-2 lg:grid-cols-4 gap-3">
+                <div>
+                  <p className="text-gray-500 uppercase tracking-wide mb-0.5">Received</p>
+                  <p className="font-medium text-primary">
+                    {new Date(article.received).toLocaleDateString("en-GB", { day: "numeric", month: "short", year: "numeric" })}
+                  </p>
+                </div>
+                <div>
+                  <p className="text-gray-500 uppercase tracking-wide mb-0.5">Accepted</p>
+                  <p className="font-medium text-primary">
+                    {new Date(article.accepted).toLocaleDateString("en-GB", { day: "numeric", month: "short", year: "numeric" })}
+                  </p>
+                </div>
+                {article.publishedOnline && (
+                  <div>
+                    <p className="text-gray-500 uppercase tracking-wide mb-0.5">Published online</p>
+                    <p className="font-medium text-primary">
+                      {new Date(article.publishedOnline).toLocaleDateString("en-GB", { day: "numeric", month: "short", year: "numeric" })}
+                    </p>
+                  </div>
+                )}
+                <div>
+                  <p className="text-gray-500 uppercase tracking-wide mb-0.5">Issue published</p>
+                  <p className="font-medium text-primary">
+                    {new Date(article.published).toLocaleDateString("en-GB", { day: "numeric", month: "short", year: "numeric" })}
+                  </p>
+                </div>
+              </div>
+
+              {/* Action bar */}
+              <div className="flex flex-wrap items-center gap-2 mb-7 pb-5 border-b border-gray-200">
+                <Button size="sm" className="font-sans bg-primary text-white hover:bg-primary/90 rounded-sm">
+                  <Download className="w-4 h-4 mr-1.5" />
+                  Download PDF ({article.pdfSize})
+                </Button>
+                <Button size="sm" variant="outline" className="font-sans rounded-sm">
+                  <FileText className="w-4 h-4 mr-1.5" />
+                  Full Text
+                </Button>
+                <Button size="sm" variant="outline" className="font-sans rounded-sm">
+                  <Quote className="w-4 h-4 mr-1.5" />
+                  Cite Article
+                </Button>
+                <div className="flex gap-1 ml-auto">
+                  <Button size="sm" variant="ghost" aria-label="Save article" className="font-sans px-2 rounded-sm">
+                    <Bookmark className="w-4 h-4" />
+                  </Button>
+                  <Button size="sm" variant="ghost" aria-label="Share article" className="font-sans px-2 rounded-sm">
+                    <Share2 className="w-4 h-4" />
+                  </Button>
+                  <Button size="sm" variant="ghost" aria-label="Print article" className="font-sans px-2 rounded-sm">
+                    <Printer className="w-4 h-4" />
+                  </Button>
+                  <Button size="sm" variant="ghost" aria-label="Email article" className="font-sans px-2 rounded-sm">
+                    <Mail className="w-4 h-4" />
+                  </Button>
+                </div>
+              </div>
+            </article>
+
+            {/* Right rail: Article sidebar */}
+            <aside className="lg:col-span-3">
+              <div className="bg-gray-50 border border-gray-200 rounded-sm p-4 sticky top-32">
+                <h3 className="font-sans text-xs uppercase tracking-widest text-gray-500 mb-3 pb-2 border-b border-gray-200">
+                  Article Information
+                </h3>
+                <dl className="space-y-2 font-sans text-xs">
+                  <Row label="Volume" value={`${article.volume}`} />
+                  <Row label="Issue" value={`${article.issue}`} />
+                  <Row label="Year" value={`${article.year}`} />
+                  <Row label="Pages" value={article.pages} />
+                  <Row label="Article type" value={article.type} />
+                  <Row label="PDF size" value={article.pdfSize} />
+                  <div className="border-t border-gray-200 pt-2 mt-2">
+                    <Row label="Citations" value={`${article.citations}`} />
+                    <Row label="Downloads" value={article.downloads.toLocaleString()} />
+                  </div>
+                  <div className="border-t border-gray-200 pt-2 mt-2">
+                    <dt className="text-gray-500 mb-0.5">DOI</dt>
+                    <dd className="font-mono text-[11px] break-all text-accent">{article.doi}</dd>
+                  </div>
+                </dl>
+                <div className="mt-4 pt-3 border-t border-gray-200 font-sans text-[11px] text-gray-500">
+                  Published by {JOURNAL_INFO.publisher}<br />
+                  ISSN {JOURNAL_INFO.issnOnline} (online)
+                </div>
+              </div>
+            </aside>
           </div>
         </div>
       </section>
 
-      <section className="container mx-auto px-4 py-10">
-        <div className="grid lg:grid-cols-4 gap-8">
-          {/* Main article column */}
-          <article className="lg:col-span-3">
-            {/* Action bar */}
-            <div className="bg-card border border-border rounded-md p-3 mb-8 flex flex-wrap items-center justify-between gap-2">
-              <div className="flex flex-wrap gap-2">
-                <Button size="sm" className="bg-primary text-primary-foreground hover:bg-primary/90 font-sans">
-                  <Download className="w-4 h-4 mr-1.5" />
-                  Download PDF ({article.pdfSize})
-                </Button>
-                <Button size="sm" variant="outline" className="font-sans">
-                  <FileText className="w-4 h-4 mr-1.5" />
-                  Full Text
-                </Button>
-                <Button size="sm" variant="outline" className="font-sans">
-                  <Quote className="w-4 h-4 mr-1.5" />
-                  Cite
-                </Button>
-              </div>
-              <div className="flex gap-1">
-                <Button size="sm" variant="ghost" className="font-sans px-2" aria-label="Save article">
-                  <Bookmark className="w-4 h-4" />
-                </Button>
-                <Button size="sm" variant="ghost" className="font-sans px-2" aria-label="Share article">
-                  <Share2 className="w-4 h-4" />
-                </Button>
-                <Button size="sm" variant="ghost" className="font-sans px-2" aria-label="Print article">
-                  <Printer className="w-4 h-4" />
-                </Button>
-              </div>
-            </div>
-
-            {/* Authors &amp; affiliations */}
-            <div className="mb-8">
-              <h2 className="font-serif text-xl font-bold text-primary mb-3 border-b border-border pb-2">
-                Authors
-              </h2>
-              <ol className="space-y-3">
-                {article.authors.map((author, idx) => (
-                  <li key={idx} className="font-serif text-base text-foreground">
-                    <span className="font-semibold">{author.name}</span>
-                    {author.corresponding && (
-                      <span className="text-accent ml-1" title="Corresponding author">*</span>
-                    )}
-                    <span className="block font-sans text-sm text-muted-foreground mt-0.5">
-                      {author.affiliation}
-                    </span>
-                    {author.corresponding && (
-                      <a
-                        href={`mailto:${author.email ?? `${author.name.split(" ").slice(-1)[0].toLowerCase()}@example.edu`}`}
-                        className="font-sans text-xs text-primary hover:text-accent hover:underline flex items-center gap-1 mt-1"
-                      >
-                        <Mail className="w-3 h-3" />
-                        Corresponding author
-                      </a>
-                    )}
-                  </li>
-                ))}
-              </ol>
-            </div>
-
-            {/* Abstract */}
-            <div className="mb-8">
-              <h2 className="font-serif text-xl font-bold text-primary mb-3 border-b border-border pb-2">
-                Abstract
-              </h2>
-              <p className="abstract-block">{article.abstract}</p>
-            </div>
-
-            {/* Keywords &amp; JEL */}
-            <div className="mb-8 grid sm:grid-cols-2 gap-6">
-              <div>
-                <h3 className="font-sans text-xs uppercase tracking-widest text-muted-foreground mb-2">
-                  Keywords
-                </h3>
-                <div className="flex flex-wrap gap-1.5">
-                  {article.keywords.map((keyword) => (
-                    <Badge
-                      key={keyword}
-                      variant="secondary"
-                      className="font-sans text-xs font-normal"
-                    >
-                      {keyword}
-                    </Badge>
-                  ))}
-                </div>
-              </div>
-              <div>
-                <h3 className="font-sans text-xs uppercase tracking-widest text-muted-foreground mb-2">
-                  JEL Classification
-                </h3>
-                <div className="flex flex-wrap gap-1.5">
-                  {article.jelCodes.map((code) => (
-                    <JELBadge key={code} code={code} />
-                  ))}
-                </div>
-              </div>
-            </div>
-
-            {/* Article timeline */}
-            <div className="mb-8 bg-secondary/50 border border-border rounded-md p-5">
-              <h3 className="font-serif text-base font-semibold text-primary mb-3">
-                Article Timeline
-              </h3>
-              <div className="grid sm:grid-cols-3 gap-4 font-sans text-sm">
-                <div className="flex items-start gap-2">
-                  <Calendar className="w-4 h-4 mt-0.5 text-muted-foreground" />
-                  <div>
-                    <p className="text-muted-foreground text-xs uppercase tracking-wide">Received</p>
-                    <p className="font-medium">
-                      {new Date(article.received).toLocaleDateString("en-GB", {
-                        day: "numeric",
-                        month: "long",
-                        year: "numeric",
-                      })}
-                    </p>
-                  </div>
-                </div>
-                <div className="flex items-start gap-2">
-                  <CheckCircle2 className="w-4 h-4 mt-0.5 text-accent" />
-                  <div>
-                    <p className="text-muted-foreground text-xs uppercase tracking-wide">Accepted</p>
-                    <p className="font-medium">
-                      {new Date(article.accepted).toLocaleDateString("en-GB", {
-                        day: "numeric",
-                        month: "long",
-                        year: "numeric",
-                      })}
-                    </p>
-                  </div>
-                </div>
-                <div className="flex items-start gap-2">
-                  <ExternalLink className="w-4 h-4 mt-0.5 text-primary" />
-                  <div>
-                    <p className="text-muted-foreground text-xs uppercase tracking-wide">Published</p>
-                    <p className="font-medium">
-                      {new Date(article.published).toLocaleDateString("en-GB", {
-                        day: "numeric",
-                        month: "long",
-                        year: "numeric",
-                      })}
-                    </p>
-                  </div>
-                </div>
-              </div>
-            </div>
-
-            {/* How to cite */}
-            <div className="mb-8 bg-card border border-border rounded-md p-5">
-              <h3 className="font-serif text-base font-semibold text-primary mb-3 flex items-center gap-2">
-                <Quote className="w-4 h-4 text-accent" />
-                How to Cite
-              </h3>
-              <p className="font-serif text-sm leading-relaxed text-foreground/85 bg-secondary/40 p-3 rounded border-l-4 border-accent">
-                {citationText}
-              </p>
-              <div className="flex flex-wrap gap-2 mt-3">
-                <Button size="sm" variant="outline" className="font-sans">BibTeX</Button>
-                <Button size="sm" variant="outline" className="font-sans">RIS</Button>
-                <Button size="sm" variant="outline" className="font-sans">EndNote</Button>
-                <Button size="sm" variant="outline" className="font-sans">APA</Button>
-                <Button size="sm" variant="outline" className="font-sans">Chicago</Button>
-                <Button size="sm" variant="outline" className="font-sans">Harvard</Button>
-              </div>
-            </div>
-
-            {/* Rights notice */}
-            <div className="mb-8 bg-accent/10 border border-accent/30 rounded-md p-4 flex items-start gap-3">
-              <AlertCircle className="w-5 h-5 text-accent flex-shrink-0 mt-0.5" />
-              <div className="font-sans text-sm">
-                <p className="font-semibold text-primary mb-1">Open Access</p>
-                <p className="text-foreground/80 leading-relaxed">
-                  This is an open-access article distributed under the terms of the
-                  Creative Commons Attribution-NonCommercial 4.0 International License
-                  (CC BY-NC 4.0). You are free to copy, distribute, and adapt the work
-                  for non-commercial purposes, provided appropriate attribution is given.
+      {/* === Abstract + Keywords + Article body === */}
+      <section className="bg-white">
+        <div className="container mx-auto px-4 py-8">
+          <div className="grid lg:grid-cols-12 gap-8">
+            <div className="lg:col-span-9">
+              {/* Abstract */}
+              <div className="mb-8">
+                <h2 className="font-serif text-xl font-bold text-primary mb-3 pb-1 border-b-2 border-accent inline-block">
+                  Abstract
+                </h2>
+                <p className="font-serif text-base leading-relaxed text-gray-800 mt-4 text-justify">
+                  {article.abstract}
                 </p>
               </div>
-            </div>
 
-            {/* Corresponding author note */}
-            <CorrespondingAuthorNote article={article} />
-          </article>
-
-          {/* Sidebar */}
-          <aside className="space-y-6">
-            {/* Article info */}
-            <div className="bg-card border border-border rounded-md p-5 sticky top-32">
-              <h3 className="font-serif text-base font-semibold text-primary mb-3 border-b border-border pb-2">
-                Article Information
-              </h3>
-              <dl className="space-y-2.5 font-sans text-sm">
-                <div className="flex justify-between gap-2">
-                  <dt className="text-muted-foreground">Volume</dt>
-                  <dd className="font-medium">{article.volume}</dd>
-                </div>
-                <div className="flex justify-between gap-2">
-                  <dt className="text-muted-foreground">Issue</dt>
-                  <dd className="font-medium">{article.issue}</dd>
-                </div>
-                <div className="flex justify-between gap-2">
-                  <dt className="text-muted-foreground">Year</dt>
-                  <dd className="font-medium">{article.year}</dd>
-                </div>
-                <div className="flex justify-between gap-2">
-                  <dt className="text-muted-foreground">Pages</dt>
-                  <dd className="font-medium">{article.pages}</dd>
-                </div>
-                <div className="flex justify-between gap-2">
-                  <dt className="text-muted-foreground">Type</dt>
-                  <dd className="font-medium text-right text-xs">{article.type}</dd>
-                </div>
-                <div className="flex justify-between gap-2 border-t border-border pt-2.5">
-                  <dt className="text-muted-foreground">DOI</dt>
-                  <dd className="font-mono text-xs">{article.doi}</dd>
-                </div>
-                <div className="flex justify-between gap-2">
-                  <dt className="text-muted-foreground">PDF size</dt>
-                  <dd className="font-medium">{article.pdfSize}</dd>
-                </div>
-                <div className="flex justify-between gap-2">
-                  <dt className="text-muted-foreground">Citations</dt>
-                  <dd className="font-medium">{article.citations}</dd>
-                </div>
-                <div className="flex justify-between gap-2">
-                  <dt className="text-muted-foreground">Downloads</dt>
-                  <dd className="font-medium">{article.downloads.toLocaleString()}</dd>
-                </div>
-              </dl>
-              <div className="mt-4 pt-3 border-t border-border font-sans text-xs text-muted-foreground">
-                Published by {JOURNAL_INFO.publisher}.<br />
-                ISSN {JOURNAL_INFO.issnOnline} (online).
-              </div>
-            </div>
-
-            {/* Related articles */}
-            {relatedArticles.length > 0 && (
-              <div className="bg-card border border-border rounded-md p-5">
-                <h3 className="font-serif text-base font-semibold text-primary mb-3 border-b border-border pb-2">
-                  Related Articles
-                </h3>
-                <ul className="space-y-3">
-                  {relatedArticles.map((rel) => (
-                    <ArticleMiniCard key={rel.id} article={rel} />
+              {/* Keywords */}
+              <div className="mb-8">
+                <h3 className="font-sans text-xs uppercase tracking-widest text-gray-500 mb-2">Keywords</h3>
+                <div className="flex flex-wrap gap-2">
+                  {article.keywords.map((kw) => (
+                    <span
+                      key={kw}
+                      className="font-sans text-xs px-2.5 py-1 bg-gray-100 border border-gray-200 rounded-sm text-gray-700"
+                    >
+                      {kw}
+                    </span>
                   ))}
-                </ul>
+                </div>
               </div>
-            )}
-          </aside>
+
+              {/* JEL */}
+              <div className="mb-8">
+                <h3 className="font-sans text-xs uppercase tracking-widest text-gray-500 mb-2">JEL Classification</h3>
+                <div className="flex flex-wrap gap-2">
+                  {article.jelCodes.map((c) => (
+                    <JELBadge key={c} code={c} />
+                  ))}
+                </div>
+              </div>
+
+              {/* Acknowledgments */}
+              {article.acknowledgments && (
+                <div className="mb-8">
+                  <h3 className="font-serif text-lg font-semibold text-primary mb-2 pb-1 border-b border-gray-200">
+                    Acknowledgments
+                  </h3>
+                  <p className="font-serif text-sm leading-relaxed text-gray-800 text-justify">
+                    {article.acknowledgments}
+                  </p>
+                </div>
+              )}
+
+              {/* Funding */}
+              {article.funding && (
+                <div className="mb-8">
+                  <h3 className="font-serif text-lg font-semibold text-primary mb-2 pb-1 border-b border-gray-200">
+                    Funding
+                  </h3>
+                  <p className="font-serif text-sm leading-relaxed text-gray-800 text-justify">
+                    {article.funding}
+                  </p>
+                </div>
+              )}
+
+              {/* Data availability */}
+              {article.dataAvailability && (
+                <div className="mb-8 bg-gray-50 border border-gray-200 rounded-sm p-4">
+                  <h3 className="font-serif text-base font-semibold text-primary mb-2 flex items-center gap-2">
+                    <Database className="w-4 h-4 text-accent" />
+                    Data Availability Statement
+                  </h3>
+                  <p className="font-serif text-sm leading-relaxed text-gray-800 text-justify">
+                    {article.dataAvailability}
+                  </p>
+                </div>
+              )}
+
+              {/* References */}
+              {article.references && article.references.length > 0 && (
+                <div className="mb-8">
+                  <h3 className="font-serif text-xl font-bold text-primary mb-4 pb-1 border-b-2 border-accent inline-block">
+                    References
+                  </h3>
+                  <ol className="mt-4 space-y-2.5">
+                    {article.references.map((ref) => (
+                      <li
+                        key={ref.number}
+                        className="font-serif text-sm leading-relaxed text-gray-800 flex gap-3"
+                      >
+                        <span className="flex-shrink-0 w-7 text-right font-sans text-xs text-accent font-semibold pt-0.5">
+                          {ref.number}.
+                        </span>
+                        <span className="flex-1 text-justify">
+                          {ref.text}
+                          {ref.doi && (
+                            <a
+                              href={`https://doi.org/${ref.doi}`}
+                              target="_blank"
+                              rel="noopener noreferrer"
+                              className="ml-1 text-accent hover:underline font-sans text-xs"
+                            >
+                              https://doi.org/{ref.doi}
+                            </a>
+                          )}
+                        </span>
+                      </li>
+                    ))}
+                  </ol>
+                </div>
+              )}
+
+              {/* Open access notice */}
+              <div className="mb-8 bg-accent/10 border border-accent/30 rounded-sm p-4 flex items-start gap-3">
+                <AlertCircle className="w-5 h-5 text-accent flex-shrink-0 mt-0.5" />
+                <div className="font-sans text-sm">
+                  <p className="font-semibold text-primary mb-1">Open Access</p>
+                  <p className="text-gray-700 leading-relaxed">
+                    This is an open-access article distributed under the terms of the
+                    Creative Commons Attribution-NonCommercial 4.0 International License
+                    (CC BY-NC 4.0). You are free to copy, distribute, and adapt the work
+                    for non-commercial purposes, provided appropriate attribution is given.
+                  </p>
+                </div>
+              </div>
+
+              {/* How to cite */}
+              <div className="mb-8">
+                <h3 className="font-serif text-lg font-semibold text-primary mb-2 pb-1 border-b border-gray-200 flex items-center gap-2">
+                  <Quote className="w-4 h-4 text-accent" />
+                  How to Cite
+                </h3>
+                <p className="font-serif text-sm leading-relaxed text-gray-800 bg-gray-50 p-3 border-l-4 border-accent">
+                  {citationText}
+                </p>
+                <div className="flex flex-wrap gap-2 mt-3">
+                  <Button size="sm" variant="outline" className="font-sans rounded-sm text-xs">BibTeX</Button>
+                  <Button size="sm" variant="outline" className="font-sans rounded-sm text-xs">RIS</Button>
+                  <Button size="sm" variant="outline" className="font-sans rounded-sm text-xs">EndNote</Button>
+                  <Button size="sm" variant="outline" className="font-sans rounded-sm text-xs">APA</Button>
+                  <Button size="sm" variant="outline" className="font-sans rounded-sm text-xs">Chicago</Button>
+                  <Button size="sm" variant="outline" className="font-sans rounded-sm text-xs">Harvard</Button>
+                </div>
+              </div>
+            </div>
+
+            {/* Sticky right rail: Options and Tools (AOM sidebar) */}
+            <aside className="lg:col-span-3">
+              <div className="sticky top-32 space-y-5">
+                {/* Options & Tools */}
+                <div className="bg-white border border-gray-200 rounded-sm overflow-hidden">
+                  <div className="bg-primary text-white px-4 py-2.5">
+                    <h3 className="font-sans text-xs uppercase tracking-widest font-semibold">
+                      Options and Tools
+                    </h3>
+                  </div>
+                  <ul className="divide-y divide-gray-200 font-sans text-sm">
+                    <ToolItem icon={Download} label="Download PDF" sub={`${article.pdfSize}`} />
+                    <ToolItem icon={FileText} label="Full Text (HTML)" />
+                    <ToolItem icon={Quote} label="Cite this article" />
+                    <ToolItem icon={FileDown} label="Download citation" sub="BibTeX / RIS / EndNote" />
+                    <ToolItem icon={Share2} label="Share" sub="Email / X / LinkedIn" />
+                    <ToolItem icon={Bookmark} label="Save to my library" />
+                    <ToolItem icon={Printer} label="Print this article" />
+                    <ToolItem icon={Eye} label="Permissions" sub="Reprint &amp; reuse" />
+                    <ToolItem icon={ShieldCheck} label="Supplementary materials" />
+                    <ToolItem icon={Award} label="Track citations" sub="Cited by {n} articles" />
+                  </ul>
+                </div>
+
+                {/* Article metrics */}
+                <div className="bg-gray-50 border border-gray-200 rounded-sm p-4">
+                  <h3 className="font-sans text-xs uppercase tracking-widest text-gray-500 mb-3 pb-2 border-b border-gray-200">
+                    Article Metrics
+                  </h3>
+                  <div className="space-y-2 font-sans text-xs">
+                    <div className="flex items-center justify-between">
+                      <span className="text-gray-600 flex items-center gap-1.5">
+                        <Quote className="w-3.5 h-3.5 text-accent" /> Citations
+                      </span>
+                      <span className="font-bold text-primary text-sm">{article.citations}</span>
+                    </div>
+                    <div className="flex items-center justify-between">
+                      <span className="text-gray-600 flex items-center gap-1.5">
+                        <Download className="w-3.5 h-3.5 text-accent" /> Downloads
+                      </span>
+                      <span className="font-bold text-primary text-sm">{article.downloads.toLocaleString()}</span>
+                    </div>
+                    <div className="flex items-center justify-between">
+                      <span className="text-gray-600 flex items-center gap-1.5">
+                        <Eye className="w-3.5 h-3.5 text-accent" /> Abstract views
+                      </span>
+                      <span className="font-bold text-primary text-sm">{(article.downloads * 4.2).toFixed(0)}</span>
+                    </div>
+                  </div>
+                </div>
+
+                {/* Rights */}
+                <div className="bg-accent/10 border border-accent/30 rounded-sm p-4 text-center">
+                  <Heart className="w-5 h-5 text-accent mx-auto mb-1" />
+                  <p className="font-sans text-xs text-gray-700 leading-relaxed">
+                    <strong className="text-primary">Open Access</strong><br />
+                    CC BY-NC 4.0<br />
+                    No APC
+                  </p>
+                </div>
+              </div>
+            </aside>
+          </div>
+        </div>
+      </section>
+
+      {/* === Related articles === */}
+      {relatedArticles.length > 0 && (
+        <section className="bg-gray-50 border-t border-gray-200">
+          <div className="container mx-auto px-4 py-10">
+            <div className="flex items-end justify-between mb-5 border-b border-gray-200 pb-2">
+              <h2 className="font-serif text-xl font-bold text-primary flex items-center gap-2">
+                <ScrollText className="w-5 h-5 text-accent" />
+                Related Articles
+              </h2>
+              <Button variant="link" onClick={() => navigate("archive")} className="font-sans text-accent hover:text-accent text-sm p-0 h-auto">
+                Browse all
+                <ChevronRight className="w-3.5 h-3.5 ml-1" />
+              </Button>
+            </div>
+            <div className="divide-y divide-gray-200 bg-white border border-gray-200 rounded-sm">
+              {relatedArticles.map((rel) => (
+                <ArticleListItem key={rel.id} article={rel} />
+              ))}
+            </div>
+          </div>
+        </section>
+      )}
+
+      {/* === Navigation back === */}
+      <section className="bg-white border-t border-gray-200">
+        <div className="container mx-auto px-4 py-8 flex flex-wrap items-center justify-between gap-3">
+          <Button variant="outline" onClick={() => navigate("current-issue")} className="font-sans rounded-sm">
+            <ChevronLeft className="w-4 h-4 mr-1.5" />
+            Back to Volume {article.volume}, Issue {article.issue}
+          </Button>
+          <Button onClick={() => navigate("submission")} className="font-sans bg-primary text-white hover:bg-primary/90 rounded-sm">
+            <Mail className="w-4 h-4 mr-2" />
+            Submit your manuscript
+          </Button>
         </div>
       </section>
     </div>
   );
 }
 
-function ArticleMiniCard({ article }: { article: (typeof ARTICLES)[number] }) {
-  const { navigate } = useNav();
+function Row({ label, value }: { label: string; value: string }) {
   return (
-    <li
-      onClick={() => navigate("article", { articleId: article.id })}
-      className="cursor-pointer group"
-    >
-      <h4 className="font-serif text-sm font-semibold text-primary leading-snug group-hover:text-accent transition-colors line-clamp-3">
-        {article.title}
-      </h4>
-      <p className="font-sans text-[11px] text-muted-foreground mt-1">
-        Vol. {article.volume}, No. {article.issue} ({article.year}) · {article.citations} cited
-      </p>
+    <div className="flex justify-between gap-2">
+      <dt className="text-gray-500">{label}</dt>
+      <dd className="font-medium text-right text-primary">{value}</dd>
+    </div>
+  );
+}
+
+function ToolItem({
+  icon: Icon,
+  label,
+  sub,
+}: {
+  icon: React.ComponentType<{ className?: string }>;
+  label: string;
+  sub?: string;
+}) {
+  return (
+    <li>
+      <button className="w-full flex items-center gap-2.5 px-4 py-2.5 hover:bg-gray-50 transition-colors text-left">
+        <Icon className="w-4 h-4 text-accent flex-shrink-0" />
+        <span className="flex-1 min-w-0">
+          <span className="block text-sm text-gray-800 leading-tight">{label}</span>
+          {sub && (
+            <span className="block text-[11px] text-gray-500 mt-0.5" dangerouslySetInnerHTML={{ __html: sub }} />
+          )}
+        </span>
+      </button>
     </li>
   );
 }

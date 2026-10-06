@@ -1,7 +1,7 @@
 "use client";
 
 import { useState } from "react";
-import { Search, Menu, X, ChevronDown } from "lucide-react";
+import { Search, Menu, X, ChevronDown, User, Bell } from "lucide-react";
 import { useNav, type PageId } from "./nav-context";
 import { JOURNAL_INFO } from "@/data/journal";
 import {
@@ -16,7 +16,7 @@ import { Input } from "@/components/ui/input";
 import { Button } from "@/components/ui/button";
 
 const NAV_ITEMS: { label: string; page: PageId; children?: { label: string; page: PageId }[] }[] = [
-  { label: "Home", page: "home" },
+  { label: "Journal Home", page: "home" },
   {
     label: "About",
     page: "about",
@@ -27,7 +27,7 @@ const NAV_ITEMS: { label: string; page: PageId; children?: { label: string; page
     ],
   },
   { label: "Current Issue", page: "current-issue" },
-  { label: "Archive", page: "archive" },
+  { label: "All Issues", page: "archive" },
   {
     label: "For Authors",
     page: "submission",
@@ -37,7 +37,7 @@ const NAV_ITEMS: { label: string; page: PageId; children?: { label: string; page
       { label: "Peer Review Process", page: "policies" },
     ],
   },
-  { label: "News", page: "news" },
+  { label: "News &amp; Announcements", page: "news" },
   { label: "Contact", page: "contact" },
 ];
 
@@ -55,34 +55,45 @@ export function Header() {
   };
 
   return (
-    <header className="sticky top-0 z-50 bg-background shadow-sm border-b border-border">
-      {/* Top utility bar */}
-      <div className="bg-primary text-primary-foreground">
-        <div className="container mx-auto px-4 flex items-center justify-between h-9 text-xs">
-          <div className="flex items-center gap-4 font-sans">
-            <span className="hidden sm:inline opacity-90">
-              Peer-reviewed · Open Access · Quarterly · Since 1996
-            </span>
-            <span className="sm:hidden opacity-90">Open Access · Quarterly</span>
-          </div>
-          <div className="flex items-center gap-3 font-sans">
+    <header className="sticky top-0 z-50 bg-white shadow-sm border-b border-gray-200">
+      {/* === Top utility bar (AOM-style) === */}
+      <div className="bg-gray-50 border-b border-gray-200">
+        <div className="container mx-auto px-4 flex items-center justify-between h-9 text-[11px] font-sans">
+          <div className="flex items-center gap-4 text-gray-600">
             <a
-              href={`mailto:${JOURNAL_INFO.contactEmail}`}
-              className="opacity-90 hover:opacity-100 hover:underline"
+              href="https://www.hanyang.ac.kr/"
+              target="_blank"
+              rel="noopener noreferrer"
+              className="hover:text-accent transition-colors"
             >
-              {JOURNAL_INFO.contactEmail}
+              Hanyang University
             </a>
-            <span className="opacity-50">|</span>
-            <span className="opacity-90">ISSN {JOURNAL_INFO.issnPrint}</span>
-            <span className="opacity-50 hidden sm:inline">|</span>
-            <span className="hidden sm:inline opacity-90">English</span>
+            <span className="text-gray-300">|</span>
+            <button className="hover:text-accent transition-colors">Sign In</button>
+            <span className="text-gray-300">|</span>
+            <button className="hover:text-accent transition-colors">Register</button>
+            <span className="text-gray-300 hidden sm:inline">|</span>
+            <button className="hidden sm:inline hover:text-accent transition-colors">Subscribe</button>
+          </div>
+          <div className="flex items-center gap-3">
+            <span className="hidden md:inline text-gray-500">ISSN {JOURNAL_INFO.issnPrint}</span>
+            <span className="text-gray-300 hidden md:inline">|</span>
+            <button className="hover:text-accent transition-colors flex items-center gap-1" aria-label="Notifications">
+              <Bell className="w-3.5 h-3.5" />
+            </button>
+            <span className="text-gray-300">|</span>
+            <button className="hover:text-accent transition-colors flex items-center gap-1">
+              <User className="w-3.5 h-3.5" />
+              <span className="hidden sm:inline">My Account</span>
+            </button>
           </div>
         </div>
       </div>
 
-      {/* Masthead */}
-      <div className="border-b border-border bg-background">
+      {/* === Masthead (AOM-style: logo left, journal title center, search right) === */}
+      <div className="border-b border-gray-200 bg-white">
         <div className="container mx-auto px-4 py-5 flex items-center justify-between gap-6">
+          {/* Logo + journal title */}
           <button
             onClick={() => navigate("home")}
             className="flex items-center gap-4 text-left group"
@@ -95,19 +106,13 @@ export function Header() {
               width={56}
               height={56}
             />
-            <div className="hidden sm:block">
+            <div>
               <h1 className="font-serif text-2xl sm:text-3xl font-bold text-primary leading-tight tracking-tight">
                 Journal of Economic Research
               </h1>
-              <p className="font-sans text-xs sm:text-sm text-muted-foreground mt-1">
-                Hanyang University · Seoul, Republic of Korea
+              <p className="font-sans text-xs sm:text-sm text-gray-500 mt-1">
+                Published by the Department of Economics · Hanyang University, Seoul
               </p>
-            </div>
-            <div className="sm:hidden">
-              <h1 className="font-serif text-lg font-bold text-primary leading-tight">
-                Journal of Economic Research
-              </h1>
-              <p className="font-sans text-[10px] text-muted-foreground">Hanyang University · Seoul</p>
             </div>
           </button>
 
@@ -116,15 +121,15 @@ export function Header() {
             <div className="relative">
               <Input
                 type="search"
-                placeholder="Search articles, authors, keywords…"
+                placeholder="Search this journal…"
                 value={searchQuery}
                 onChange={(e) => setSearchQuery(e.target.value)}
-                className="w-72 pl-9 bg-card border-border font-sans text-sm"
+                className="w-72 pl-9 bg-white border-gray-300 font-sans text-sm rounded-sm"
                 aria-label="Search journal articles"
               />
-              <Search className="absolute left-3 top-1/2 -translate-y-1/2 w-4 h-4 text-muted-foreground" />
+              <Search className="absolute left-3 top-1/2 -translate-y-1/2 w-4 h-4 text-gray-400" />
             </div>
-            <Button type="submit" variant="outline" size="sm" className="font-sans">
+            <Button type="submit" size="sm" className="font-sans rounded-sm bg-primary">
               Search
             </Button>
           </form>
@@ -140,10 +145,10 @@ export function Header() {
         </div>
       </div>
 
-      {/* Primary navigation */}
-      <nav className="bg-secondary border-b border-border hidden lg:block">
+      {/* === Secondary navigation bar (AOM-style horizontal nav) === */}
+      <nav className="bg-primary border-b border-primary hidden lg:block">
         <div className="container mx-auto px-4">
-          <ul className="flex items-center justify-center font-sans text-sm">
+          <ul className="flex items-center font-sans text-sm">
             {NAV_ITEMS.map((item) => {
               const isActive = page === item.page;
               if (item.children) {
@@ -152,19 +157,19 @@ export function Header() {
                     <DropdownMenu>
                       <DropdownMenuTrigger asChild>
                         <button
-                          className={`flex items-center gap-1 px-5 py-3.5 hover:bg-accent/10 hover:text-primary transition-colors border-b-2 ${
+                          className={`flex items-center gap-1 px-5 py-3.5 hover:bg-white/10 transition-colors border-b-[3px] ${
                             isActive
-                              ? "border-accent text-primary font-semibold"
-                              : "border-transparent text-foreground"
+                              ? "border-accent text-white font-semibold bg-white/5"
+                              : "border-transparent text-white/95"
                           }`}
                         >
-                          {item.label}
-                          <ChevronDown className="w-3 h-3 opacity-60" />
+                          <span dangerouslySetInnerHTML={{ __html: item.label }} />
+                          <ChevronDown className="w-3 h-3 opacity-70" />
                         </button>
                       </DropdownMenuTrigger>
-                      <DropdownMenuContent align="start" className="w-64">
-                        <DropdownMenuLabel className="font-serif text-sm uppercase tracking-wide text-muted-foreground">
-                          {item.label}
+                      <DropdownMenuContent align="start" className="w-64 rounded-sm">
+                        <DropdownMenuLabel className="font-serif text-sm uppercase tracking-wide text-gray-500">
+                          <span dangerouslySetInnerHTML={{ __html: item.label }} />
                         </DropdownMenuLabel>
                         <DropdownMenuSeparator />
                         {item.children.map((child) => (
@@ -185,13 +190,13 @@ export function Header() {
                 <li key={item.label}>
                   <button
                     onClick={() => navigate(item.page)}
-                    className={`px-5 py-3.5 hover:bg-accent/10 hover:text-primary transition-colors border-b-2 ${
+                    className={`px-5 py-3.5 hover:bg-white/10 transition-colors border-b-[3px] text-white ${
                       isActive
-                        ? "border-accent text-primary font-semibold"
-                        : "border-transparent text-foreground"
+                        ? "border-accent font-semibold bg-white/5"
+                        : "border-transparent"
                     }`}
                   >
-                    {item.label}
+                    <span dangerouslySetInnerHTML={{ __html: item.label }} />
                   </button>
                 </li>
               );
@@ -202,7 +207,7 @@ export function Header() {
 
       {/* Mobile menu */}
       {mobileOpen && (
-        <div className="lg:hidden border-b border-border bg-background">
+        <div className="lg:hidden border-b border-gray-200 bg-white">
           <div className="container mx-auto px-4 py-4">
             <form onSubmit={handleSearch} className="flex items-center gap-2 mb-4">
               <div className="relative flex-1">
@@ -211,11 +216,11 @@ export function Header() {
                   placeholder="Search articles…"
                   value={searchQuery}
                   onChange={(e) => setSearchQuery(e.target.value)}
-                  className="pl-9 bg-card border-border font-sans text-sm"
+                  className="pl-9 bg-white border-gray-300 font-sans text-sm rounded-sm"
                 />
-                <Search className="absolute left-3 top-1/2 -translate-y-1/2 w-4 h-4 text-muted-foreground" />
+                <Search className="absolute left-3 top-1/2 -translate-y-1/2 w-4 h-4 text-gray-400" />
               </div>
-              <Button type="submit" size="sm" className="font-sans">Go</Button>
+              <Button type="submit" size="sm" className="font-sans bg-primary">Go</Button>
             </form>
             <ul className="space-y-1 font-sans">
               {NAV_ITEMS.map((item) => (
@@ -225,11 +230,11 @@ export function Header() {
                       navigate(item.page);
                       setMobileOpen(false);
                     }}
-                    className={`w-full text-left px-3 py-2.5 rounded hover:bg-secondary ${
-                      page === item.page ? "bg-secondary text-primary font-semibold" : "text-foreground"
+                    className={`w-full text-left px-3 py-2.5 rounded-sm hover:bg-gray-100 ${
+                      page === item.page ? "bg-gray-100 text-primary font-semibold" : "text-gray-700"
                     }`}
                   >
-                    {item.label}
+                    <span dangerouslySetInnerHTML={{ __html: item.label }} />
                   </button>
                 </li>
               ))}
