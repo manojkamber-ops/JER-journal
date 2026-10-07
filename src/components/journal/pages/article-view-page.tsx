@@ -1,6 +1,7 @@
 "use client";
 
 import { ARTICLES, JOURNAL_INFO } from "@/data/journal";
+import { SampleTag } from "../article-components";
 import { useEffect } from "react";
 import { useNav } from "../nav-context";
 import { useArticleActions } from "../article-actions";
@@ -97,6 +98,7 @@ export function ArticleViewPage({ articleId }: { articleId: string | null }) {
                 <Badge className="bg-accent text-white hover:bg-accent font-sans text-[10px] uppercase tracking-wider">
                   {article.type}
                 </Badge>
+                <SampleTag article={article} />
                 <span className="font-sans text-xs text-gray-500">
                   Volume {article.volume}, Issue {article.issue} ({article.year}) · pp. {article.pages}
                 </span>

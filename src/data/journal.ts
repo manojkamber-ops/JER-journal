@@ -92,6 +92,8 @@ export type Article = {
   downloads: number;
   pdfSize: string;
   type: "Research Article" | "Review Article" | "Short Communication" | "Editorial";
+  /** false marks a genuine published article; anything else is illustrative sample content (tagged "Sample article"). */
+  sample?: boolean;
   featured?: boolean;
 };
 
@@ -2540,6 +2542,9 @@ for (const [id, refs] of PENDING_REFS) ARTICLES.find((a) => a.id === id)!.refere
 }
 
 /** First page number of an article; roman-numbered front matter (editorials) sorts first as 0. */
+/** True for illustrative sample content; only articles explicitly marked `sample: false` are genuine publications. */
+export const isSampleArticle = (a: Pick<Article, "sample">) => a.sample !== false;
+
 export function pageStart(a: Pick<Article, "pages">) {
   const n = parseInt(a.pages, 10);
   return Number.isFinite(n) ? n : 0;

@@ -64,6 +64,8 @@ export function fromSanityPaper(doc: SanityDoc): PaperSpec | null {
     downloads: doc.downloads ?? 0,
     pdfSize: doc.pdfSize || "1.50 MB",
     type: doc.type || "Research Article",
+    // Papers added in Sanity are genuine publications unless an editor ticks "Sample / demonstration content"
+    sample: doc.sampleContent === true,
     acknowledgments: doc.acknowledgments,
     funding: doc.funding,
     dataAvailability: doc.dataAvailability,

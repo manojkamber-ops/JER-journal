@@ -1,6 +1,6 @@
 // Minimal dependency-free PDF writer for article and issue PDFs.
 // Uses the standard 14 fonts (WinAnsi encoding), so no font embedding is needed.
-import { ARTICLES, JOURNAL_INFO, pageStart, type Article } from "@/data/journal";
+import { ARTICLES, JOURNAL_INFO, isSampleArticle, pageStart, type Article } from "@/data/journal";
 import { formatCitation } from "@/lib/citations";
 import { ARTICLE_BODIES, exhibitTables, type BodyExhibits, type BodyFigure, type BodyTable } from "@/data/article-bodies";
 import { FIGURE_COLORS, figureScale, formatTick } from "@/lib/figures";
@@ -449,6 +449,10 @@ function writeCover(doc: PdfDoc, a: Article) {
   doc.labelledLink(`ISSN: ${JOURNAL_INFO.issnPrint} (Print) ${JOURNAL_INFO.issnOnline} (Online)   Journal homepage: `, base.replace(/^https?:\/\//, ""), `${base}#/home`, 8.5);
   doc.rule(NAVY, 0.8);
   doc.space(8);
+  if (isSampleArticle(a)) {
+    doc.text("SAMPLE ARTICLE — illustrative content, not a peer-reviewed published article", { font: "F2", size: 9, color: GOLD });
+    doc.space(4);
+  }
   doc.text(a.title, { font: "F2", size: 17, color: [0.1, 0.1, 0.1], leading: 22 });
   doc.space(6);
   doc.text(names, { font: "F3", size: 11.5 });
@@ -492,7 +496,7 @@ function writeArticle(doc: PdfDoc, a: Article) {
   doc.text(`${a.year}, VOL. ${a.volume}, NO. ${a.issue}, ${a.pages}`, { font: "F4", size: 7.5, color: GREY, align: "right" });
   doc.text(`https://doi.org/${a.doi}`, { font: "F4", size: 7.5, align: "right", link: doiUrl(a.doi) });
   doc.rule();
-  doc.text(a.type.toUpperCase(), { font: "F2", size: 9, color: GOLD });
+  doc.text((isSampleArticle(a) ? "SAMPLE ARTICLE · " : "") + a.type.toUpperCase(), { font: "F2", size: 9, color: GOLD });
   doc.space(4);
   doc.text(a.title, { font: "F2", size: 17, color: NAVY, leading: 22 });
   doc.space(6);

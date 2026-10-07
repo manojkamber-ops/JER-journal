@@ -5,6 +5,7 @@ import { ARTICLES, CURRENT_ISSUE, pageStart, type Article } from "@/data/journal
 import { ChevronDown, ChevronLeft, ChevronRight, FileText, BookOpen, Download, Lock } from "lucide-react";
 import { useNav } from "../nav-context";
 import { useArticleActions } from "../article-actions";
+import { SampleTag } from "../article-components";
 import { JournalBanner } from "../journal-banner";
 import { issuePdf } from "@/lib/pdf";
 import { formatCitations } from "@/lib/citations";
@@ -208,7 +209,10 @@ function TocItem({ article: a }: { article: Article }) {
   return (
     <div className="border-b border-[#e1e1e1] py-4">
       <div className="flex items-start justify-between gap-3">
-        <span className="inline-block bg-[#9e9e9e] text-white text-[12px] uppercase px-1.5 py-0.5 leading-[18px]">Open Access</span>
+        <span className="flex items-center gap-2">
+          <span className="inline-block bg-[#9e9e9e] text-white text-[12px] uppercase px-1.5 py-0.5 leading-[18px]">Open Access</span>
+          <SampleTag article={a} />
+        </span>
         <span className="text-[14px] uppercase text-black">{monthYear(a.publishedOnline ?? a.published)}</span>
       </div>
       <h5 className="mt-2.5 text-[16px] font-bold leading-snug">

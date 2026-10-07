@@ -67,9 +67,6 @@ export default function RootLayout({
       <body
         className={`${sourceSans.variable} ${geistMono.variable} antialiased bg-background text-foreground`}
       >
-        <div role="note" className="bg-amber-100 text-amber-950 text-center text-[12.5px] sm:text-[13px] font-sans font-semibold px-3 py-1.5 border-b border-amber-300">
-          Demo website with sample content — not an official journal site. Please do not submit manuscripts or payments.
-        </div>
         {children}
         <Toaster />
       </body>

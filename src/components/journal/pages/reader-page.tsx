@@ -13,6 +13,7 @@ import { useNav } from "../nav-context";
 import { useSession } from "../session";
 import { useArticleActions } from "../article-actions";
 import { DoiLink } from "../doi-link";
+import { SampleTag } from "../article-components";
 import {
   DropdownMenu,
   DropdownMenuContent,
@@ -749,6 +750,7 @@ export function ReaderPage({ articleId, defaultView = "epub" }: { articleId: str
                 <p className="mt-8 pb-5 text-center border-b" style={{ fontSize: `min(${settings.size * 2.55}px, 7.2vw)`, letterSpacing: "0.18em", lineHeight: 1.15, borderColor: theme.rule }}>
                   {KICKER[article.type]}
                 </p>
+                <div className="mt-3 text-center"><SampleTag article={article} /></div>
 
                 <h1 className="mt-12 text-center font-bold uppercase leading-snug" style={{ fontSize: settings.size * 1.38 }}>
                   {mark(article.title)}

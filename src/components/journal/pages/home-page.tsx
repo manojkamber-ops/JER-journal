@@ -3,7 +3,7 @@
 import { useNav } from "../nav-context";
 import { useArticleActions } from "../article-actions";
 import { JournalBanner } from "../journal-banner";
-import { ArticleCard } from "../article-components";
+import { ArticleCard, SampleTag } from "../article-components";
 import {
   ARTICLES,
   NEWS_ITEMS,
@@ -113,6 +113,7 @@ export function HomePage() {
                 <Badge variant="outline" className="font-sans text-[10px] uppercase tracking-wide border-accent text-accent">
                   {featuredArticle.type}
                 </Badge>
+                <SampleTag article={featuredArticle} />
                 <span className="font-sans text-xs text-gray-500">
                   pp. {featuredArticle.pages} · {featuredArticle.citations} cited · {featuredArticle.downloads.toLocaleString()} downloads
                 </span>
@@ -524,6 +525,7 @@ function ArticleRankCard({
           <Badge variant="outline" className="font-sans text-[10px] uppercase tracking-wide border-accent text-accent">
             {article.type}
           </Badge>
+          <SampleTag article={article} />
           <span className="font-sans text-[11px] text-gray-500">
             Vol. {article.volume}, No. {article.issue} ({article.year})
           </span>

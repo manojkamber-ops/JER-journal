@@ -1,8 +1,21 @@
 "use client";
 
-import { Article } from "@/data/journal";
+import { Article, isSampleArticle } from "@/data/journal";
 import { useNav } from "./nav-context";
 import { Badge } from "@/components/ui/badge";
+
+/** Small tag shown on illustrative sample articles (nothing is rendered for genuine publications). */
+export function SampleTag({ article, className = "" }: { article: Pick<Article, "sample">; className?: string }) {
+  if (!isSampleArticle(article)) return null;
+  return (
+    <span
+      title="Illustrative sample content, not a peer-reviewed published article"
+      className={`inline-flex items-center rounded-sm border border-amber-400 bg-amber-50 px-1.5 py-0.5 font-sans text-[10px] font-semibold uppercase tracking-wide text-amber-800 ${className}`}
+    >
+      Sample article
+    </span>
+  );
+}
 import { FileText, Download, Quote, ChevronRight, Mail } from "lucide-react";
 
 export function ArticleCard({ article, compact = false }: { article: Article; compact?: boolean }) {
@@ -19,6 +32,7 @@ export function ArticleCard({ article, compact = false }: { article: Article; co
         <Badge variant="outline" className="font-sans text-[10px] uppercase tracking-wide border-accent text-accent">
           {article.type}
         </Badge>
+        <SampleTag article={article} />
         <span className="font-sans text-[11px] text-gray-500">
           Vol. {article.volume}, No. {article.issue} ({article.year}) · pp. {article.pages}
         </span>
@@ -73,6 +87,7 @@ export function ArticleListItem({ article }: { article: Article }) {
         <Badge variant="outline" className="font-sans text-[10px] uppercase tracking-wide border-accent text-accent">
           {article.type}
         </Badge>
+        <SampleTag article={article} />
         <span className="font-sans text-[11px] text-gray-500">
           Vol. {article.volume}, No. {article.issue} · pp. {article.pages}
         </span>
