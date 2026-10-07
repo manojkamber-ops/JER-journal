@@ -1,6 +1,8 @@
 "use client";
 
 import { useNav } from "../nav-context";
+import { useArticleActions } from "../article-actions";
+import { JournalBanner } from "../journal-banner";
 import { ArticleCard } from "../article-components";
 import {
   ARTICLES,
@@ -9,6 +11,7 @@ import {
   JOURNAL_STATS,
   INDEXING_SERVICES,
   EDITORIAL_BOARD,
+  CURRENT_ISSUE,
 } from "@/data/journal";
 import { Button } from "@/components/ui/button";
 import { Badge } from "@/components/ui/badge";
@@ -29,16 +32,21 @@ import {
   Clock,
   Mail,
   MapPin,
+  BadgeCheck,
 } from "lucide-react";
 
 export function HomePage() {
   const { navigate } = useNav();
 
   // Current issue
-  const currentIssueArticles = ARTICLES.filter((a) => a.volume === 30 && a.issue === 3).slice(0, 6);
+  const allCurrent = ARTICLES.filter((a) => a.volume === CURRENT_ISSUE.volume && a.issue === CURRENT_ISSUE.issue);
+  const currentIssueArticles = allCurrent.slice(0, 6);
+  const issueTitle = `Volume ${CURRENT_ISSUE.volume}, Issue ${CURRENT_ISSUE.issue}`;
+  const publishedLabel = new Date(CURRENT_ISSUE.published).toLocaleDateString("en-GB", { day: "numeric", month: "long", year: "numeric" });
 
   // Featured = the new AI paper
-  const featuredArticle = ARTICLES.find((a) => a.id === "2025-v30-i3-10") ?? ARTICLES[0];
+  const featuredArticle = ARTICLES.find((a) => a.id === "2025-v30-i4-01") ?? ARTICLES[0];
+  const featuredActions = useArticleActions(featuredArticle);
 
   // Most recent (latest published, top 6)
   const mostRecent = [...ARTICLES]
@@ -60,55 +68,26 @@ export function HomePage() {
 
   return (
     <div className="bg-background">
-      {/* === Hero: journal cover (left) + featured article (right) — AOM-style === */}
+      <JournalBanner />
+
+      {/* === Featured article === */}
       <section className="border-b border-gray-200 bg-white">
         <div className="container mx-auto px-4 py-10">
           <div className="grid lg:grid-cols-12 gap-10 items-start">
-            {/* Left: journal cover */}
-            <div className="lg:col-span-3">
-              <div className="text-center">
-                <img
-                  src="/jer-cover.svg"
-                  alt="Journal of Economic Research — Volume 30, Issue 3 cover"
-                  className="w-full max-w-[260px] mx-auto shadow-xl rounded-sm border border-gray-200"
-                  width={260}
-                  height={354}
-                />
-                <div className="mt-4 space-y-2">
-                  <Button
-                    size="sm"
-                    onClick={() => navigate("current-issue")}
-                    className="font-sans w-full bg-primary text-white hover:bg-primary/90 rounded-sm"
-                  >
-                    View Current Issue
-                    <ArrowRight className="w-3.5 h-3.5 ml-1.5" />
-                  </Button>
-                  <Button
-                    size="sm"
-                    variant="outline"
-                    onClick={() => navigate("archive")}
-                    className="font-sans w-full rounded-sm"
-                  >
-                    View All Issues
-                  </Button>
-                </div>
-              </div>
-            </div>
-
             {/* Right: Featured Article + abstract preview */}
-            <div className="lg:col-span-9">
+            <div className="lg:col-span-12">
               <div className="flex items-center gap-2 mb-3">
                 <span className="font-sans text-[11px] uppercase tracking-widest text-accent font-semibold">
                   Featured Article
                 </span>
                 <span className="text-gray-300">·</span>
                 <span className="font-sans text-[11px] text-gray-500">
-                  Volume 30, Issue 3 (October 2025)
+                  {issueTitle} ({CURRENT_ISSUE.label})
                 </span>
               </div>
 
               <button
-                onClick={() => navigate("article", { articleId: featuredArticle.id })}
+                onClick={() => navigate("reader", { articleId: featuredArticle.id })}
                 className="text-left group block w-full"
               >
                 <h1 className="font-serif text-2xl sm:text-3xl lg:text-4xl font-bold text-primary leading-tight mb-3 group-hover:text-accent transition-colors">
@@ -144,7 +123,7 @@ export function HomePage() {
 
               <div className="flex flex-wrap gap-3">
                 <Button
-                  onClick={() => navigate("article", { articleId: featuredArticle.id })}
+                  onClick={() => navigate("reader", { articleId: featuredArticle.id })}
                   className="font-sans bg-primary text-white hover:bg-primary/90 rounded-sm"
                 >
                   Read Article
@@ -152,6 +131,7 @@ export function HomePage() {
                 </Button>
                 <Button
                   variant="outline"
+                  onClick={featuredActions.downloadPdf}
                   className="font-sans rounded-sm"
                 >
                   <Download className="w-4 h-4 mr-2" />
@@ -159,6 +139,7 @@ export function HomePage() {
                 </Button>
                 <Button
                   variant="outline"
+                  onClick={featuredActions.cite}
                   className="font-sans rounded-sm"
                 >
                   <Quote className="w-4 h-4 mr-2" />
@@ -197,10 +178,10 @@ export function HomePage() {
           <div className="flex items-end justify-between mb-6 border-b border-gray-200 pb-3">
             <div>
               <h2 className="font-serif text-2xl font-bold text-primary">
-                Current Issue — Volume 30, Issue 3
+                Current Issue — {issueTitle}
               </h2>
               <p className="font-sans text-sm text-gray-500 mt-1">
-                Published 15 October 2025 · 10 articles · ISSN 1226-4261
+                Published {publishedLabel} · {allCurrent.length} articles · ISSN {JOURNAL_INFO.issnPrint}
               </p>
             </div>
             <Button
@@ -279,7 +260,7 @@ export function HomePage() {
                 {latestNews.map((item) => (
                   <article
                     key={item.id}
-                    onClick={() => navigate("news")}
+                    onClick={() => navigate("news", { anchor: `news-${item.id}` })}
                     className="border-l-2 border-accent pl-4 py-1 hover:bg-gray-50 cursor-pointer transition-colors"
                   >
                     <div className="flex items-center gap-2 mb-1">
@@ -363,13 +344,12 @@ export function HomePage() {
 
             <div className="lg:col-span-2 grid sm:grid-cols-2 gap-4">
               {[
-                { title: "Macroeconomics &amp; Monetary Policy", desc: "Monetary transmission, fiscal policy, exchange rates, financial stability.", icon: "📈" },
-                { title: "Applied Microeconomics", desc: "Labour, industrial organisation, education, health, household behaviour.", icon: "🔬" },
-                { title: "Development &amp; International Economics", desc: "Trade, growth, inequality, place-based policy, field experiments.", icon: "🌍" },
-                { title: "Financial Economics &amp; Climate Finance", desc: "Banking, asset pricing, household finance, climate-risk integration.", icon: "🏦" },
+                { title: "Macroeconomics &amp; Monetary Policy", desc: "Monetary transmission, fiscal policy, exchange rates, financial stability." },
+                { title: "Applied Microeconomics", desc: "Labour, industrial organisation, education, health, household behaviour." },
+                { title: "Development &amp; International Economics", desc: "Trade, growth, inequality, place-based policy, field experiments." },
+                { title: "Financial Economics &amp; Climate Finance", desc: "Banking, asset pricing, household finance, climate-risk integration." },
               ].map((area) => (
                 <div key={area.title} className="bg-gray-50 border border-gray-200 rounded-sm p-4 hover:border-accent transition-colors">
-                  <div className="text-xl mb-1.5" aria-hidden>{area.icon}</div>
                   <h3 className="font-serif text-sm font-semibold text-primary mb-1" dangerouslySetInnerHTML={{ __html: area.title }} />
                   <p className="font-serif text-xs leading-relaxed text-gray-700" dangerouslySetInnerHTML={{ __html: area.desc }} />
                 </div>
@@ -394,7 +374,7 @@ export function HomePage() {
             <Button
               size="lg"
               onClick={() => navigate("submission")}
-              className="font-sans bg-accent text-accent-foreground hover:bg-accent/90 rounded-sm"
+              className="font-sans bg-white text-primary hover:bg-white/90 rounded-sm"
             >
               <Send className="w-4 h-4 mr-2" />
               Submit your manuscript
@@ -403,9 +383,10 @@ export function HomePage() {
               size="lg"
               variant="outline"
               onClick={() => navigate("author-guidelines")}
-              className="font-sans border-white/40 text-white hover:bg-white/10 rounded-sm"
+              className="font-sans rounded-sm border-white/70 bg-transparent text-white shadow-none transition-colors duration-200 hover:bg-white hover:text-primary hover:border-white focus-visible:ring-white/50"
             >
               Author Guidelines
+              <ArrowRight className="w-4 h-4" />
             </Button>
           </div>
         </div>
@@ -450,16 +431,23 @@ export function HomePage() {
               Indexed In
             </h2>
           </div>
-          <div className="flex flex-wrap items-center justify-center gap-2 max-w-4xl mx-auto">
+          <div className="flex flex-wrap items-stretch justify-center gap-3 max-w-4xl mx-auto">
             {INDEXING_SERVICES.map((svc) => (
-              <span
+              <div
                 key={svc.name}
-                className="font-sans text-xs px-3 py-1.5 bg-gray-100 border border-gray-200 rounded-sm text-gray-700"
+                className="flex items-center gap-2.5 font-sans text-sm px-4 py-2.5 bg-gray-50 border border-gray-200 rounded-sm text-gray-700"
               >
-                {svc.name}
-              </span>
+                <BadgeCheck className="w-4 h-4 text-accent flex-shrink-0" aria-hidden />
+                <span>
+                  <span className="font-semibold text-primary">{svc.name}</span>
+                  <span className="text-gray-500"> · {svc.badge}</span>
+                </span>
+              </div>
             ))}
           </div>
+          <p className="mt-4 text-center font-sans text-xs text-gray-500">
+            ISSN {JOURNAL_INFO.issnPrint} (print) · eISSN {JOURNAL_INFO.issnOnline} (online)
+          </p>
         </div>
       </section>
 
@@ -526,7 +514,7 @@ function ArticleRankCard({
   return (
     <article
       className="bg-white border border-gray-200 rounded-sm p-4 hover:border-accent hover:shadow-md transition-all cursor-pointer relative"
-      onClick={() => navigate("article", { articleId: article.id })}
+      onClick={() => navigate("reader", { articleId: article.id })}
     >
       <div className="absolute -top-2 -left-2 w-7 h-7 rounded-full bg-accent text-white font-serif text-sm font-bold flex items-center justify-center shadow">
         {rank}

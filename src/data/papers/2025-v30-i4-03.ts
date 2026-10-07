@@ -1,0 +1,375 @@
+// Vol. 30, No. 4 (October 2025) — full research paper (sample content).
+import type { PaperSpec } from "../paper-spec";
+
+export const paper: PaperSpec = {
+  id: "2025-v30-i4-03",
+  title: "Minimum Wage Hikes and Small-Business Employment: Evidence from Korea's 2018–2019 Increases",
+  authors: [{ name: "Dong-Hyun Kwon", corresponding: true }],
+  abstract:
+    "Korea raised its minimum wage by 16.4 percent in 2018 and by a further 10.9 percent in 2019, among the largest increases in any high-income economy in recent decades. This paper estimates the effects on small businesses using administrative employment-insurance records for establishments with fewer than 30 employees, exploiting variation in the bite of the increases across 229 municipalities and 19 industries. Following the bunching approach of Cengiz et al. (2019), I compare the number of jobs below and just above the new minimum in high- and low-bite cells. Jobs paying below the new minimum fell by 4.1 percent of pre-reform small-business employment, while jobs at and just above it rose by 3.3 percent, implying a net loss of 0.8 percent and an own-wage employment elasticity of −0.36. Adjustment also took place through hours, which fell by 2.9 percent for affected workers, and through establishment exit, which rose by 1.1 percentage points in the highest-bite quartile. Restaurant prices rose by 2.6 percent more in high-bite regions. Net job losses were about two-thirds smaller where take-up of the Job Stability Fund wage subsidy was high, suggesting that temporary subsidies cushioned the transition.",
+  keywords: ["Minimum wage", "Small business", "Employment", "Bunching", "Korea"],
+  jelCodes: ["J23", "J38", "L26"],
+  pages: "513–542",
+  volume: 30,
+  issue: 4,
+  year: 2025,
+  received: "2024-10-07",
+  accepted: "2025-06-09",
+  published: "2025-10-15",
+  publishedOnline: "2025-10-02",
+  citations: 5,
+  downloads: 853,
+  pdfSize: "1.55 MB",
+  type: "Research Article",
+  acknowledgments:
+    "I thank seminar participants at Sungkyunkwan University, the Korea Labor Institute and the Hanyang University labour economics workshop, two anonymous referees and the handling editor for helpful comments. Financial support from the National Research Foundation of Korea is gratefully acknowledged. All errors are my own.",
+  dataAvailability:
+    "Employment-insurance records are available to approved researchers through the Korea Employment Information Service under a confidentiality agreement; the author cannot redistribute them. Consumer price data are publicly available from Statistics Korea. Code and aggregated cell-level data sufficient to reproduce the tables are available from the author.",
+  refs: [
+    /* 1 */ "Card, D., & Krueger, A. B. (1994). Minimum wages and employment: A case study of the fast-food industry in New Jersey and Pennsylvania. American Economic Review, 84(4), 772–793.",
+    /* 2 */ "Card, D., & Krueger, A. B. (1995). Myth and measurement: The new economics of the minimum wage. Princeton University Press.",
+    /* 3 */ "Cengiz, D., Dube, A., Lindner, A., & Zipperer, B. (2019). The effect of minimum wages on low-wage jobs. Quarterly Journal of Economics, 134(3), 1405–1454.",
+    /* 4 */ "Harasztosi, P., & Lindner, A. (2019). Who pays for the minimum wage? American Economic Review, 109(8), 2693–2727.",
+    /* 5 */ "Dube, A., Lester, T. W., & Reich, M. (2010). Minimum wage effects across state borders: Estimates using contiguous counties. Review of Economics and Statistics, 92(4), 945–964.",
+    /* 6 */ "Neumark, D., & Wascher, W. L. (2008). Minimum wages. MIT Press.",
+    /* 7 */ "Meer, J., & West, J. (2016). Effects of the minimum wage on employment dynamics. Journal of Human Resources, 51(2), 500–522.",
+    /* 8 */ "Draca, M., Machin, S., & Van Reenen, J. (2011). Minimum wages and firm profitability. American Economic Journal: Applied Economics, 3(1), 129–151.",
+    /* 9 */ "Aaronson, D. (2001). Price pass-through and the minimum wage. Review of Economics and Statistics, 83(1), 158–169.",
+    /* 10 */ "Dustmann, C., Lindner, A., Schönberg, U., Umkehrer, M., & vom Berge, P. (2022). Reallocation effects of the minimum wage. Quarterly Journal of Economics, 137(1), 267–328.",
+    /* 11 */ "Manning, A. (2003). Monopsony in motion: Imperfect competition in labor markets. Princeton University Press.",
+    /* 12 */ "Manning, A. (2021). The elusive employment effect of the minimum wage. Journal of Economic Perspectives, 35(1), 3–26.",
+    /* 13 */ "Clemens, J., & Wither, M. (2019). The minimum wage and the Great Recession: Evidence of effects on the employment and income trajectories of low-skilled workers. Journal of Public Economics, 170, 53–67.",
+    /* 14 */ "Jardim, E., Long, M. C., Plotnick, R., van Inwegen, E., Vigdor, J., & Wething, H. (2022). Minimum-wage increases and low-wage employment: Evidence from Seattle. American Economic Journal: Economic Policy, 14(2), 263–314.",
+    /* 15 */ "Lee, D. S. (1999). Wage inequality in the United States during the 1980s: Rising dispersion or falling minimum wage? Quarterly Journal of Economics, 114(3), 977–1023.",
+    /* 16 */ "Autor, D. H., Manning, A., & Smith, C. L. (2016). The contribution of the minimum wage to US wage inequality over three decades: A reassessment. American Economic Journal: Applied Economics, 8(1), 58–99.",
+    /* 17 */ "Callaway, B., & Sant'Anna, P. H. C. (2021). Difference-in-differences with multiple time periods. Journal of Econometrics, 225(2), 200–230.",
+    /* 18 */ "Engbom, N., & Moser, C. (2022). Earnings inequality and the minimum wage: Evidence from Brazil. American Economic Review, 112(12), 3803–3847.",
+    /* 19 */ "Derenoncourt, E., & Montialoux, C. (2021). Minimum wages and racial inequality. Quarterly Journal of Economics, 136(1), 169–228.",
+    /* 20 */ "DiNardo, J., Fortin, N. M., & Lemieux, T. (1996). Labor market institutions and the distribution of wages, 1973–1992: A semiparametric approach. Econometrica, 64(5), 1001–1044.",
+    /* 21 */ "Allegretto, S. A., Dube, A., & Reich, M. (2011). Do minimum wages really reduce teen employment? Accounting for heterogeneous trends and state panel data. Industrial Relations, 50(2), 205–240.",
+    /* 22 */ "Giuliano, L. (2013). Minimum wage effects on employment, substitution, and the teenage labor supply: Evidence from personnel data. Journal of Labor Economics, 31(1), 155–194.",
+    /* 23 */ "Goodman-Bacon, A. (2021). Difference-in-differences with variation in treatment timing. Journal of Econometrics, 225(2), 254–277.",
+    /* 24 */ "Machin, S., Manning, A., & Rahman, L. (2003). Where the minimum wage bites hard: Introduction of minimum wages to a low wage sector. Journal of the European Economic Association, 1(1), 154–180.",
+    /* 25 */ "Aaronson, D., French, E., Sorkin, I., & To, T. (2018). Industry dynamics and the minimum wage: A putty-clay approach. International Economic Review, 59(1), 51–84.",
+    /* 26 */ "Sorkin, I. (2015). Are there long-run effects of the minimum wage? Review of Economic Dynamics, 18(2), 306–333.",
+    /* 27 */ "Azar, J., Huet-Vaughn, E., Marinescu, I., Taska, B., & von Wachter, T. (2024). Minimum wage employment effects and labour market concentration. Review of Economic Studies, 91(4), 1843–1883.",
+    /* 28 */ "Neumark, D., Salas, J. M. I., & Wascher, W. (2014). Revisiting the minimum wage–employment debate: Throwing out the baby with the bathwater? ILR Review, 67(3 suppl), 608–648.",
+  ],
+  body: [
+    {
+      id: "introduction",
+      heading: "1. Introduction",
+      paragraphs: [
+        "In July 2017 Korea's Minimum Wage Commission approved a 16.4 percent increase in the hourly minimum wage for 2018, raising it from KRW 6,470 to KRW 7,530. A year later it approved a further 10.9 percent increase, to KRW 8,350 for 2019. Over two years the nominal minimum rose by 29 percent, and the ratio of the minimum to the median wage climbed from about 0.53 to 0.63, one of the highest levels in the OECD. The increases were part of the government's income-led growth agenda and were intended as steps towards a minimum of KRW 10,000. They provoked an intense public debate about their effects on small businesses — restaurants, convenience stores, beauty salons and small manufacturers — which employ the majority of minimum-wage workers and which owners argued could not absorb labour cost increases of this size.",
+        "This paper provides evidence on that debate using administrative employment-insurance records covering the near-universe of establishments with fewer than 30 employees. The size and speed of the Korean increases make them an unusually informative episode. Most of the evidence on minimum wages comes from increases of a few percent in the United States [1][5][3] or from countries with lower bites, while recent studies of large increases have focused on Hungary [4], Germany [10] and individual US cities [14]. The Korean increases combined a large nationwide change with substantial geographic and sectoral variation in its bite, because wages differ widely between Seoul and rural provinces and between, for example, manufacturing and accommodation and food services.",
+        "My empirical strategy follows the bunching approach of {3}. Rather than relating total employment to the minimum wage, I estimate how the number of jobs in narrow wage bins around the new minimum changed in municipality-industry cells where the increase bit hard, relative to cells where it bit less. Jobs paying below the new minimum must either disappear or be moved up to at least the minimum; comparing the missing jobs below the new minimum with the excess jobs at and just above it gives a transparent estimate of net employment effects that is concentrated where effects should occur. I measure the bite as the share of small-business workers in a cell whose 2017 hourly wage was below the 2018 minimum, which ranges from under 5 percent in finance and professional services in Seoul to over 45 percent in food services in parts of South Jeolla and North Gyeongsang.",
+        "I find that the increases sharply compressed the bottom of the small-business wage distribution with modest net employment losses. In the highest-bite cells, jobs paying below the new minimum fell by 4.1 percent of pre-reform small-business employment, while jobs at and up to KRW 3,000 above the minimum rose by 3.3 percent (Figure 1 and Table 3). The net loss of 0.8 percent of employment, or 4.3 percent of affected jobs, combined with a 12.1 percent increase in the average wage of affected jobs, implies an own-wage employment elasticity of −0.36, larger in magnitude than typical US estimates [3] but within the range found for large increases elsewhere [4][14].",
+        "Employment counts are not the only margin of adjustment. Paid weekly hours of affected workers fell by 2.9 percent, and the share of jobs with contracted hours below 15 per week, which are exempt from Korea's paid weekly holiday allowance, rose by 1.9 percentage points. Establishment exit rose by 1.1 percentage points in the highest-bite quartile, and entry fell. Restaurant prices rose by 2.6 percent more in high-bite regions than in low-bite regions, consistent with substantial pass-through to consumers [9][4]. Finally, the Job Stability Fund, which paid employers KRW 130,000 per month for each eligible low-wage worker, appears to have cushioned the shock: net job losses were about two-thirds smaller in cells with above-median take-up.",
+        "The paper makes three contributions. First, it provides administrative evidence on one of the largest minimum wage increases in a high-income economy, focusing on the small businesses at the centre of the policy debate. Second, it documents how small firms adjusted along multiple margins — hours, exit and prices — that together explain why measured employment effects are modest even when the bite is large. Third, it offers rare evidence on a temporary wage subsidy designed to ease the transition to a higher minimum. The rest of the paper is organised as follows. Section 2 describes the institutional background, Section 3 reviews the literature and Section 4 sets out a conceptual framework. Sections 5 and 6 describe the data and empirical strategy, Section 7 presents the main results, Section 8 examines mechanisms and heterogeneity, Section 9 reports robustness checks and Sections 10 and 11 discuss policy implications and conclude.",
+      ],
+    },
+    {
+      id: "background",
+      heading: "2. Institutional Background",
+      paragraphs: [
+        "Korea's minimum wage is set annually by the Minimum Wage Commission, a tripartite body of nine worker representatives, nine employer representatives and nine public-interest members appointed by the government. The Commission must announce the following year's minimum by early August, and the minimum applies uniformly across regions, industries and firm sizes, with no youth sub-minimum. Table 1 reports the minimum wage between 2014 and 2021. Increases averaged 7.4 percent per year between 2014 and 2017, before jumping to 16.4 percent in 2018 and 10.9 percent in 2019. After evidence of strain among small businesses and a slowdown in employment growth, the Commission approved much smaller increases of 2.9 percent for 2020 and 1.5 percent for 2021.",
+        "Two features of Korean labour law shape how employers adjust. First, workers who work at least 15 hours per week are entitled to a paid weekly holiday allowance (ju-hyu su-dang) equal to one day's wages, which raises the effective hourly cost of a worker by about 20 percent above the statutory minimum. Employers can avoid the allowance by keeping contracted hours below 15 per week, creating an incentive to split jobs into short part-time positions when wages rise. Second, establishments with fewer than five employees are exempt from several provisions of the Labour Standards Act, including overtime premiums and restrictions on dismissal, which gives the smallest firms more flexibility to adjust hours and headcount.",
+        "Recognising the burden on small employers, the government introduced the Job Stability Fund in January 2018. The Fund paid employers with fewer than 30 workers a subsidy of KRW 130,000 per month for each worker earning less than KRW 1.9 million per month, provided the worker was enrolled in employment insurance and the employer complied with the minimum wage. In 2019 the subsidy was raised to KRW 150,000 for firms with fewer than five workers and the earnings ceiling to KRW 2.1 million. Budgeted spending was close to KRW 3 trillion in each year. Because eligibility required employment-insurance enrolment, the Fund also encouraged employers to formalise previously unregistered workers, a feature I return to when discussing measurement in Section 5.",
+      ],
+      tables: [
+        {
+          id: "table-1",
+          caption: "Table 1. The Korean minimum wage, 2014–2021",
+          columns: ["Year", "Hourly minimum (KRW)", "Increase (percent)", "Minimum / median wage", "Small-business workers below new minimum (percent)"],
+          rows: [
+            ["2014", "5,210", "7.2", "0.50", "11.8"],
+            ["2015", "5,580", "7.1", "0.51", "12.1"],
+            ["2016", "6,030", "8.1", "0.52", "12.4"],
+            ["2017", "6,470", "7.3", "0.53", "13.1"],
+            ["2018", "7,530", "16.4", "0.59", "23.6"],
+            ["2019", "8,350", "10.9", "0.63", "19.8"],
+            ["2020", "8,590", "2.9", "0.63", "7.9"],
+            ["2021", "8,720", "1.5", "0.62", "6.2"],
+          ],
+          note: "Note: The minimum-to-median ratio uses the median hourly wage of full-time employees. The final column reports the share of employees in establishments with fewer than 30 workers whose hourly wage in October of the previous year was below the new minimum, computed from employment-insurance records.",
+        },
+      ],
+    },
+    {
+      id: "literature",
+      heading: "3. Related Literature",
+      paragraphs: [
+        "The employment effects of minimum wages remain among the most studied and contested questions in labour economics. Early case-study evidence found no reduction in fast-food employment after a minimum wage increase in New Jersey [1][2], challenging the competitive model's prediction of job losses. A large subsequent literature using state-level panel variation reached mixed conclusions, with some studies finding significant disemployment effects for teenagers and low-skilled workers [6][28] and others finding small or zero effects once regional trends are controlled for [5][21]. Studies using personnel data from individual firms find little evidence of employment reductions [22], while studies emphasising dynamics find effects on employment growth rather than levels [7] and on the income trajectories of low-skilled workers [13].",
+        "The bunching approach of {3} reframed the debate by focusing directly on jobs near the minimum. Using 138 state-level increases in the United States, they found that the number of jobs paying below the new minimum fell by almost exactly as much as the number of jobs paying at or just above it rose, implying negligible net employment effects. {4} studied a near doubling of the Hungarian minimum wage and found small employment losses, with most of the cost passed on to consumers through higher prices. {10} showed that Germany's 2015 introduction of a national minimum wage reallocated workers from small, low-paying firms to larger, more productive ones without reducing aggregate employment. In contrast, {14} found that Seattle's increase to USD 13 reduced hours in low-wage jobs enough to lower total payroll for low-wage workers, and {24} found employment and hours reductions when the British minimum wage was introduced in the care-home sector.",
+        "Several strands of work explain why measured employment effects can be small. Monopsony models imply that a moderate minimum can raise employment where employers have wage-setting power [11][12], and {27} show that employment effects are more positive in concentrated labour markets. Price pass-through allows firms to shift costs to consumers [9][4], while reductions in profits absorb part of the cost in other settings [8]. Putty-clay models predict that employment adjusts slowly through exit and entry rather than immediately [25][26]. A related literature documents the large effects of minimum wages on wage inequality, both in the United States [15][20][16][19] and in Brazil [18].",
+        "Evidence on Korea's 2018–2019 increases is so far limited to government reports and studies using survey data, which have reached conflicting conclusions partly because surveys are too small to measure effects in narrow wage bins and because the Job Stability Fund changed incentives to report employment. This paper contributes administrative evidence at the cell level, an explicit treatment of the Fund and evidence on margins of adjustment beyond employment counts.",
+      ],
+    },
+    {
+      id: "framework",
+      heading: "4. Conceptual Framework",
+      paragraphs: [
+        "To guide the empirical analysis, consider a small employer that produces a non-tradable service using labour of different wage levels. When the minimum rises, workers previously paid below the new minimum must either receive a wage increase to at least the minimum or lose their jobs. In a competitive labour market, the employer reduces employment of affected workers until their marginal revenue product equals the new minimum; the size of the reduction depends on the elasticity of demand for the firm's output, the share of affected labour in costs and the substitutability of affected labour with capital and other workers. If the employer has wage-setting power, as in monopsony models [11], a moderate increase can leave employment unchanged or even raise it, because the minimum removes the incentive to restrict hiring in order to hold wages down.",
+        "The framework yields four predictions that the data can discriminate between. First, the number of jobs below the new minimum should fall sharply in high-bite cells, while jobs at and just above the minimum should rise; the difference between these changes measures the net employment effect [3]. Second, if employers face fixed costs per worker, such as the weekly holiday allowance, they may adjust hours rather than headcount, and the intensive margin may account for much of the response. Third, in competitive markets with free entry, higher labour costs reduce the profitability of marginal establishments, so exit should rise and entry fall, especially for the smallest and least productive firms [10][25]. Fourth, where demand for output is inelastic and competitors face the same cost shock, firms can pass a large share of the cost increase on to consumers through prices [9][4].",
+        "A temporary wage subsidy such as the Job Stability Fund lowers the effective cost of affected workers and should attenuate employment losses, particularly at the smallest firms where the subsidy covered a larger share of the cost increase. For a full-time worker paid the 2018 minimum, the increase raised monthly labour costs by roughly KRW 220,000, of which the KRW 130,000 subsidy offset about 60 percent. Because the subsidy was explicitly temporary, however, forward-looking employers might have treated it as a transfer rather than a permanent reduction in labour costs, in which case it would affect exit decisions more than hiring.",
+      ],
+    },
+    {
+      id: "data",
+      heading: "5. Data",
+      paragraphs: [],
+      subsections: [
+        {
+          id: "data-ei",
+          heading: "5.1 Employment-Insurance Records",
+          paragraphs: [
+            "The main data source is the employment-insurance database maintained by the Korea Employment Information Service, which records every employment spell covered by employment insurance, together with the establishment's location, industry and size. Since 2011, employers have reported each insured worker's monthly remuneration and contracted weekly hours, from which I compute hourly wages. I use October snapshots for 2014 through 2020 and restrict attention to establishments with fewer than 30 employees, matching the eligibility threshold of the Job Stability Fund. The resulting sample contains about 1.9 million establishments and 7.6 million jobs per year.",
+            "I aggregate jobs into cells defined by the 229 municipalities (si-gun-gu) and 19 industry sections of the Korean Standard Industrial Classification, which yields 3,986 cells with at least 20 small-business workers in 2017. Within each cell I count jobs in KRW 500 hourly wage bins relative to the new minimum in each year, following {3}. Hourly wages include the weekly holiday allowance where it applies, since the Ministry of Employment and Labour's compliance rules count it towards the minimum. I deflate wage bins using the national consumer price index so that bins above the minimum are comparable over time.",
+          ],
+        },
+        {
+          id: "data-bite",
+          heading: "5.2 Measuring the Bite",
+          paragraphs: [
+            "The bite of the 2018 increase in cell c is the share of small-business workers whose October 2017 hourly wage was below KRW 7,530. Table 2 summarises cells by tercile of the bite. The average bite is 23.6 percent, ranging from 9.8 percent in the lowest tercile to 39.4 percent in the highest. High-bite cells are concentrated in accommodation and food services, retail, personal services and small manufacturing outside the capital region; they have smaller establishments, a higher share of female and older workers and lower average wages. Importantly, employment growth in 2015–2017 was similar across terciles, at between 3.1 and 3.4 percent per year, which supports a comparison between them.",
+            "Because the bite is defined using pre-reform wages, it is not affected by employer responses to the increase. It does, however, reflect the level of local wages, which might be correlated with other shocks affecting low-wage labour markets. I address this concern by including flexible controls for region-specific and industry-specific trends and by examining pre-reform trends in each wage bin, which should show no differential changes before 2018 if the design is valid.",
+          ],
+          tables: [
+            {
+              id: "table-2",
+              caption: "Table 2. Small-business cells by tercile of the minimum wage bite, 2017",
+              columns: ["Variable", "Low bite", "Middle bite", "High bite", "All"],
+              rows: [
+                ["Bite (share below KRW 7,530, percent)", "9.8", "21.5", "39.4", "23.6"],
+                ["Mean hourly wage (KRW)", "13,420", "10,860", "8,910", "11,060"],
+                ["Mean establishment size (workers)", "6.8", "5.1", "3.9", "5.3"],
+                ["Female share (percent)", "41.2", "50.6", "61.3", "51.0"],
+                ["Share aged 60 and over (percent)", "9.4", "13.8", "19.7", "14.3"],
+                ["Part-time share (percent)", "11.6", "18.9", "31.2", "20.6"],
+                ["Food services and retail share (percent)", "12.4", "34.7", "58.1", "35.1"],
+                ["Employment growth 2015–2017 (percent per year)", "3.4", "3.2", "3.1", "3.2"],
+                ["Cells", "1,329", "1,329", "1,328", "3,986"],
+              ],
+              note: "Note: Cells are municipality-by-industry combinations with at least 20 workers in establishments with fewer than 30 employees. Statistics are employment-weighted. The difference in employment growth between high- and low-bite cells is not statistically significant at the 10 percent level.",
+            },
+          ],
+        },
+        {
+          id: "data-other",
+          heading: "5.3 Prices, Firm Dynamics and the Job Stability Fund",
+          paragraphs: [
+            "Establishment entry and exit are measured from the employment-insurance establishment register, where an exit is defined as an establishment that reports no insured workers for twelve consecutive months. Prices come from the micro data underlying the consumer price index, which record the prices of 460 items in 40 cities; I focus on restaurant meals and on goods sold in small retail outlets, and aggregate item prices to city-level indices weighted by expenditure shares. Take-up of the Job Stability Fund is measured from administrative records of subsidy payments, aggregated to the cell level as the share of eligible workers for whom a subsidy was paid in 2018.",
+            "A measurement concern arises because eligibility for the Fund required employment-insurance enrolment. If high-bite employers enrolled previously unregistered workers to claim the subsidy, measured employment would rise mechanically in high-bite cells, biasing estimated job losses towards zero. I address this in three ways: by restricting the sample to workers enrolled before 2018, by comparing results with employment counts from the National Tax Service's wage-withholding records, which are less affected by the Fund, and by examining the evolution of new enrolments of workers with long prior tenure at the same establishment, which signal formalisation rather than hiring.",
+          ],
+        },
+      ],
+    },
+    {
+      id: "strategy",
+      heading: "6. Empirical Strategy",
+      paragraphs: [],
+      subsections: [
+        {
+          id: "strategy-bunching",
+          heading: "6.1 Bunching Estimator",
+          paragraphs: [
+            "Let E_cwt denote the number of jobs in cell c, wage bin w and year t, normalised by total small-business employment in the cell in 2017. I estimate regressions of the form E_cwt = Σ_k β_k · (Bite_c × Post_t × 1[w = k]) + α_cw + δ_wt + γ_rwt + θ_iwt + ε_cwt, where Post_t equals one in 2018 and 2019, α_cw are cell-by-bin fixed effects, δ_wt are bin-by-year fixed effects, and γ_rwt and θ_iwt are province-by-bin-by-year and industry-section-by-bin-by-year fixed effects. Wage bins are defined relative to the new minimum in each year. The coefficients β_k measure the change in employment in bin k per unit of bite; I rescale them to report effects for a cell at the mean of the highest bite tercile relative to one at the mean of the lowest.",
+            "The missing jobs below the new minimum are Δb = Σ_{k<0} β_k, and the excess jobs at and above it are Δa = Σ_{k=0}^{K} β_k, where K is an upper limit beyond which the minimum is assumed to have no effect. I set K to KRW 3,000, which corresponds to about the 40th percentile of the 2017 small-business wage distribution; Section 9 shows that results are similar with alternative limits. The net employment effect is Δb + Δa, and the change in the average wage of affected jobs follows from the employment-weighted change in wages in bins below K.",
+          ],
+        },
+        {
+          id: "strategy-identification",
+          heading: "6.2 Identification and Inference",
+          paragraphs: [
+            "The key identifying assumption is that, in the absence of the increases, the distribution of jobs across wage bins in high-bite cells would have evolved in parallel with that in low-bite cells after controlling for province and industry shocks. Because all cells were treated at the same time, the design does not suffer from the problems with staggered adoption identified by {23} and {17}; the treatment is continuous, and the comparison is between cells with different intensities. I test the parallel-trends assumption by estimating bin-specific coefficients for each pre-reform year, normalised to zero in 2017.",
+            "Standard errors are clustered at the municipality level, allowing for arbitrary correlation across industries and years within a municipality. I also report wild cluster bootstrap confidence intervals, which give similar inference. Regressions are weighted by 2017 cell employment so that estimates represent the average small-business worker. To compute the own-wage elasticity, I divide the percentage change in affected employment, defined as jobs below K, by the percentage change in their average wage, and obtain confidence intervals using the delta method.",
+          ],
+        },
+      ],
+    },
+    {
+      id: "results",
+      heading: "7. Results",
+      paragraphs: [],
+      subsections: [
+        {
+          id: "results-bunching",
+          heading: "7.1 Jobs Below and Above the New Minimum",
+          paragraphs: [
+            "Figure 1 shows the estimated changes in employment by wage bin, pooling 2018 and 2019, for a high-bite cell relative to a low-bite cell. The pattern closely resembles that found by {3} and {4}. Employment in each bin below the new minimum fell, with the largest declines in the two bins immediately below it, where most affected workers were initially paid. Employment rose sharply in the bin at the new minimum and in the next two bins above it, and the effects fade to zero by about KRW 2,000 above the minimum, indicating limited spillovers higher up the distribution. Estimates for 2015–2016 relative to 2017, reported in Appendix A, show no comparable pattern before the reform.",
+            "Table 3 summarises the estimates. Pooling the two years, jobs below the new minimum fell by 4.10 percent of pre-reform small-business employment, while jobs at and up to KRW 3,000 above it rose by 3.30 percent. The net change of −0.80 percent is statistically significant at the 5 percent level. Relative to the 18.5 percent of employment in affected jobs, the net loss is 4.3 percent, while the average wage of affected jobs rose by 12.1 percent, implying an own-wage employment elasticity of −0.36 with a 95 percent confidence interval from −0.70 to −0.02.",
+            "The effects were larger in 2018 than in 2019. The 2018 increase destroyed 0.62 percent of employment on net, while the cumulative effect by 2019 was 0.80 percent, so the second increase added smaller losses despite being only somewhat smaller in percentage terms. One explanation is that the most vulnerable jobs and establishments had already been eliminated by the first increase; another is that the Job Stability Fund became more widely used in 2019, as take-up rose from 63 to 79 percent of eligible workers.",
+            "The magnitude of the net effect deserves interpretation. An elasticity of −0.36 implies that for every 10 percent increase in the wages of affected workers, about 3.6 percent of affected jobs were lost. This is larger than the near-zero elasticities in the US bunching evidence [3] and in Germany [10], but smaller than the elasticity implied by the Seattle hours results [14] and similar to the Hungarian estimate [4]. Given that the Korean bite was much larger than in typical US increases, finding effects of this size is consistent with the view that employment losses grow as the minimum moves further into the wage distribution [12].",
+          ],
+          figures: [
+            {
+              id: "figure-1",
+              caption: "Figure 1. Change in small-business jobs by wage bin relative to the new minimum, 2018–2019",
+              kind: "line",
+              xLabels: ["−2,500", "−2,000", "−1,500", "−1,000", "−500", "0", "+500", "+1,000", "+1,500", "+2,000", "+2,500", "+3,000"],
+              yLabel: "Change in jobs (% of 2017 employment)",
+              series: [
+                {
+                  name: "Estimate",
+                  values: [-0.21, -0.48, -0.93, -1.36, -1.12, 1.48, 0.92, 0.51, 0.24, 0.09, -0.04, 0.1],
+                  lower: [-0.39, -0.71, -1.22, -1.71, -1.44, 1.11, 0.61, 0.25, 0.01, -0.12, -0.25, -0.12],
+                  upper: [-0.03, -0.25, -0.64, -1.01, -0.8, 1.85, 1.23, 0.77, 0.47, 0.3, 0.17, 0.32],
+                },
+              ],
+              marker: 4,
+              note: "Note: Each point is the change in jobs in a KRW 500 hourly wage bin, relative to the new minimum, for a cell at the mean of the highest bite tercile relative to one at the mean of the lowest, as a percentage of 2017 small-business employment. Bars show 95 percent confidence intervals clustered by municipality. The dashed line marks the new minimum wage.",
+            },
+          ],
+          tables: [
+            {
+              id: "table-3",
+              caption: "Table 3. Bunching estimates of the employment effects of the minimum wage increases",
+              columns: ["", "2018", "2019 (cumulative)", "Pooled 2018–2019"],
+              rows: [
+                ["Missing jobs below new minimum (Δb, percent)", "−3.52***", "−4.47***", "−4.10***"],
+                ["", "(0.41)", "(0.52)", "(0.44)"],
+                ["Excess jobs at and above new minimum (Δa, percent)", "2.90***", "3.67***", "3.30***"],
+                ["", "(0.37)", "(0.49)", "(0.40)"],
+                ["Net employment change (Δb + Δa, percent)", "−0.62*", "−0.80*", "−0.80**"],
+                ["", "(0.34)", "(0.43)", "(0.39)"],
+                ["Change in average wage of affected jobs (percent)", "8.9***", "13.6***", "12.1***"],
+                ["Own-wage employment elasticity", "−0.38", "−0.32", "−0.36"],
+                ["95 percent confidence interval", "[−0.79, 0.03]", "[−0.66, 0.02]", "[−0.70, −0.02]"],
+                ["Observations (cell × bin × year)", "334,824", "334,824", "382,656"],
+              ],
+              note: "Note: Effects are for a cell at the mean of the highest bite tercile relative to one at the mean of the lowest, expressed as a percentage of 2017 small-business employment. Standard errors clustered by municipality in parentheses. * p < 0.10, ** p < 0.05, *** p < 0.01.",
+            },
+          ],
+        },
+        {
+          id: "results-intensive",
+          heading: "7.2 Hours and Job Composition",
+          paragraphs: [
+            "Table 4 examines adjustment on other margins. Among workers employed in the same establishment in October 2017 and October 2019, contracted weekly hours fell by 1.1 hours, or 2.9 percent, in high-bite relative to low-bite cells. The share of jobs with fewer than 15 contracted hours per week rose by 1.9 percentage points, from a base of 7.4 percent, consistent with employers avoiding the weekly holiday allowance. Because hours fell, the increase in monthly earnings of affected workers, at 9.0 percent, was smaller than the increase in their hourly wage.",
+            "The composition of employment also changed. The share of workers aged 15–24 in high-bite cells fell by 1.2 percentage points and the share aged 60 and over rose by 0.8 percentage points, suggesting that employers substituted towards older workers, many of whom combined part-time work with pension income. The female share was unchanged. I find no evidence that employers substituted towards workers with more education, which may reflect the limited scope for upgrading in the low-skill service jobs that dominate high-bite cells.",
+          ],
+          tables: [
+            {
+              id: "table-4",
+              caption: "Table 4. Effects on hours, earnings and the composition of employment",
+              columns: ["Outcome", "Estimate", "Std. error", "Pre-reform mean"],
+              rows: [
+                ["Weekly contracted hours (stayers)", "−1.1***", "(0.24)", "37.9"],
+                ["Log weekly hours (stayers)", "−0.029***", "(0.006)", ""],
+                ["Share of jobs under 15 hours (pp)", "1.9***", "(0.42)", "7.4"],
+                ["Log hourly wage of affected workers", "0.121***", "(0.011)", ""],
+                ["Log monthly earnings of affected workers", "0.090***", "(0.013)", ""],
+                ["Share aged 15–24 (pp)", "−1.2**", "(0.51)", "12.9"],
+                ["Share aged 60 and over (pp)", "0.8**", "(0.37)", "14.3"],
+                ["Female share (pp)", "0.2", "(0.44)", "51.0"],
+              ],
+              note: "Note: Difference-in-differences estimates for 2019 relative to 2017, comparing cells at the mean of the highest and lowest bite terciles, with province-by-year and industry-by-year fixed effects. Standard errors clustered by municipality in parentheses. pp = percentage points. ** p < 0.05, *** p < 0.01.",
+            },
+          ],
+        },
+        {
+          id: "results-firms",
+          heading: "7.3 Establishment Exit, Entry and Prices",
+          paragraphs: [
+            "The first panel of Table 5 reports effects on establishment dynamics. In the highest-bite quartile, the annual exit rate of small establishments rose by 1.1 percentage points relative to the lowest quartile, an increase of 8.6 percent over a base rate of 12.8 percent. The entry rate fell by 0.7 percentage points. Exits were concentrated among establishments with fewer than five workers and among establishments less than three years old, consistent with putty-clay models in which the least productive and newest firms adjust first [25]. Jobs lost through exit account for about half of the net employment decline, with the remainder reflecting reductions at continuing establishments.",
+            "The second panel reports effects on prices. Restaurant prices rose by 2.6 percent more over 2017–2019 in cities in the top half of the bite distribution than in the bottom half. With a labour cost share of about 30 percent in Korean restaurants and an estimated 9.6 percent increase in the average wage bill of high-bite restaurants relative to low-bite ones, full pass-through would imply a price increase of about 2.9 percent, so the estimate implies pass-through of roughly 90 percent of the cost increase. This is in line with US evidence on restaurant prices [9] and with the Hungarian finding that consumers bore most of the cost [4]. The effect on prices of goods in small retail outlets was smaller and not statistically significant, consistent with competition from large chains and online retailers, which were less affected by the increases.",
+          ],
+          tables: [
+            {
+              id: "table-5",
+              caption: "Table 5. Effects on establishment dynamics and consumer prices",
+              columns: ["Outcome", "Estimate", "Std. error", "Pre-reform mean"],
+              rows: [
+                ["Panel A. Establishment dynamics (top vs bottom bite quartile)", "", "", ""],
+                ["Exit rate, all small establishments (pp)", "1.1***", "(0.31)", "12.8"],
+                ["Exit rate, fewer than five workers (pp)", "1.6***", "(0.40)", "14.9"],
+                ["Exit rate, 5–29 workers (pp)", "0.3", "(0.27)", "7.1"],
+                ["Entry rate (pp)", "−0.7**", "(0.29)", "14.2"],
+                ["Panel B. Prices, 2017–2019 (high vs low bite cities)", "", "", ""],
+                ["Restaurant meals (log)", "0.026***", "(0.008)", ""],
+                ["Small retail goods (log)", "0.009", "(0.007)", ""],
+                ["Implied pass-through, restaurants (share of cost increase)", "0.90", "(0.28)", ""],
+              ],
+              note: "Note: Panel A reports annual rates averaged over 2018–2019 relative to 2015–2017; Panel B uses city-level price indices for 40 cities. Standard errors clustered by municipality (Panel A) or city (Panel B) in parentheses. pp = percentage points. ** p < 0.05, *** p < 0.01.",
+            },
+          ],
+        },
+      ],
+    },
+    {
+      id: "mechanisms",
+      heading: "8. Mechanisms and Heterogeneity",
+      paragraphs: [
+        "Figure 2 reports net employment effects for subgroups of cells. Losses were concentrated among the smallest establishments: in cells dominated by establishments with one to four workers, net employment fell by 1.6 percent, compared with 0.9 percent for five to nine workers and 0.2 percent for 10 to 29 workers. This gradient is consistent with the German evidence that minimum wages reallocate workers from small, low-productivity firms to larger ones [10]. Indeed, I find that workers who left high-bite establishments with fewer than five employees were more likely than comparable workers in low-bite cells to be re-employed within a year at establishments with 10 or more employees.",
+        "The most striking heterogeneity concerns the Job Stability Fund. Splitting cells at the median of 2018 take-up, net employment fell by only 0.4 percent in high take-up cells, compared with 1.3 percent in low take-up cells. Take-up is not randomly assigned: it was higher where employers already had experience with employment insurance and where local employment offices conducted outreach. To address this, I instrument take-up with the pre-reform share of eligible workers already enrolled in employment insurance, which affected the administrative cost of applying but is unlikely to have affected employment responses directly once the bite is controlled for. The instrumented estimate implies that raising take-up from the 25th to the 75th percentile reduced net job losses by 0.6 percentage points, about two-thirds of the average loss.",
+        "Effects also varied with local labour market conditions. In municipalities with higher concentration of small-business employment among a few large employers, net employment effects were close to zero, consistent with the monopsony evidence of {27}. In tourism-dependent municipalities such as Jeju and parts of Gangwon, where demand fell in 2017 following a decline in Chinese visitors, losses were larger, which suggests that employment effects depend on the demand environment in which an increase occurs, a point also emphasised by {13}.",
+      ],
+      figures: [
+        {
+          id: "figure-2",
+          caption: "Figure 2. Net employment effects by establishment size and Job Stability Fund take-up",
+          kind: "bar",
+          xLabels: ["1–4 workers", "5–9 workers", "10–29 workers", "High JSF take-up", "Low JSF take-up"],
+          yLabel: "Net employment change (%)",
+          series: [{ name: "Estimate", values: [-1.6, -0.9, -0.2, -0.4, -1.3] }],
+          note: "Note: Net change in jobs up to KRW 3,000 above the new minimum, pooled 2018–2019, for cells at the mean of the highest bite tercile relative to the lowest, as a percentage of 2017 employment. JSF = Job Stability Fund; take-up groups split at the median share of eligible workers subsidised in 2018.",
+        },
+      ],
+    },
+    {
+      id: "robustness",
+      heading: "9. Robustness",
+      paragraphs: [
+        "Table 6 reports a range of robustness checks on the net employment effect. Restricting the sample to workers enrolled in employment insurance before 2018, which removes any mechanical increase from formalisation induced by the Job Stability Fund, raises the estimated net loss slightly to 0.94 percent. Using employment counts from wage-withholding tax records yields a similar estimate of 0.86 percent. These results indicate that formalisation biased the baseline estimates modestly towards zero, but not by enough to change the conclusions.",
+        "The results are also robust to the choice of the upper limit K, to excluding the capital region, to using municipality-level rather than cell-level bites and to dropping accommodation and food services, the most affected sector. Adding cell-specific linear trends estimated on 2014–2017, in the spirit of {21}, changes the net estimate little. A placebo test that assigns the 2018 increase to 2016 yields a net effect of 0.05 percent, close to zero. Finally, using larger establishments with 30 to 99 workers, which were ineligible for the Job Stability Fund but subject to the same minimum, gives a larger net loss of 1.12 percent, consistent with the role of the subsidy, although these establishments also differ in other respects.",
+      ],
+      tables: [
+        {
+          id: "table-6",
+          caption: "Table 6. Robustness of the net employment effect",
+          columns: ["Specification", "Net change (percent)", "Std. error", "Own-wage elasticity"],
+          rows: [
+            ["Baseline (pooled 2018–2019)", "−0.80**", "(0.39)", "−0.36"],
+            ["Workers enrolled before 2018 only", "−0.94**", "(0.41)", "−0.42"],
+            ["Wage-withholding tax records", "−0.86**", "(0.42)", "−0.39"],
+            ["Upper limit K = KRW 2,000", "−0.92**", "(0.37)", "−0.40"],
+            ["Upper limit K = KRW 4,000", "−0.71*", "(0.42)", "−0.33"],
+            ["Excluding the capital region", "−0.83**", "(0.41)", "−0.37"],
+            ["Municipality-level bite", "−0.74*", "(0.43)", "−0.33"],
+            ["Excluding accommodation and food services", "−0.66*", "(0.38)", "−0.31"],
+            ["Cell-specific linear trends", "−0.77*", "(0.44)", "−0.35"],
+            ["Placebo: reform assigned to 2016", "0.05", "(0.31)", ""],
+            ["Establishments with 30–99 workers", "−1.12***", "(0.40)", "−0.47"],
+          ],
+          note: "Note: Each row is a separate bunching regression. Standard errors clustered by municipality in parentheses. * p < 0.10, ** p < 0.05, *** p < 0.01.",
+        },
+      ],
+    },
+    {
+      id: "discussion",
+      heading: "10. Discussion and Policy Implications",
+      paragraphs: [
+        "The results suggest that the costs of Korea's 2018–2019 increases were real but more modest than the most pessimistic claims at the time. Applying the pooled estimates to total employment in small establishments implies a net loss of roughly 60,000 to 90,000 jobs relative to the counterfactual, compared with about 2.6 million small-business workers who received a wage increase. Combined with the hours reductions, total paid hours of affected workers fell by about 7 percent, while their hourly wages rose by 12 percent, so their aggregate earnings rose. These findings echo the broader conclusion that minimum wages raise the earnings of low-wage workers as a group, with employment costs concentrated among a minority [3][12].",
+        "Three lessons emerge for the design of minimum wage policy. First, the speed of increases matters. The larger losses in 2018 than in 2019 per unit of wage increase, and the concentration of exits among the newest and smallest establishments, suggest that rapid increases give firms little time to adjust through price changes and reorganisation. Phasing in increases more gradually, as Germany did after 2015 [10], could reduce transition costs. Second, features of the wider labour code, such as the 15-hour threshold for the weekly holiday allowance, create incentives for adjustment through job splitting that can undermine the intended gains for workers. Aligning such thresholds with the minimum wage would reduce these distortions.",
+        "Third, temporary subsidies can cushion the shock. The Job Stability Fund appears to have reduced job losses substantially at a cost of about KRW 3 trillion per year, or roughly KRW 1.2 million per subsidised worker annually. Whether it was cost-effective depends on how many jobs it preserved permanently rather than delayed the loss of; my estimates suggest that cells with high take-up did not experience catch-up job losses in 2020 when the subsidy was scaled back, but the 2020 data are affected by the COVID-19 pandemic and should be interpreted cautiously. Debates about regionally differentiated minimum wages, which Korea's Commission has repeatedly considered, could also draw on these findings: the large differences in bite across regions translated into larger effects in lower-wage regions, but regional differentiation would raise difficult questions of fairness and administration.",
+      ],
+    },
+    {
+      id: "conclusion",
+      heading: "11. Conclusion",
+      paragraphs: [
+        "This paper has used administrative employment-insurance records to study the effects of Korea's 2018–2019 minimum wage increases on small businesses. Using a bunching estimator that exploits variation in the bite across municipalities and industries, I find that the increases sharply compressed the bottom of the wage distribution with net employment losses of 0.8 percent of small-business employment, an own-wage elasticity of −0.36. Small businesses also adjusted by reducing hours, splitting jobs to avoid the weekly holiday allowance, exiting and raising prices. The Job Stability Fund substantially cushioned the transition.",
+        "Future research could extend the analysis in several directions. Linking employment-insurance records to firm financial statements would show how much of the cost was absorbed by profits [8]. Following displaced workers over longer horizons would reveal whether reallocation towards larger firms raised their long-run earnings, as in Germany [10]. And comparing the Korean experience with subsequent increases elsewhere would help to establish how the employment effects of minimum wages depend on their level relative to the wage distribution.",
+      ],
+    },
+    {
+      id: "appendix",
+      heading: "Appendix A. Pre-Reform Trends and Construction of Wage Bins",
+      paragraphs: [
+        "Pre-reform trends. Estimating the bunching regression with bin-specific coefficients for 2015 and 2016, relative to 2017, yields missing-job estimates of −0.12 percent (standard error 0.29) and −0.08 percent (0.27) and excess-job estimates of 0.09 percent (0.26) and 0.11 percent (0.24), none statistically significant. The pattern of bin-level coefficients shows no systematic decline below the future minimum or increase above it, supporting the parallel-trends assumption.",
+        "Hourly wages. Hourly wages are computed as monthly remuneration divided by monthly paid hours, where monthly paid hours equal contracted weekly hours multiplied by 4.345, plus paid weekly holiday hours for workers contracted for at least 15 hours per week. This matches the Ministry of Employment and Labour's method for assessing compliance, under which a full-time worker's monthly minimum in 2018 was KRW 1,573,770 for 209 paid hours.",
+        "Wage bins. Bins are KRW 500 wide and defined relative to the minimum in force in each year. Bins below KRW 2,500 under the new minimum are pooled. Bins above the minimum are deflated to 2017 prices so that a bin at a given distance above the minimum corresponds to the same real wage gap in each year. Jobs with computed hourly wages below 50 percent of the minimum, which typically reflect reporting errors in hours, are dropped; they account for 0.6 percent of jobs.",
+      ],
+    },
+  ],
+};

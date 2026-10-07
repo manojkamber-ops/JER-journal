@@ -1,18 +1,12 @@
 import type { Metadata } from "next";
-import { Inter, Source_Serif_4, Geist_Mono } from "next/font/google";
+import { Source_Sans_3, Geist_Mono } from "next/font/google";
 import "./globals.css";
 import { Toaster } from "@/components/ui/toaster";
 
-const inter = Inter({
-  variable: "--font-inter",
+const sourceSans = Source_Sans_3({
+  variable: "--font-source-sans",
   subsets: ["latin"],
-  display: "swap",
-});
-
-const sourceSerif = Source_Serif_4({
-  variable: "--font-source-serif",
-  subsets: ["latin"],
-  weight: ["400", "500", "600", "700"],
+  weight: ["400", "600", "700"],
   style: ["normal", "italic"],
   display: "swap",
 });
@@ -26,7 +20,7 @@ const geistMono = Geist_Mono({
 export const metadata: Metadata = {
   title: "Journal of Economic Research | Hanyang University, Seoul",
   description:
-    "The Journal of Economic Research is a peer-reviewed, open-access economics journal published by the Department of Economics at Hanyang University, Seoul. ISSN 1226-4261. Indexed in Scopus, KCI, EconLit, EBSCO and DOAJ. ABDC rating: B.",
+    "The Journal of Economic Research is a peer-reviewed, open-access economics journal published by the Department of Economics at Hanyang University, Seoul. ISSN 1226-4261, eISSN 2713-6418. ABDC rating B (Applied Economics); KCI-listed.",
   keywords: [
     "Journal of Economic Research",
     "Hanyang University",
@@ -37,15 +31,19 @@ export const metadata: Metadata = {
     "open access economics",
     "ABDC B journal",
     "ISSN 1226-4261",
+    "eISSN 2713-6418",
+    "KCI",
   ],
   authors: [{ name: "Hanyang University, Department of Economics" }],
   icons: {
-    icon: "/logo.svg",
+    icon: [{ url: "/favicon.svg", type: "image/svg+xml" }],
+    shortcut: "/favicon.svg",
+    apple: "/jer-logo.svg",
   },
   openGraph: {
     title: "Journal of Economic Research — Hanyang University, Seoul",
     description:
-      "Peer-reviewed, open-access economics journal. ISSN 1226-4261. ABDC rating: B. Published by Hanyang University, Seoul.",
+      "Peer-reviewed, open-access economics journal. ISSN 1226-4261 · eISSN 2713-6418. ABDC rating B (Applied Economics); KCI-listed. Published by Hanyang University, Seoul.",
     url: "https://jer.hanyang.ac.kr",
     siteName: "Journal of Economic Research",
     type: "website",
@@ -65,7 +63,7 @@ export default function RootLayout({
   return (
     <html lang="en" suppressHydrationWarning>
       <body
-        className={`${inter.variable} ${sourceSerif.variable} ${geistMono.variable} antialiased bg-background text-foreground`}
+        className={`${sourceSans.variable} ${geistMono.variable} antialiased bg-background text-foreground`}
       >
         {children}
         <Toaster />

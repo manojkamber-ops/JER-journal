@@ -1,0 +1,375 @@
+// Vol. 26, No. 3 (July 2021) — full research paper (sample content).
+import type { PaperSpec } from "../paper-spec";
+
+export const paper: PaperSpec = {
+  id: "2021-v26-i3-03",
+  title: "Online Learning and Educational Inequality during School Closures: Evidence from Korean Panel Data",
+  authors: [{ name: "Hong-Mei Wang" }, { name: "Ji-Yeon Park", corresponding: true }],
+  abstract:
+    "In April 2020 Korean schools moved entirely online for the first time. We study how this shift affected learning and educational inequality using a panel of 5,800 middle-school students with test scores and household information collected before and after the closures. Comparing score growth in 2020 with growth for earlier cohorts of the same schools, we estimate an average learning loss of 0.11 standard deviations in mathematics and 0.07 standard deviations in Korean language. Losses were 0.19 standard deviations for students without their own device or a quiet place to study, but negligible for students from the top income quintile. Spending on private tutoring rose among higher-income households and accounts for about a third of the widening gap. The results indicate that remote schooling amplified existing inequalities and that targeted catch-up support is warranted.",
+  keywords: ["School closures", "Online learning", "Educational inequality", "COVID-19", "Private tutoring"],
+  jelCodes: ["I21", "I24", "J24"],
+  pages: "301–330",
+  volume: 26,
+  issue: 3,
+  year: 2021,
+  received: "2020-12-14",
+  accepted: "2021-05-03",
+  published: "2021-07-15",
+  publishedOnline: "2021-07-02",
+  citations: 32,
+  downloads: 2970,
+  pdfSize: "1.55 MB",
+  type: "Research Article",
+  acknowledgments:
+    "We thank the participating schools, students and parents, seminar participants at Hanyang University and the Korean Educational Development Institute, two anonymous referees and the handling editor for helpful comments.",
+  dataAvailability:
+    "The student panel data are confidential and were accessed under an agreement with the administering education office; researchers may apply for access through the same office. Code is available from the corresponding author.",
+  refs: [
+    /* 1 */ "Kuhfeld, M., Soland, J., Tarasawa, B., Johnson, A., Ruzek, E., & Liu, J. (2020). Projecting the potential impact of COVID-19 school closures on academic achievement. Educational Researcher, 49(8), 549–565.",
+    /* 2 */ "Hanushek, E. A., & Woessmann, L. (2020). The economic impacts of learning losses. OECD Education Working Papers No. 225. Paris: OECD Publishing.",
+    /* 3 */ "Cooper, H., Nye, B., Charlton, K., Lindsay, J., & Greathouse, S. (1996). The effects of summer vacation on achievement test scores: A narrative and meta-analytic review. Review of Educational Research, 66(3), 227–268.",
+    /* 4 */ "Bacher-Hicks, A., Goodman, J., & Mulhern, C. (2021). Inequality in household adaptation to schooling shocks: Covid-induced online learning engagement in real time. Journal of Public Economics, 193, 104345.",
+    /* 5 */ "Fairlie, R. W., & Robinson, J. (2013). Experimental evidence on the effects of home computers on academic achievement among schoolchildren. American Economic Journal: Applied Economics, 5(3), 211–240.",
+    /* 6 */ "Heckman, J. J. (2006). Skill formation and the economics of investing in disadvantaged children. Science, 312(5782), 1900–1902.",
+    /* 7 */ { jer: "2021-v26-i3-01" },
+    /* 8 */ "Engzell, P., Frey, A., & Verhagen, M. D. (2021). Learning loss due to school closures during the COVID-19 pandemic. Proceedings of the National Academy of Sciences, 118(17), e2022376118.",
+    /* 9 */ "Andrew, A., Cattan, S., Costa Dias, M., Farquharson, C., Kraftman, L., Krutikova, S., Phimister, A., & Sevilla, A. (2020). Inequalities in children's experiences of home learning during the COVID-19 lockdown in England. Fiscal Studies, 41(3), 653–683.",
+    /* 10 */ "Chetty, R., Friedman, J. N., Hendren, N., Stepner, M., & The Opportunity Insights Team. (2020). The economic impacts of COVID-19: Evidence from a new public database built using private sector data. NBER Working Paper No. 27431. Cambridge, MA: National Bureau of Economic Research.",
+    /* 11 */ "Alexander, K. L., Entwisle, D. R., & Olson, L. S. (2007). Lasting consequences of the summer learning gap. American Sociological Review, 72(2), 167–180.",
+    /* 12 */ "Downey, D. B., von Hippel, P. T., & Broh, B. A. (2004). Are schools the great equalizer? Cognitive inequality during the summer months and the school year. American Sociological Review, 69(5), 613–635.",
+    /* 13 */ "Lavy, V. (2015). Do differences in schools' instruction time explain international achievement gaps? Evidence from developed and developing countries. Economic Journal, 125(588), F397–F424.",
+    /* 14 */ "Pischke, J.-S. (2007). The impact of length of the school year on student performance and earnings: Evidence from the German short school years. Economic Journal, 117(523), 1216–1242.",
+    /* 15 */ "Jaume, D., & Willén, A. (2019). The long-run effects of teacher strikes: Evidence from Argentina. Journal of Labor Economics, 37(4), 1097–1139.",
+    /* 16 */ "Bettinger, E. P., Fox, L., Loeb, S., & Taylor, E. S. (2017). Virtual classrooms: How online college courses affect student success. American Economic Review, 107(9), 2855–2875.",
+    /* 17 */ "Figlio, D., Rush, M., & Yin, L. (2013). Is it live or is it internet? Experimental estimates of the effects of online instruction on student learning. Journal of Labor Economics, 31(4), 763–784.",
+    /* 18 */ "Malamud, O., & Pop-Eleches, C. (2011). Home computer use and the development of human capital. Quarterly Journal of Economics, 126(2), 987–1027.",
+    /* 19 */ "Vigdor, J. L., Ladd, H. F., & Martinez, E. (2014). Scaling the digital divide: Home computer technology and student achievement. Economic Inquiry, 52(3), 1103–1119.",
+    /* 20 */ "Kim, S., & Lee, J.-H. (2010). Private tutoring and demand for education in South Korea. Economic Development and Cultural Change, 58(2), 259–296.",
+    /* 21 */ "Bray, M. (1999). The Shadow Education System: Private Tutoring and Its Implications for Planners. Paris: UNESCO International Institute for Educational Planning.",
+    /* 22 */ "Cunha, F., & Heckman, J. (2007). The technology of skill formation. American Economic Review, 97(2), 31–47.",
+    /* 23 */ "Todd, P. E., & Wolpin, K. I. (2003). On the specification and estimation of the production function for cognitive achievement. Economic Journal, 113(485), F3–F33.",
+    /* 24 */ "Chetty, R., Friedman, J. N., & Rockoff, J. E. (2014). Measuring the impacts of teachers I: Evaluating bias in teacher value-added estimates. American Economic Review, 104(9), 2593–2632.",
+    /* 25 */ "Guryan, J., Hurst, E., & Kearney, M. (2008). Parental education and parental time with children. Journal of Economic Perspectives, 22(3), 23–46.",
+    /* 26 */ "Azevedo, J. P., Hasan, A., Goldemberg, D., Iqbal, S. A., & Geven, K. (2020). Simulating the potential impacts of COVID-19 school closures on schooling and learning outcomes: A set of global estimates. Policy Research Working Paper No. 9284. Washington, DC: World Bank.",
+    /* 27 */ "Banerjee, A. V., Cole, S., Duflo, E., & Linden, L. (2007). Remedying education: Evidence from two randomized experiments in India. Quarterly Journal of Economics, 122(3), 1235–1264.",
+    /* 28 */ "Kraft, M. A. (2020). Interpreting effect sizes of education interventions. Educational Researcher, 49(4), 241–253.",
+  ],
+  body: [
+    {
+      id: "introduction",
+      heading: "1. Introduction",
+      paragraphs: [
+        "School closures during the COVID-19 pandemic interrupted the education of more than a billion students worldwide. Early projections, based mainly on evidence on summer learning loss, suggested that closures would cause large learning losses, particularly in mathematics, and widen gaps between students from advantaged and disadvantaged families [1][3][26]. Because skills acquired at school are strongly associated with later earnings and with economic growth, such losses could have lasting economic consequences [2]. Evidence on actual learning outcomes, however, has only begun to emerge, and almost all of it comes from the United States and Europe [8].",
+        "Korea offers an informative test case. In April 2020, after delaying the start of the school year by more than a month, Korean schools moved entirely online for the first time, using a national platform and broadcast lessons. The transition took place in a country with near-universal broadband access, high rates of computer ownership, a well-resourced public school system and teachers who were quickly trained to deliver online classes. If remote schooling widened learning gaps even in such favourable conditions, the concern is likely to be greater in countries with weaker infrastructure.",
+        "We use a panel of 5,800 students in 120 middle schools observed before and after the closures to measure learning losses and their distribution. The panel combines standardised mathematics and Korean language tests administered each autumn with student and parent questionnaires on devices, study space, parental work arrangements and spending on private tutoring. We compare score growth between autumn 2019 and autumn 2020 with score growth for earlier cohorts in the same schools, in a value-added framework that controls for prior achievement and student characteristics.",
+        "We find an average learning loss of 0.11 standard deviations in mathematics and 0.07 standard deviations in Korean language — roughly equivalent to a third of a school year of typical progress in mathematics for students of this age. Losses are highly unequal. Students without their own device or a quiet place to study lost 0.19 standard deviations in mathematics, and students from the bottom income quintile lost 0.17, while losses for students in the top income quintile were negligible.",
+        "Private tutoring helps explain the widening gap. Monthly spending on private tutoring rose by 18 percent in the top income quintile but fell in the bottom quintile, and controlling for changes in tutoring reduces the income gradient in learning loss by about a third. Differences in engagement with online classes and in parental supervision account for much of the remainder. Our results indicate that remote schooling amplified existing inequalities and that catch-up support targeted at students with poor home learning environments is warranted.",
+        "Section 2 describes the Korean context and Section 3 reviews related literature. Section 4 presents a framework, Section 5 the data and Section 6 the empirical strategy. Section 7 reports the main results, Section 8 examines mechanisms, Section 9 presents robustness checks, Section 10 discusses implications and Section 11 concludes.",
+      ],
+    },
+    {
+      id: "background",
+      heading: "2. School Closures in Korea",
+      paragraphs: [
+        "The Korean school year normally begins in early March. In 2020 the start was postponed three times as COVID-19 cases rose, and on 9 April schools began a phased move to online classes, starting with the final grades of middle and high school and extending to all grades by 20 April. Lessons combined real-time video classes, pre-recorded content and assignments delivered through national learning platforms, supplemented by educational broadcasting on television. Schools lent devices to students who lacked them, and mobile carriers waived data charges for educational sites.",
+        "From late May, students returned to school in rotation. To limit density, middle schools in the capital region operated with no more than one-third of students on site at any time, and schools elsewhere with no more than two-thirds, with the remaining students learning online. Strict limits were reimposed in late August and again in December as infection rates rose. Over the 2020 school year, the typical middle-school student in our sample spent about 60 percent of school days learning remotely.",
+        "Private tutoring plays an unusually large role in Korean education [20][21]. In 2019 about 70 percent of middle-school students attended private academies (hagwon) or received private tutoring, with spending strongly increasing in household income. Private academies were subject to intermittent closures in 2020, but many moved online or offered small-group and individual instruction, and higher-income households could also substitute private tutors for academies. This made private tutoring a potentially important channel through which household resources could offset — or fail to offset — the loss of school instruction.",
+        "Teachers' readiness for remote instruction varied considerably. Although the government provided training and guidance on online platforms, many teachers relied mainly on pre-recorded content and assignments during the first months, and real-time interactive classes became common only in the second semester. Surveys of teachers conducted by education authorities in 2020 reported that a majority were concerned about widening gaps between students, particularly those who lacked parental support at home. These features suggest that the quality of remote instruction improved over the year but remained below that of in-person instruction, especially for students who needed individual attention.",
+      ],
+    },
+    {
+      id: "literature",
+      heading: "3. Related Literature",
+      paragraphs: [
+        "Our paper contributes to a rapidly growing literature on the effects of pandemic school closures. Using national assessment data from the Netherlands, Engzell, Frey and Verhagen {8} find a learning loss of about 3 percentile points after an eight-week closure, equivalent to a fifth of a school year, with losses up to 60 percent larger among students from less-educated homes. Time-use evidence from England shows that children from better-off families spent more time on home learning and had better access to resources [9]. Real-time data show that online learning engagement rose much more in high-income areas of the United States [4], and that participation in an online mathematics programme fell sharply in low-income areas [10].",
+        "A second literature studies the effects of lost instruction time more generally. Summer vacations reduce achievement, particularly in mathematics, and widen gaps by family income in reading [3][11][12]. Cross-country evidence shows that instruction time has substantial effects on achievement [13], while evidence from German short school years suggests that some effects may fade [14]. Teacher strikes in Argentina reduced students' later earnings [15], indicating that the consequences of lost schooling can be long-lasting.",
+        "A third literature studies online instruction and home technology. Online college courses reduce student performance relative to in-person courses [16], and live instruction yields modestly better outcomes than internet-based instruction, particularly for lower-achieving students [17]. Providing home computers has small or even negative effects on achievement [5][18][19], highlighting that how technology is used matters more than access alone. Finally, a large literature emphasises that early gaps in skills tend to persist and compound [6][22], and that parental time with children rises steeply with parental education [25].",
+        "We contribute by providing panel evidence on learning losses from a country with a well-prepared transition to remote schooling, by documenting how home learning environments shaped losses and by quantifying the role of private tutoring — a channel of particular importance in East Asia [20][21]. Our results also relate to evidence in this issue on how family circumstances shape mothers' labour supply [7], since parental time became an important input during closures.",
+      ],
+    },
+    {
+      id: "framework",
+      heading: "4. Conceptual Framework",
+      paragraphs: [
+        "We frame learning as the output of a cumulative production function in which achievement at the end of a school year depends on achievement at the beginning of the year and on inputs received during the year, including school instruction, parental time, private tutoring and the home learning environment [22][23]. School closures reduced the quantity and, plausibly, the effectiveness of school instruction. How much this lowered learning depended on the extent to which other inputs substituted for school instruction.",
+        "This framework yields three predictions. First, the average student should experience a learning loss, larger in subjects that depend more heavily on structured instruction and sequential content, such as mathematics. Second, losses should be larger for students with fewer complementary inputs at home — those without their own device, a quiet place to study or a parent available to supervise. Third, households with greater resources should increase purchased inputs such as private tutoring, offsetting part of the loss and widening gaps by income.",
+        "The framework also suggests that the effects of closures may differ from those of summer vacations. During closures, students were expected to keep learning, and the effectiveness of remote instruction depended on students' ability to engage with it. Students who lacked devices or study space may therefore have lost more than during a comparable period of vacation, while well-supported students may have lost little.",
+        "Finally, the framework highlights the role of private tutoring as a purchased input that is particularly important in Korea [20][21]. Because tutoring can partly substitute for school instruction, an increase in tutoring among higher-income households during the closures would offset part of their children's learning loss, while a decline among lower-income households would amplify losses. The net effect of the closures on inequality therefore depends both on differences in home learning environments and on the responses of households with different resources, which we examine in Section 8.",
+      ],
+    },
+    {
+      id: "data",
+      heading: "5. Data",
+      paragraphs: [],
+      subsections: [
+        {
+          id: "data-panel",
+          heading: "5.1 Student Panel",
+          paragraphs: [
+            "Our data come from a longitudinal study of middle-school students administered by a metropolitan office of education. The study follows students in 120 randomly selected middle schools from the first to the third year of middle school (grades 7 to 9). Each autumn, students take standardised tests in mathematics and Korean language that are vertically scaled and equated across years using common items, and students and parents complete questionnaires. The tests are low-stakes and are administered in school by external proctors.",
+            "Our treated cohort consists of 5,800 students who were in grade 7 in 2019 and grade 8 in 2020, and who took the tests in both autumn 2019 and autumn 2020. Our comparison cohorts consist of 11,300 students in the same schools who progressed from grade 7 to grade 8 in 2017–2018 and 2018–2019. For 96 of the schools, an additional cohort observed in 2016–2017 is available, which we use to examine pre-trends. Scores are standardised using the mean and standard deviation of the grade 8 distribution for the comparison cohorts.",
+            "Attrition from the panel is low. Of the students who took the grade 7 tests in 2019, 94 percent took the grade 8 tests in 2020; most of the remainder had moved to schools outside the study area. Students who left the panel had slightly lower grade 7 scores than those who remained, but the difference is similar to that observed for comparison cohorts, and attrition does not differ significantly by household income or home learning environment. Parent questionnaire response rates were 91 percent in 2019 and 87 percent in 2020.",
+          ],
+        },
+        {
+          id: "data-measures",
+          heading: "5.2 Household Measures",
+          paragraphs: [
+            "Parent questionnaires administered in spring 2019 report household income, parental education, parental employment and monthly spending on private tutoring. Student questionnaires report whether the student has his or her own computer or tablet for study and whether he or she has a quiet place to study at home. Questionnaires in autumn 2020 ask about private tutoring spending, hours of study, engagement with online classes and whether a parent worked from home during the closures. We define students as lacking an adequate home learning environment if they had neither their own device nor a quiet place to study, or lacked either one; 27 percent of students fall into this group.",
+            "Table 1 describes the sample by income quintile. Students in the bottom quintile were much less likely to have their own device or a quiet place to study, received less than a quarter of the private tutoring of top-quintile students and scored 0.82 standard deviations lower in mathematics in 2019. Their parents were also less likely to be able to work from home.",
+          ],
+          tables: [
+            {
+              id: "table-1",
+              caption: "Table 1. Student characteristics, autumn 2019",
+              columns: ["Variable", "Bottom income quintile", "Middle quintiles", "Top income quintile", "All"],
+              rows: [
+                ["Own device for study", "0.71", "0.87", "0.97", "0.86"],
+                ["Quiet place to study", "0.64", "0.81", "0.93", "0.80"],
+                ["Adequate home learning environment", "0.53", "0.74", "0.91", "0.73"],
+                ["Monthly private tutoring (KRW thousand)", "142", "331", "618", "354"],
+                ["Any private tutoring", "0.51", "0.73", "0.89", "0.72"],
+                ["Parent with university degree", "0.24", "0.52", "0.83", "0.53"],
+                ["Parent able to work from home (2020)", "0.11", "0.27", "0.46", "0.28"],
+                ["Mathematics score (standardised)", "−0.38", "0.00", "0.44", "0.00"],
+                ["Korean language score (standardised)", "−0.31", "0.01", "0.35", "0.00"],
+                ["Students", "1,140", "3,490", "1,170", "5,800"],
+              ],
+              note: "Note: Treated cohort (grade 7 in 2019). Adequate home learning environment: student has both own device and quiet place to study. Income quintiles defined over the full sample of households.",
+            },
+          ],
+        },
+      ],
+    },
+    {
+      id: "strategy",
+      heading: "6. Empirical Strategy",
+      paragraphs: [],
+      subsections: [
+        {
+          id: "specification",
+          heading: "6.1 Specification",
+          paragraphs: [
+            "We estimate value-added models of the form A_ist = λ·A_is,t−1 + θ·Post_t + X_i·β + μ_s + ε_ist, where A_ist is the grade 8 score of student i in school s and cohort t, A_is,t−1 is the student's grade 7 score in the same subject, Post_t indicates the 2019–2020 cohort, X_i includes gender, parental education and household income, and μ_s are school fixed effects. The coefficient θ measures the learning loss: the difference between score growth in 2020 and score growth for earlier cohorts with the same prior achievement and characteristics. Standard errors are clustered by school.",
+            "To study heterogeneity, we interact Post_t with indicators for household income quintile and for an adequate home learning environment. Value-added models of this kind have been shown to provide approximately unbiased estimates of the contributions of teachers and schools when they condition on prior achievement [24], and we use them here to account for differences in initial achievement across cohorts and groups.",
+          ],
+        },
+        {
+          id: "identification",
+          heading: "6.2 Identifying Assumption",
+          paragraphs: [
+            "The identifying assumption is that, absent the closures, score growth for the 2020 cohort would have matched that of earlier cohorts with similar prior achievement and characteristics. Table 2 shows that the treated and comparison cohorts are similar in baseline achievement and household characteristics. Score growth was stable across the pre-pandemic cohorts: the estimated cohort effect for 2018–2019 relative to 2017–2018 is 0.01 standard deviations in mathematics and −0.01 in Korean, and similar stability holds within each income quintile and home-environment group.",
+            "A second concern is test participation. Because the 2020 tests were administered in school during a period of rotating attendance, students absent on the test day were tested within two weeks. Test participation was 94 percent in 2020, compared with 95–96 percent for comparison cohorts, and participation did not differ significantly by income. We show in Section 9 that reweighting for attrition does not change the results.",
+          ],
+          tables: [
+            {
+              id: "table-2",
+              caption: "Table 2. Balance between the treated and comparison cohorts",
+              columns: ["Variable", "Comparison cohorts (2017–19)", "Treated cohort (2019–20)", "Difference (s.e.)"],
+              rows: [
+                ["Grade 7 mathematics score", "0.00", "0.01", "0.01 (0.02)"],
+                ["Grade 7 Korean score", "0.00", "−0.01", "−0.01 (0.02)"],
+                ["Female", "0.49", "0.48", "−0.01 (0.01)"],
+                ["Parent with university degree", "0.52", "0.53", "0.01 (0.01)"],
+                ["Log household income", "8.61", "8.64", "0.03 (0.02)"],
+                ["Own device for study", "0.84", "0.86", "0.02* (0.01)"],
+                ["Any private tutoring", "0.73", "0.72", "−0.01 (0.01)"],
+                ["Test participation (grade 8)", "0.955", "0.940", "−0.015 (0.010)"],
+                ["Students", "11,300", "5,800", ""],
+              ],
+              note: "Note: Differences estimated with school fixed effects; standard errors clustered by school. * p < 0.10.",
+            },
+          ],
+        },
+      ],
+    },
+    {
+      id: "results",
+      heading: "7. Results",
+      paragraphs: [],
+      subsections: [
+        {
+          id: "results-average",
+          heading: "7.1 Average Learning Loss",
+          paragraphs: [
+            "Table 3 reports the main estimates. Column (1) shows that score growth in mathematics between grades 7 and 8 was 0.11 standard deviations lower in 2020 than for comparison cohorts with the same prior achievement. Column (2) shows a loss of 0.07 standard deviations in Korean language. The estimates are essentially unchanged when we add student characteristics in columns (3) and (4), consistent with the balance between cohorts shown in Table 2.",
+            "To put these magnitudes in perspective, typical annual gains on vertically scaled tests at this age are roughly 0.3–0.4 standard deviations in mathematics, so the mathematics loss corresponds to about a third of a year of typical progress. By the benchmarks proposed by Kraft {28} for education interventions, an effect of 0.11 standard deviations is medium-sized. The loss in mathematics is larger than the Dutch estimate [8], reflecting the much longer period of remote learning in Korea, but smaller than many early projections [1][26].",
+            "The larger loss in mathematics than in Korean language is consistent with evidence from summer learning loss and from other pandemic studies [3][8]. Mathematics content is more sequential and depends more heavily on structured instruction and practice with feedback, whereas reading and language skills are practised more in everyday life at home. The difference may also reflect the fact that Korean language instruction relied more on reading assignments that could be completed independently, while mathematics teachers found it harder to identify and correct students' misconceptions remotely.",
+          ],
+          tables: [
+            {
+              id: "table-3",
+              caption: "Table 3. Learning loss in 2020 (standard deviations)",
+              columns: ["", "(1) Mathematics", "(2) Korean", "(3) Mathematics", "(4) Korean"],
+              rows: [
+                ["Post (2019–20 cohort)", "−0.11***", "−0.07***", "−0.11***", "−0.07***"],
+                ["", "(0.02)", "(0.02)", "(0.02)", "(0.02)"],
+                ["Prior score (grade 7)", "0.79***", "0.74***", "0.76***", "0.71***"],
+                ["", "(0.01)", "(0.01)", "(0.01)", "(0.01)"],
+                ["School fixed effects", "Yes", "Yes", "Yes", "Yes"],
+                ["Student controls", "No", "No", "Yes", "Yes"],
+                ["Students", "17,100", "17,100", "17,100", "17,100"],
+              ],
+              note: "Note: Dependent variable is the grade 8 score in the indicated subject. Student controls: gender, parental education and household income quintile. Standard errors clustered by school in parentheses. *** p < 0.01.",
+            },
+          ],
+        },
+        {
+          id: "results-inequality",
+          heading: "7.2 Losses by Home Environment and Income",
+          paragraphs: [
+            "Table 4 reports heterogeneity in learning losses. Students without an adequate home learning environment lost 0.19 standard deviations in mathematics and 0.13 in Korean, more than twice the losses of students with both their own device and a quiet place to study (0.08 and 0.05). Losses decline steadily with household income: students in the bottom quintile lost 0.17 standard deviations in mathematics, those in the middle quintiles about 0.11, and those in the top quintile only 0.02, a loss statistically indistinguishable from zero.",
+            "Figure 1 plots losses by income quintile in both subjects. The gap in mathematics losses between the bottom and top quintiles, 0.15 standard deviations, is equivalent to about 18 percent of the pre-existing gap in achievement between these groups, implying that a single year of remote schooling widened the income gap in mathematics substantially. Home learning environment and income are correlated, but both matter independently: when both sets of interactions are included, the coefficient on an inadequate home learning environment falls only from −0.11 to −0.08 relative to students with an adequate environment, and the income gradient remains significant.",
+            "Losses are also larger for students whose parents could not work from home and for students with lower prior achievement. Among students in the bottom quartile of grade 7 mathematics scores, the loss was 0.16 standard deviations, compared with 0.06 in the top quartile, suggesting that students who were already struggling found it hardest to learn remotely, consistent with evidence on online instruction [17].",
+          ],
+          tables: [
+            {
+              id: "table-4",
+              caption: "Table 4. Learning loss by home learning environment, income and prior achievement",
+              columns: ["Group", "Mathematics", "Korean language", "Share of students"],
+              rows: [
+                ["All students", "−0.11*** (0.02)", "−0.07*** (0.02)", "1.00"],
+                ["No own device or quiet space", "−0.19*** (0.04)", "−0.13*** (0.03)", "0.27"],
+                ["Own device and quiet space", "−0.08*** (0.02)", "−0.05*** (0.02)", "0.73"],
+                ["Bottom income quintile", "−0.17*** (0.04)", "−0.11*** (0.03)", "0.20"],
+                ["Middle income quintiles", "−0.11*** (0.02)", "−0.07*** (0.02)", "0.60"],
+                ["Top income quintile", "−0.02 (0.03)", "−0.01 (0.03)", "0.20"],
+                ["Parent unable to work from home", "−0.13*** (0.02)", "−0.08*** (0.02)", "0.72"],
+                ["Parent worked from home", "−0.06** (0.03)", "−0.04 (0.03)", "0.28"],
+                ["Bottom quartile of prior score", "−0.16*** (0.03)", "−0.10*** (0.03)", "0.25"],
+                ["Top quartile of prior score", "−0.06** (0.03)", "−0.03 (0.03)", "0.25"],
+              ],
+              note: "Note: Each row reports the coefficient on Post for the indicated group from a model interacting Post with group indicators. Standard errors clustered by school in parentheses. ** p < 0.05, *** p < 0.01.",
+            },
+          ],
+          figures: [
+            {
+              id: "figure-1",
+              caption: "Figure 1. Learning loss in 2020 by household income quintile",
+              kind: "bar",
+              xLabels: ["Q1 (lowest)", "Q2", "Q3", "Q4", "Q5 (highest)"],
+              yLabel: "Learning loss (standard deviations)",
+              series: [
+                { name: "Mathematics", values: [-0.17, -0.14, -0.11, -0.08, -0.02] },
+                { name: "Korean language", values: [-0.11, -0.09, -0.07, -0.05, -0.01] },
+              ],
+              note: "Note: Coefficients on Post interacted with income quintile indicators from value-added models with school fixed effects.",
+            },
+          ],
+        },
+        {
+          id: "results-cohorts",
+          heading: "7.3 Pre-Trends and Cohort Comparisons",
+          paragraphs: [
+            "Figure 2 plots the estimated cohort effects on mathematics score growth for each cohort relative to the 2018–2019 cohort, separately for students with and without an adequate home learning environment, using the 96 schools for which three pre-pandemic cohorts are available. Score growth was stable for both groups across the three pre-pandemic cohorts, with no evidence of diverging trends. The break in 2020 is sharp and much larger for students without an adequate home environment, reinforcing the interpretation that the losses reflect the closures rather than pre-existing trends.",
+          ],
+          figures: [
+            {
+              id: "figure-2",
+              caption: "Figure 2. Cohort effects on mathematics score growth by home learning environment",
+              kind: "line",
+              xLabels: ["2016–17", "2017–18", "2018–19", "2019–20"],
+              yLabel: "Cohort effect (standard deviations)",
+              series: [
+                {
+                  name: "No own device or quiet space",
+                  values: [0.02, 0.0, 0, -0.19],
+                  lower: [-0.05, -0.06, 0, -0.27],
+                  upper: [0.09, 0.06, 0, -0.11],
+                },
+                {
+                  name: "Own device and quiet space",
+                  values: [0.01, -0.01, 0, -0.08],
+                  lower: [-0.03, -0.05, 0, -0.12],
+                  upper: [0.05, 0.03, 0, -0.04],
+                },
+              ],
+              marker: 2,
+              note: "Note: Cohort effects on grade 8 mathematics scores conditional on grade 7 scores, relative to the 2018–19 cohort, with 95 percent confidence intervals. Schools with three pre-pandemic cohorts (96 schools).",
+            },
+          ],
+        },
+      ],
+    },
+    {
+      id: "mechanisms",
+      heading: "8. Mechanisms",
+      paragraphs: [
+        "Table 5 examines changes in inputs between 2019 and 2020 by income quintile. Monthly spending on private tutoring rose by 18 percent in the top quintile and by 10 percent in the fourth, but fell by 9 percent in the bottom quintile, where some families withdrew children from academies that closed or moved online. Self-reported weekly study hours outside school fell for all groups, but by much more in the bottom quintile. Students in the bottom quintile were also less likely to attend real-time online classes regularly and to complete assignments on time, consistent with evidence on unequal engagement during closures in the United States and England [4][9][10].",
+        "To quantify the role of private tutoring, we add the change in log tutoring spending and its interaction with Post to the heterogeneity model. Controlling for tutoring reduces the gap in mathematics losses between the top and bottom income quintiles from 0.15 to 0.10 standard deviations — about a third. Adding measures of engagement with online classes and parental supervision reduces the gap further, to 0.05 standard deviations. These decompositions are descriptive, since changes in inputs may themselves respond to students' learning, but they indicate that household responses played a central role in widening gaps.",
+        "Parental availability also mattered. Students whose parents worked from home lost about half as much as those whose parents did not, even conditional on income. Because mothers are the primary providers of childcare in Korea and their labour-market attachment is strongly affected by children [7], the closures placed additional demands on working mothers, and households in which no parent could supervise remote learning were at a particular disadvantage. This finding is consistent with evidence that parental time with children rises steeply with education [25].",
+      ],
+      tables: [
+        {
+          id: "table-5",
+          caption: "Table 5. Changes in learning inputs between 2019 and 2020 by income quintile",
+          columns: ["Input", "Q1", "Q2", "Q3", "Q4", "Q5"],
+          rows: [
+            ["Change in monthly tutoring spending (%)", "−9", "−4", "3", "10", "18"],
+            ["Change in any private tutoring (pp)", "−6", "−3", "−1", "1", "2"],
+            ["Change in weekly study hours outside school", "−3.8", "−2.9", "−2.2", "−1.6", "−0.9"],
+            ["Attended real-time online classes regularly (share)", "0.71", "0.79", "0.84", "0.88", "0.92"],
+            ["Completed assignments on time (share)", "0.63", "0.72", "0.78", "0.83", "0.89"],
+            ["Parent supervised remote learning daily (share)", "0.29", "0.38", "0.46", "0.53", "0.61"],
+          ],
+          note: "Note: Changes between spring 2019 and autumn 2020 parent and student questionnaires for the treated cohort. Engagement measures from autumn 2020 questionnaires.",
+        },
+      ],
+    },
+    {
+      id: "robustness",
+      heading: "9. Robustness",
+      paragraphs: [
+        "Table 6 reports robustness checks for the average mathematics loss and the gap between students with and without an adequate home environment. Reweighting for test participation using inverse probability weights based on prior scores and household characteristics leaves the estimates unchanged. Using only the 2018–2019 cohort as the comparison, or only the 2017–2018 cohort, yields similar results. Estimates using item-response-theory scale scores instead of equated raw scores, and using a gain-score specification without the prior-score coefficient, are also similar.",
+        "Excluding schools that operated with more in-person attendance than the regional rules required, and excluding students who changed schools, does not change the results. A placebo test assigning the 2018–2019 cohort as treated yields a loss of 0.01 standard deviations, indistinguishable from zero. Finally, the losses are not explained by ceiling effects: students in the top income quintile are not concentrated at the top of the score distribution, and the result holds when we exclude students scoring in the top decile in grade 7.",
+      ],
+      tables: [
+        {
+          id: "table-6",
+          caption: "Table 6. Robustness of mathematics learning-loss estimates",
+          columns: ["Specification", "Average loss", "Gap: no adequate environment − adequate"],
+          rows: [
+            ["Baseline", "−0.11*** (0.02)", "−0.11*** (0.04)"],
+            ["Reweighted for test participation", "−0.11*** (0.02)", "−0.12*** (0.04)"],
+            ["Comparison cohort 2018–19 only", "−0.12*** (0.02)", "−0.11*** (0.04)"],
+            ["Comparison cohort 2017–18 only", "−0.10*** (0.03)", "−0.10** (0.04)"],
+            ["IRT scale scores", "−0.11*** (0.02)", "−0.12*** (0.04)"],
+            ["Gain-score specification", "−0.12*** (0.02)", "−0.10** (0.04)"],
+            ["Excluding schools with extra in-person days", "−0.12*** (0.02)", "−0.11*** (0.04)"],
+            ["Excluding school movers", "−0.11*** (0.02)", "−0.11*** (0.04)"],
+            ["Placebo: 2018–19 cohort as treated", "0.01 (0.02)", "0.02 (0.04)"],
+          ],
+          note: "Note: Standard errors clustered by school in parentheses. ** p < 0.05, *** p < 0.01.",
+        },
+      ],
+    },
+    {
+      id: "discussion",
+      heading: "10. Discussion",
+      paragraphs: [
+        "Our results show that even in a highly connected school system with a well-prepared transition, remote schooling caused substantial learning losses and widened gaps by family background. The average loss in mathematics corresponds to about a third of a year of typical progress, and for students without an adequate home learning environment the loss was more than half a year. Because skills build on one another [6][22], these losses are unlikely to disappear without intervention, and estimates linking skills to earnings suggest that losses of this size could reduce affected students' lifetime earnings by several percent [2].",
+        "The role of private tutoring illustrates how household responses can amplify the unequal effects of public policy. When public instruction was disrupted, families with greater resources increased their spending on private instruction, while lower-income families reduced theirs. In a country where private tutoring was already a major source of inequality in educational opportunities [20], the closures widened this gap further. Policies that provide high-quality supplementary instruction to disadvantaged students — such as small-group tutoring delivered by schools or trained volunteers, which has proven effective in other contexts [27] — could counteract this mechanism.",
+        "Our results also suggest that providing devices alone is unlikely to be sufficient. Korean schools lent devices to students who needed them, but students without a quiet place to study or a parent able to supervise still experienced large losses, consistent with evidence that access to technology has small effects on achievement without complementary inputs [5][19]. Catch-up programmes should therefore target students with poor home learning environments and combine additional instruction with support for engagement.",
+        "Our analysis has limitations. Our panel covers one metropolitan area and may not represent rural areas, where both infrastructure and private tutoring differ. Our measures of inputs are self-reported, and our decompositions of the income gradient are descriptive. Finally, we observe outcomes only at the end of the 2020 school year and cannot yet assess whether losses persisted or were recovered after schools reopened.",
+        "A further implication concerns the measurement of learning losses in other countries. Our estimates are based on low-stakes tests administered in school under standardised conditions, with vertically scaled scores that allow comparison across cohorts. Many countries lack such data, and evidence based on administrative grades or on online platform usage may understate losses if grading standards were relaxed or if platform usage is selected. Investments in comparable assessments of student learning would help governments identify which students need catch-up support and evaluate whether such support works.",
+      ],
+    },
+    {
+      id: "conclusion",
+      heading: "11. Conclusion",
+      paragraphs: [
+        "Using panel data on 5,800 Korean middle-school students, we estimate that the move to remote schooling in 2020 reduced learning by 0.11 standard deviations in mathematics and 0.07 standard deviations in Korean language on average, with losses of 0.19 standard deviations for students without their own device or a quiet place to study and negligible losses for students from the top income quintile. Increased private tutoring among higher-income households accounts for about a third of the widening gap. Even in a highly connected school system, the move online widened learning gaps by family background. Catch-up programmes targeted at students with poor home learning environments would address the largest losses and may yield substantial long-run returns [2][6].",
+      ],
+    },
+    {
+      id: "appendix",
+      heading: "Appendix A. Test Equating and Variable Definitions",
+      paragraphs: [
+        "Test equating. The mathematics and Korean language tests contain 30 and 35 items respectively, of which about one-third are common across years and grades. Scores are equated across years using a common-item non-equivalent groups design with item-response-theory linking, so that a given scale score represents the same level of achievement in each year. The 2020 tests were identical in format and content coverage to those of earlier years, although content taught in 2020 was compressed by the delayed start of the school year; the tests cover the national curriculum for each grade.",
+        "Home learning environment. Students are classified as having their own device if they reported having a computer, laptop or tablet that they did not need to share with other family members during school hours. A quiet place to study is defined as a room or space where the student could study without interruption. Both questions refer to the situation in spring 2019 and were asked again in autumn 2020; we use the 2019 measures to avoid conditioning on outcomes affected by the closures.",
+        "Income. Household income is the parent-reported monthly household income in spring 2019, measured in ten brackets. Income quintiles are defined over the pooled sample of households in all cohorts, and the bracket midpoints are used to compute log household income for the balance tests.",
+      ],
+    },
+  ],
+};

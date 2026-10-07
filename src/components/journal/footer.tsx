@@ -1,148 +1,133 @@
 "use client";
 
 import { useNav, type PageId } from "./nav-context";
+import { useSession } from "./session";
 import { JOURNAL_INFO } from "@/data/journal";
-import { Mail, Phone, MapPin, FileText, BookOpen, Award } from "lucide-react";
+import { BookOpen, Users, Rss, Mail, Award } from "lucide-react";
 
 export function Footer() {
   const { navigate } = useNav();
+  const { openAlerts } = useSession();
 
-  const quickLinks: { label: string; page: PageId }[] = [
-    { label: "About the Journal", page: "about" },
-    { label: "Editorial Board", page: "editorial-board" },
-    { label: "Current Issue", page: "current-issue" },
-    { label: "Archive", page: "archive" },
-    { label: "Submit a Manuscript", page: "submission" },
-    { label: "Author Guidelines", page: "author-guidelines" },
-    { label: "Journal Policies", page: "policies" },
-    { label: "Contact", page: "contact" },
+  const columns: { title: string; icon: typeof BookOpen; links: { label: string; page: PageId; anchor?: string }[] }[] = [
+    {
+      title: "Information",
+      icon: BookOpen,
+      links: [
+        { label: "About JER", page: "about" },
+        { label: "Editorial Board", page: "editorial-board" },
+        { label: "Journal Policies", page: "policies" },
+        { label: "News & Announcements", page: "news" },
+        { label: "Contact Us", page: "contact" },
+      ],
+    },
+    {
+      title: "Resources",
+      icon: Users,
+      links: [
+        { label: "Submit a Manuscript", page: "submission" },
+        { label: "Author Guidelines", page: "author-guidelines" },
+        { label: "Peer Review Process", page: "policies", anchor: "peer-review" },
+        { label: "Open Access", page: "policies", anchor: "open-access" },
+        { label: "Current Issue", page: "current-issue" },
+        { label: "All Issues", page: "archive" },
+      ],
+    },
+  ];
+
+  const legal: [string, string][] = [
+    ["Privacy Policy", "privacy"],
+    ["Terms of Use", "terms"],
+    ["Cookies", "cookies"],
+    ["Accessibility", "accessibility"],
   ];
 
   return (
-    <footer className="mt-auto bg-primary text-primary-foreground border-t-4 border-accent">
-      <div className="container mx-auto px-4 py-12">
-        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-10">
-          {/* Journal identity */}
-          <div className="lg:col-span-1">
-            <div className="flex items-center gap-3 mb-4">
-              <img
-                src="/jer-logo.svg"
-                alt="Journal of Economic Research"
-                className="w-12 h-12 rounded-md bg-white/5"
-                width={48}
-                height={48}
-              />
-              <div>
-                <h2 className="font-serif text-lg font-bold leading-tight">
-                  Journal of Economic Research
-                </h2>
-                <p className="font-sans text-xs opacity-80 mt-0.5">Hanyang University, Seoul</p>
-              </div>
-            </div>
-            <p className="font-sans text-sm opacity-80 leading-relaxed mb-4">
-              A peer-reviewed, open-access economics journal publishing rigorous
-              empirical and theoretical research since 1996.
-            </p>
-            <div className="space-y-1.5 font-sans text-xs opacity-85">
-              <div className="flex items-center gap-2">
-                <Award className="w-3.5 h-3.5 flex-shrink-0" />
-                <span>ABDC rating: {JOURNAL_INFO.abdcRating}</span>
-              </div>
-              <div className="flex items-center gap-2">
-                <BookOpen className="w-3.5 h-3.5 flex-shrink-0" />
-                <span>ISSN {JOURNAL_INFO.issnPrint} (print &amp; online)</span>
-              </div>
-              <div className="flex items-center gap-2">
-                <FileText className="w-3.5 h-3.5 flex-shrink-0" />
-                <span>Open Access · CC BY-NC 4.0</span>
-              </div>
-            </div>
+    <footer className="mt-auto bg-white border-t border-[#e1e1e1] print:hidden">
+      <div className="container mx-auto px-4 pt-12 pb-8 grid gap-10 md:grid-cols-2 lg:grid-cols-[1.2fr_0.8fr_1fr_1fr]">
+        {/* Identity + address */}
+        <div>
+          <button onClick={() => navigate("home")} className="flex items-center gap-3 text-left" aria-label="Journal of Economic Research home">
+            <img src="/jer-logo.svg" alt="" className="w-16 h-16 rounded-sm" width={64} height={64} />
+            <span className="leading-none">
+              <span className="block text-[12px] tracking-[0.3em] uppercase text-[#4a4a4a]">Journal of</span>
+              <span className="block text-[26px] text-primary mt-0.5">Economic Research</span>
+            </span>
+          </button>
+
+          <div className="flex items-center gap-4 mt-6 text-[#212121]">
+            <button onClick={() => openAlerts(["new-issue", "news"])} aria-label="Email alerts" className="hover:text-primary">
+              <Mail className="w-5 h-5" />
+            </button>
+            <button onClick={() => navigate("news")} aria-label="News and announcements" className="hover:text-primary">
+              <Rss className="w-5 h-5" />
+            </button>
+            <a href={`mailto:${JOURNAL_INFO.contactEmail}`} className="text-[14px] hover:text-primary hover:underline">
+              {JOURNAL_INFO.contactEmail}
+            </a>
           </div>
 
-          {/* Quick links */}
-          <div>
-            <h3 className="font-serif text-sm font-semibold uppercase tracking-wider mb-4 text-accent">
-              Quick Links
-            </h3>
-            <ul className="space-y-2 font-sans text-sm">
-              {quickLinks.map((link) => (
-                <li key={link.page}>
+          <address className="not-italic mt-5 text-[14px] leading-relaxed text-[#212121]">
+            Journal of Economic Research<br />
+            Department of Economics, Hanyang University<br />
+            222 Wangsimni-ro, Seongdong-gu<br />
+            Seoul 04763, Republic of Korea<br />
+            Phone: {JOURNAL_INFO.phone}<br />
+            Fax: {JOURNAL_INFO.fax}
+          </address>
+        </div>
+
+        {/* Quality badges (AOM shows its COPE membership here) */}
+        <div className="space-y-4">
+          <div className="inline-flex flex-col items-center border border-[#c9c9c9] px-5 py-3 text-center">
+            <Award className="w-6 h-6 text-primary" />
+            <span className="mt-1 text-[13px] font-bold tracking-[0.25em] text-[#4a4a4a]">ABDC</span>
+            <span className="text-[12px] text-[#616161]">Rating {JOURNAL_INFO.abdcRating}</span>
+          </div>
+          <p className="text-[13px] text-[#616161] leading-relaxed">
+            ABDC B (Applied Economics) · KCI-listed<br />
+            ISSN {JOURNAL_INFO.issnPrint} · eISSN {JOURNAL_INFO.issnOnline}<br />
+            Open access · CC BY-NC 4.0 · No APC
+          </p>
+        </div>
+
+        {columns.map(({ title, icon: Icon, links }) => (
+          <div key={title} className="border-t-2 border-primary pt-3">
+            <h4 className="text-[18px] font-bold text-primary">{title}</h4>
+            <Icon className="w-11 h-11 my-4 text-[#9fb8d0]" strokeWidth={1.5} />
+            <ul className="space-y-1.5 text-[14px]">
+              {links.map((l) => (
+                <li key={l.label}>
                   <button
-                    onClick={() => navigate(link.page)}
-                    className="text-left opacity-85 hover:opacity-100 hover:text-accent transition-colors"
+                    onClick={() => navigate(l.page, l.anchor ? { anchor: l.anchor } : undefined)}
+                    className="text-left text-primary hover:underline"
                   >
-                    {link.label}
+                    {l.label}
                   </button>
                 </li>
               ))}
             </ul>
           </div>
+        ))}
+      </div>
 
-          {/* Indexing */}
-          <div>
-            <h3 className="font-serif text-sm font-semibold uppercase tracking-wider mb-4 text-accent">
-              Indexed In
-            </h3>
-            <ul className="space-y-1.5 font-sans text-xs opacity-85">
-              <li>Scopus</li>
-              <li>Korean Citation Index (KCI)</li>
-              <li>EconLit (American Economic Association)</li>
-              <li>EBSCO Business Source Complete</li>
-              <li>Directory of Open Access Journals (DOAJ)</li>
-              <li>RePEc / IDEAS</li>
-              <li>Google Scholar</li>
-              <li>ABDC Journal Quality List — Tier B</li>
-            </ul>
-          </div>
-
-          {/* Contact */}
-          <div>
-            <h3 className="font-serif text-sm font-semibold uppercase tracking-wider mb-4 text-accent">
-              Editorial Office
-            </h3>
-            <ul className="space-y-3 font-sans text-sm opacity-90">
-              <li className="flex gap-2.5">
-                <MapPin className="w-4 h-4 mt-0.5 flex-shrink-0 text-accent" />
-                <span className="leading-snug">
-                  Department of Economics<br />
-                  Hanyang University<br />
-                  222 Wangsimni-ro, Seongdong-gu<br />
-                  Seoul 04763, Republic of Korea
-                </span>
-              </li>
-              <li className="flex gap-2.5">
-                <Mail className="w-4 h-4 mt-0.5 flex-shrink-0 text-accent" />
-                <a
-                  href={`mailto:${JOURNAL_INFO.contactEmail}`}
-                  className="hover:text-accent hover:underline"
-                >
-                  {JOURNAL_INFO.contactEmail}
-                </a>
-              </li>
-              <li className="flex gap-2.5">
-                <Phone className="w-4 h-4 mt-0.5 flex-shrink-0 text-accent" />
-                <span>
-                  {JOURNAL_INFO.phone}<br />
-                  Fax: {JOURNAL_INFO.fax}
-                </span>
-              </li>
-            </ul>
-          </div>
-        </div>
-
-        <div className="gold-rule my-8" />
-
-        <div className="flex flex-col sm:flex-row items-center justify-between gap-3 font-sans text-xs opacity-75">
-          <div>
-            © 1996–{new Date().getFullYear()} Journal of Economic Research · Hanyang University.
-            All rights reserved.
-          </div>
-          <div className="flex items-center gap-4">
-            <span>Privacy Policy</span>
-            <span className="opacity-50">|</span>
-            <span>Terms of Use</span>
-            <span className="opacity-50">|</span>
-            <span>Cookies</span>
+      <div className="bg-primary text-white">
+        <div className="container mx-auto px-4 py-4 flex flex-col sm:flex-row sm:items-center justify-between gap-3 text-[14px] font-bold">
+          <nav aria-label="Legal" className="flex flex-wrap gap-x-6 gap-y-1">
+            {legal.map(([label, section]) => (
+              <button
+                key={section}
+                onClick={() => navigate("legal", { params: { section }, anchor: section })}
+                className="hover:underline"
+              >
+                {label}
+              </button>
+            ))}
+          </nav>
+          <div className="sm:text-right leading-snug">
+            © 1996–{new Date().getFullYear()} Journal of Economic Research
+            <br />
+            <span className="font-semibold opacity-90">{JOURNAL_INFO.publisher} · ISSN {JOURNAL_INFO.issnPrint} · eISSN {JOURNAL_INFO.issnOnline}</span>
           </div>
         </div>
       </div>

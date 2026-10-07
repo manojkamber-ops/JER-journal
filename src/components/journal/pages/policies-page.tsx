@@ -42,7 +42,7 @@ export function PoliciesPage() {
         <div className="grid lg:grid-cols-3 gap-8">
           <div className="lg:col-span-2 space-y-12">
             {/* Peer review process */}
-            <section>
+            <section id="peer-review" className="scroll-mt-40">
               <h2 className="font-serif text-2xl font-bold text-primary mb-2 border-b border-border pb-2 flex items-center gap-2">
                 <Users className="w-5 h-5 text-accent" />
                 Peer Review Process
@@ -77,7 +77,7 @@ export function PoliciesPage() {
             </section>
 
             {/* Open access policy */}
-            <section>
+            <section id="open-access" className="scroll-mt-40">
               <h2 className="font-serif text-2xl font-bold text-primary mb-2 border-b border-border pb-2 flex items-center gap-2">
                 <Globe2 className="w-5 h-5 text-accent" />
                 Open Access Policy
@@ -122,17 +122,17 @@ export function PoliciesPage() {
                 <div className="bg-card border border-border rounded-md p-5">
                   <Globe2 className="w-5 h-5 text-accent mb-2" />
                   <h3 className="font-serif text-base font-semibold text-primary mb-1">
-                    Indexed in DOAJ
+                    KCI-listed
                   </h3>
                   <p className="font-serif text-sm text-foreground/80 leading-relaxed">
-                    Listed in the Directory of Open Access Journals since 2016.
+                    Listed in the Korea Citation Index (KCI) of the National Research Foundation of Korea.
                   </p>
                 </div>
               </div>
             </section>
 
             {/* Publication ethics */}
-            <section>
+            <section id="ethics" className="scroll-mt-40">
               <h2 className="font-serif text-2xl font-bold text-primary mb-2 border-b border-border pb-2 flex items-center gap-2">
                 <ShieldCheck className="w-5 h-5 text-accent" />
                 Publication Ethics
@@ -173,7 +173,7 @@ export function PoliciesPage() {
             </section>
 
             {/* Confidentiality */}
-            <section>
+            <section id="confidentiality" className="scroll-mt-40">
               <h2 className="font-serif text-2xl font-bold text-primary mb-2 border-b border-border pb-2 flex items-center gap-2">
                 <Lock className="w-5 h-5 text-accent" />
                 Confidentiality &amp; Anonymisation
@@ -237,8 +237,8 @@ export function PoliciesPage() {
               </h3>
               <p className="font-serif text-sm text-foreground/85">
                 The Journal of Economic Research is listed at the &apos;{JOURNAL_INFO.abdcRating}&apos;
-                tier of the Australian Business Deans Council Journal Quality List under
-                FoR code {JOURNAL_INFO.fieldOfResearch} ({JOURNAL_INFO.forDescription}).
+                tier of the Australian Business Deans Council Journal Quality List in
+                Applied Economics, {JOURNAL_INFO.fieldOfResearch}.
               </p>
             </div>
 

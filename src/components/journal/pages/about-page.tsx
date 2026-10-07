@@ -207,7 +207,7 @@ export function AboutPage() {
           </h2>
           <p className="font-serif text-base text-muted-foreground mt-2 max-w-2xl mx-auto">
             From its founding at Hanyang University in 1996 to its current position as
-            a Scopus-indexed open-access journal.
+            an ABDC-rated, KCI-listed open-access journal.
           </p>
         </div>
 
@@ -255,12 +255,12 @@ export function AboutPage() {
               Where the Journal Is Indexed
             </h2>
             <p className="font-serif text-base text-muted-foreground mt-2 max-w-2xl mx-auto">
-              The Journal of Economic Research is indexed in the following bibliographic
-              databases and journal quality lists.
+              The Journal of Economic Research (ISSN {JI.issnPrint}, eISSN {JI.issnOnline}) is
+              rated in the ABDC Journal Quality List and listed in the Korea Citation Index.
             </p>
           </div>
 
-          <div className="grid sm:grid-cols-2 lg:grid-cols-3 gap-4 max-w-5xl mx-auto">
+          <div className="grid sm:grid-cols-2 gap-4 max-w-3xl mx-auto">
             {INDEXING_SERVICES.map((svc) => (
               <div
                 key={svc.name}
@@ -273,7 +273,7 @@ export function AboutPage() {
                       {svc.name}
                     </h3>
                     <p className="font-sans text-xs text-muted-foreground mt-1">
-                      Indexed since <span className="font-medium text-foreground">{svc.since}</span>
+                      <span className="font-medium text-foreground">{svc.badge}</span> · since {svc.since}
                     </p>
                     <p className="font-sans text-xs text-muted-foreground">
                       {svc.coverage}
@@ -302,7 +302,7 @@ export function AboutPage() {
             <Button
               size="lg"
               onClick={() => navigate("submission")}
-              className="bg-accent text-accent-foreground hover:bg-accent/90 font-sans"
+              className="bg-white text-primary hover:bg-white/90 font-sans"
             >
               <Send className="w-4 h-4 mr-2" />
               Submit a Manuscript

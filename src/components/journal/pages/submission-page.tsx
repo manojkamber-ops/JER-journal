@@ -1,6 +1,8 @@
 "use client";
 
-import { useState } from "react";
+import { useRef, useState } from "react";
+import { api, useSession } from "../session";
+import { toast } from "@/hooks/use-toast";
 import { useNav } from "../nav-context";
 import { JOURNAL_INFO, JOURNAL_STATS } from "@/data/journal";
 import { Button } from "@/components/ui/button";
@@ -33,16 +35,74 @@ import {
   Heart,
   AlertCircle,
   ChevronRight,
+  Loader2,
+  X,
 } from "lucide-react";
 
 export function SubmissionPage() {
   const { navigate } = useNav();
-  const [submitted, setSubmitted] = useState(false);
+  const { user, openAuth } = useSession();
+  const formRef = useRef<HTMLFormElement>(null);
+  const fileRef = useRef<HTMLInputElement>(null);
+  const [file, setFile] = useState<File | null>(null);
+  const [dragging, setDragging] = useState(false);
+  const [abstractWords, setAbstractWords] = useState(0);
+  const [busy, setBusy] = useState<"submitted" | "draft" | null>(null);
+  const [error, setError] = useState<string | null>(null);
+  const [submitted, setSubmitted] = useState<string | null>(null); // reference number
+
+  const pickFile = (f: File | undefined | null) => {
+    if (!f) return;
+    if (f.size > 25 * 1024 * 1024) {
+      setError("File is larger than 25 MB.");
+      return;
+    }
+    setError(null);
+    setFile(f);
+  };
+
+  async function send(status: "submitted" | "draft") {
+    const form = formRef.current!;
+    if (status === "submitted") {
+      if (!new FormData(form).get("articleType")) return setError("Please select an article type.");
+      if (!form.reportValidity()) return;
+      if (abstractWords > 250) return setError("The abstract must be 250 words or fewer.");
+      if (!file) return setError("Please attach your manuscript file.");
+    } else if (!(form.elements.namedItem("title") as HTMLInputElement).value.trim()) {
+      return setError("Enter at least a title to save a draft.");
+    }
+    const data = new FormData(form);
+    data.set("status", status);
+    if (file) data.set("manuscript", file);
+    setBusy(status);
+    setError(null);
+    try {
+      const { reference } = await api<{ reference: string }>("/api/submissions", { method: "POST", body: data });
+      if (status === "draft") {
+        toast({
+          title: "Draft saved",
+          description: user ? `Reference ${reference}. Find it under My Account → My Submissions.` : `Reference ${reference}. Sign in next time to keep drafts in your account.`,
+        });
+      } else {
+        setSubmitted(reference);
+        window.scrollTo({ top: 0, behavior: "smooth" });
+      }
+    } catch (err) {
+      setError((err as Error).message);
+    } finally {
+      setBusy(null);
+    }
+  }
 
   const handleSubmit = (e: React.FormEvent) => {
     e.preventDefault();
-    setSubmitted(true);
-    window.scrollTo({ top: 0, behavior: "smooth" });
+    send("submitted");
+  };
+
+  const reset = () => {
+    setSubmitted(null);
+    setFile(null);
+    setAbstractWords(0);
   };
 
   return (
@@ -78,13 +138,23 @@ export function SubmissionPage() {
               </p>
               <p className="font-sans text-sm text-muted-foreground mb-6">
                 Your submission has been assigned reference number{" "}
-                <span className="font-mono font-medium text-primary">JER-2025-{Math.floor(Math.random() * 9000) + 1000}</span>.
-                You will receive a confirmation email within 48 hours, and an initial
+                <span className="font-mono font-medium text-primary">{submitted}</span>.
+                Please quote it in any correspondence. You will receive an initial
                 editorial decision within 7 working days.
+                {user && " You can follow its status under My Account → My Submissions."}
               </p>
               <div className="flex flex-wrap items-center justify-center gap-3">
+                {user && (
+                  <Button
+                    onClick={() => navigate("account", { params: { tab: "submissions" } })}
+                    variant="outline"
+                    className="font-sans"
+                  >
+                    View my submissions
+                  </Button>
+                )}
                 <Button
-                  onClick={() => setSubmitted(false)}
+                  onClick={reset}
                   variant="outline"
                   className="font-sans"
                 >
@@ -112,17 +182,27 @@ export function SubmissionPage() {
                   </CardTitle>
                   <CardDescription className="font-sans text-sm">
                     Please complete the form below. Fields marked with an asterisk
-                    (*) are required. You will be able to upload files in the next step.
+                    (*) are required.
                   </CardDescription>
                 </CardHeader>
                 <CardContent className="pt-6">
-                  <form onSubmit={handleSubmit} className="space-y-5">
+                  <form ref={formRef} onSubmit={handleSubmit} className="space-y-5" noValidate={false}>
+                    {!user && (
+                      <div className="bg-accent/10 border border-accent/30 rounded-sm p-3 font-sans text-sm text-gray-700 flex flex-wrap items-center justify-between gap-2">
+                        <span>Sign in to track this submission and keep drafts in your account.</span>
+                        <span className="flex gap-2">
+                          <Button type="button" size="sm" variant="outline" onClick={() => openAuth("signin")}>Sign In</Button>
+                          <Button type="button" size="sm" variant="outline" onClick={() => openAuth("register")}>Register</Button>
+                        </span>
+                      </div>
+                    )}
                     <div>
                       <Label htmlFor="title" className="font-sans text-sm font-medium">
                         Article Title <span className="text-destructive">*</span>
                       </Label>
                       <Input
                         id="title"
+                        name="title"
                         required
                         placeholder="Enter the full title of your manuscript"
                         className="mt-1.5 font-sans"
@@ -131,10 +211,10 @@ export function SubmissionPage() {
 
                     <div className="grid sm:grid-cols-2 gap-4">
                       <div>
-                        <Label htmlFor="articletype" className="font-sans text-sm font-medium">
+                        <Label className="font-sans text-sm font-medium">
                           Article Type <span className="text-destructive">*</span>
                         </Label>
-                        <Select required>
+                        <Select name="articleType" required>
                           <SelectTrigger className="mt-1.5 font-sans">
                             <SelectValue placeholder="Select article type" />
                           </SelectTrigger>
@@ -152,6 +232,7 @@ export function SubmissionPage() {
                         </Label>
                         <Input
                           id="wordcount"
+                        name="wordCount"
                           type="number"
                           placeholder="e.g., 8,500"
                           className="mt-1.5 font-sans"
@@ -165,14 +246,15 @@ export function SubmissionPage() {
                       </Label>
                       <Textarea
                         id="abstract"
+                        name="abstract"
                         required
                         rows={5}
-                        maxLength={250}
+                        onChange={(e) => setAbstractWords(e.target.value.trim().split(/\s+/).filter(Boolean).length)}
                         placeholder="Maximum 250 words, single paragraph, no citations or displayed equations"
                         className="mt-1.5 font-sans"
                       />
-                      <p className="font-sans text-xs text-muted-foreground mt-1">
-                        Maximum 250 words. Single paragraph.
+                      <p className={`font-sans text-xs mt-1 ${abstractWords > 250 ? "text-destructive font-medium" : "text-muted-foreground"}`}>
+                        {abstractWords} / 250 words · Single paragraph.
                       </p>
                     </div>
 
@@ -183,6 +265,7 @@ export function SubmissionPage() {
                         </Label>
                         <Input
                           id="keywords"
+                        name="keywords"
                           required
                           placeholder="Comma-separated, 4–6 keywords"
                           className="mt-1.5 font-sans"
@@ -194,6 +277,7 @@ export function SubmissionPage() {
                         </Label>
                         <Input
                           id="jelcodes"
+                        name="jelCodes"
                           placeholder="e.g., E52, E58, O53"
                           className="mt-1.5 font-sans"
                         />
@@ -206,6 +290,8 @@ export function SubmissionPage() {
                       </Label>
                       <Input
                         id="corresponding"
+                        name="authorName"
+                        defaultValue={user?.name}
                         required
                         placeholder="Full name"
                         className="mt-1.5 font-sans"
@@ -219,7 +305,9 @@ export function SubmissionPage() {
                         </Label>
                         <Input
                           id="email"
+                          name="authorEmail"
                           type="email"
+                          defaultValue={user?.email}
                           required
                           placeholder="author@institution.edu"
                           className="mt-1.5 font-sans"
@@ -231,6 +319,7 @@ export function SubmissionPage() {
                         </Label>
                         <Input
                           id="orcid"
+                        name="orcid"
                           placeholder="0000-0000-0000-0000"
                           className="mt-1.5 font-sans"
                         />
@@ -243,6 +332,7 @@ export function SubmissionPage() {
                       </Label>
                       <Textarea
                         id="affiliation"
+                        name="affiliations"
                         rows={3}
                         placeholder="List all authors and their institutional affiliations"
                         className="mt-1.5 font-sans"
@@ -255,26 +345,66 @@ export function SubmissionPage() {
                       </Label>
                       <Textarea
                         id="cover"
+                        name="coverLetter"
                         rows={4}
                         placeholder="Briefly describe the contribution of your paper and confirm it is not under consideration elsewhere"
                         className="mt-1.5 font-sans"
                       />
                     </div>
 
-                    {/* File upload placeholder */}
+                    {/* File upload */}
                     <div>
-                      <Label className="font-sans text-sm font-medium">
-                        Manuscript Files <span className="text-destructive">*</span>
+                      <Label htmlFor="manuscript" className="font-sans text-sm font-medium">
+                        Manuscript File <span className="text-destructive">*</span>
                       </Label>
-                      <div className="mt-1.5 border-2 border-dashed border-border rounded-md p-8 text-center hover:border-accent transition-colors cursor-pointer">
-                        <Upload className="w-8 h-8 mx-auto text-muted-foreground mb-2" />
-                        <p className="font-sans text-sm text-foreground">
-                          <span className="text-accent font-medium">Click to upload</span> or drag and drop
-                        </p>
-                        <p className="font-sans text-xs text-muted-foreground mt-1">
-                          Anonymised manuscript PDF (max 25 MB) · Title page (separate file)
-                        </p>
-                      </div>
+                      <input
+                        ref={fileRef}
+                        id="manuscript"
+                        type="file"
+                        accept=".pdf,.doc,.docx,.tex,.zip"
+                        className="sr-only"
+                        onChange={(e) => pickFile(e.target.files?.[0])}
+                      />
+                      {file ? (
+                        <div className="mt-1.5 flex items-center gap-3 border border-border rounded-md p-4 bg-secondary/30">
+                          <FileText className="w-8 h-8 text-accent flex-shrink-0" />
+                          <div className="flex-1 min-w-0">
+                            <p className="font-sans text-sm font-medium text-primary truncate">{file.name}</p>
+                            <p className="font-sans text-xs text-muted-foreground">{(file.size / 1024 / 1024).toFixed(2)} MB</p>
+                          </div>
+                          <Button type="button" variant="ghost" size="sm" onClick={() => fileRef.current?.click()} className="font-sans">Replace</Button>
+                          <Button
+                            type="button"
+                            variant="ghost"
+                            size="sm"
+                            aria-label="Remove file"
+                            onClick={() => { setFile(null); if (fileRef.current) fileRef.current.value = ""; }}
+                          >
+                            <X className="w-4 h-4" />
+                          </Button>
+                        </div>
+                      ) : (
+                        <div
+                          role="button"
+                          tabIndex={0}
+                          onClick={() => fileRef.current?.click()}
+                          onKeyDown={(e) => (e.key === "Enter" || e.key === " ") && fileRef.current?.click()}
+                          onDragOver={(e) => { e.preventDefault(); setDragging(true); }}
+                          onDragLeave={() => setDragging(false)}
+                          onDrop={(e) => { e.preventDefault(); setDragging(false); pickFile(e.dataTransfer.files?.[0]); }}
+                          className={`mt-1.5 border-2 border-dashed rounded-md p-8 text-center transition-colors cursor-pointer ${
+                            dragging ? "border-accent bg-accent/5" : "border-border hover:border-accent"
+                          }`}
+                        >
+                          <Upload className="w-8 h-8 mx-auto text-muted-foreground mb-2" />
+                          <p className="font-sans text-sm text-foreground">
+                            <span className="text-accent font-medium">Click to upload</span> or drag and drop
+                          </p>
+                          <p className="font-sans text-xs text-muted-foreground mt-1">
+                            Anonymised manuscript · PDF, DOC, DOCX, TeX or ZIP · max 25 MB
+                          </p>
+                        </div>
+                      )}
                     </div>
 
                     {/* Declarations */}
@@ -303,16 +433,31 @@ export function SubmissionPage() {
                       ))}
                     </div>
 
+                    {error && (
+                      <p role="alert" className="font-sans text-sm text-destructive bg-destructive/10 border border-destructive/30 rounded-sm px-3 py-2">
+                        {error}
+                      </p>
+                    )}
+
                     <div className="flex flex-wrap items-center gap-3 pt-2">
                       <Button
                         type="submit"
                         size="lg"
+                        disabled={!!busy}
                         className="font-sans bg-primary text-primary-foreground hover:bg-primary/90"
                       >
-                        <Send className="w-4 h-4 mr-2" />
+                        {busy === "submitted" ? <Loader2 className="w-4 h-4 mr-2 animate-spin" /> : <Send className="w-4 h-4 mr-2" />}
                         Submit Manuscript
                       </Button>
-                      <Button type="button" variant="outline" size="lg" className="font-sans">
+                      <Button
+                        type="button"
+                        variant="outline"
+                        size="lg"
+                        disabled={!!busy}
+                        onClick={() => send("draft")}
+                        className="font-sans"
+                      >
+                        {busy === "draft" && <Loader2 className="w-4 h-4 mr-2 animate-spin" />}
                         Save as Draft
                       </Button>
                     </div>

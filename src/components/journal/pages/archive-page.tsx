@@ -1,6 +1,8 @@
 "use client";
 
 import { useState, useMemo } from "react";
+import { useNav } from "../nav-context";
+import { JournalBanner } from "../journal-banner";
 import { ARTICLES } from "@/data/journal";
 import { ArticleListItem } from "../article-components";
 import { Button } from "@/components/ui/button";
@@ -18,8 +20,11 @@ import { Search, Filter, FileText, ChevronDown, ChevronRight } from "lucide-reac
 type SortKey = "newest" | "oldest" | "most-cited" | "most-downloaded";
 
 export function ArchivePage() {
+  const { navigate, params } = useNav();
   const [year, setYear] = useState<string>("all");
-  const [search, setSearch] = useState("");
+  // Searches submitted from the header arrive as ?q= (the page is re-keyed on q, see journal-layout)
+  const [search, setSearch] = useState(params.q ?? "");
+  const onlineFirst = params.view === "online-first";
   const [sort, setSort] = useState<SortKey>("newest");
   const [expandedIssues, setExpandedIssues] = useState<Set<string>>(new Set(["30-3", "30-2", "30-1"]));
 
@@ -49,6 +54,7 @@ export function ArchivePage() {
     if (year !== "all") {
       result = result.filter((a) => a.year === parseInt(year));
     }
+
     if (search.trim()) {
       const q = search.toLowerCase();
       result = result.filter(
@@ -74,8 +80,11 @@ export function ArchivePage() {
         result = [...result].sort((a, b) => b.downloads - a.downloads);
         break;
     }
+    if (onlineFirst) {
+      result = [...result].sort((a, b) => (b.publishedOnline ?? b.published).localeCompare(a.publishedOnline ?? a.published));
+    }
     return result;
-  }, [year, search, sort]);
+  }, [year, search, sort, onlineFirst]);
 
   const availableYears = useMemo(() => {
     return Array.from(new Set(ARTICLES.map((a) => a.year))).sort((a, b) => b - a);
@@ -92,23 +101,14 @@ export function ArchivePage() {
 
   return (
     <div>
-      <section className="bg-primary text-primary-foreground">
-        <div className="container mx-auto px-4 py-12">
-          <div className="font-sans text-xs uppercase tracking-widest text-accent mb-2">
-            Journal Archive
-          </div>
-          <h1 className="font-serif text-3xl sm:text-4xl lg:text-5xl font-bold mb-3">
-            Archive
-          </h1>
-          <p className="font-serif text-lg opacity-90 max-w-3xl">
-            Browse all published volumes and issues of the Journal of Economic Research
-            since 1996. Articles are available in full-text PDF under an open-access
-            Creative Commons licence.
-          </p>
-        </div>
-      </section>
+      <JournalBanner active={onlineFirst ? "online-first" : "archive"} />
+      <div className="container mx-auto px-4 pt-8">
+        <h3 className="text-[16px] font-bold uppercase text-primary border-b-2 border-[var(--aom-rule)] pb-3">
+          {onlineFirst ? "In-Press · Articles published online" : "Archive · All volumes and issues"}
+        </h3>
+      </div>
 
-      <section className="container mx-auto px-4 py-10">
+      <section className="container mx-auto px-4 py-6">
         {/* Search & filter bar */}
         <div className="bg-card border border-border rounded-md p-5 mb-8">
           <div className="flex flex-col lg:flex-row gap-3">
@@ -156,15 +156,25 @@ export function ArchivePage() {
         </div>
 
         {/* When searching, show flat list. Otherwise, show by issue */}
-        {search.trim() || year !== "all" ? (
+        {search.trim() || year !== "all" || onlineFirst ? (
           <div>
             <h2 className="font-serif text-xl font-bold text-primary mb-4 border-b border-border pb-2">
-              Search Results
+              {onlineFirst && !search.trim() ? "Most recently published online" : "Search Results"}
             </h2>
             {filteredArticles.length === 0 ? (
-              <p className="font-serif text-base text-muted-foreground py-10 text-center">
-                No articles match your search. Try a different keyword or year filter.
-              </p>
+              <div className="py-10 text-center">
+                <p className="font-serif text-base text-muted-foreground">
+                  No articles match your search. Try a different keyword or year filter.
+                </p>
+                <Button
+                  variant="outline"
+                  size="sm"
+                  className="font-sans mt-4"
+                  onClick={() => { setSearch(""); setYear("all"); navigate("archive"); }}
+                >
+                  Clear search
+                </Button>
+              </div>
             ) : (
               <div className="divide-y divide-border">
                 {filteredArticles.map((article) => (
@@ -212,6 +222,15 @@ export function ArchivePage() {
                     </button>
                     {expanded && (
                       <div className="px-5 pb-3">
+                        <button
+                          onClick={() =>
+                            navigate("current-issue", { params: { volume: String(issue.volume), issue: String(issue.issue) } })
+                          }
+                          className="font-sans text-sm text-accent hover:underline flex items-center gap-1 pt-1"
+                        >
+                          View table of contents, issue PDF &amp; citations
+                          <ChevronRight className="w-3.5 h-3.5" />
+                        </button>
                         <div className="divide-y divide-border">
                           {issue.articles.map((article) => (
                             <ArticleListItem key={article.id} article={article} />

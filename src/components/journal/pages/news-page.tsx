@@ -3,13 +3,18 @@
 import { NEWS_ITEMS, JOURNAL_INFO } from "@/data/journal";
 import { Badge } from "@/components/ui/badge";
 import { useNav } from "../nav-context";
+import { useSession } from "../session";
+import { Button } from "@/components/ui/button";
 import { CalendarDays, ArrowRight, Send, Award } from "lucide-react";
 
 export function NewsPage() {
-  const { navigate } = useNav();
+  const { navigate, params } = useNav();
+  const { openAlerts } = useSession();
+  const category = params.category ?? null;
+  const visible = category ? NEWS_ITEMS.filter((n) => n.category === category) : NEWS_ITEMS;
 
   // Group by year
-  const grouped = NEWS_ITEMS.reduce((acc, item) => {
+  const grouped = visible.reduce((acc, item) => {
     const year = new Date(item.date).getFullYear().toString();
     if (!acc[year]) acc[year] = [];
     acc[year].push(item);
@@ -49,7 +54,8 @@ export function NewsPage() {
                   {grouped[year].map((item) => (
                     <article
                       key={item.id}
-                      className="bg-card border border-border rounded-md p-5 hover:border-accent transition-colors"
+                      id={`news-${item.id}`}
+                      className="scroll-mt-40 bg-card border border-border rounded-md p-5 hover:border-accent transition-colors"
                     >
                       <div className="flex items-center gap-2 mb-2 flex-wrap">
                         <Badge
@@ -84,12 +90,13 @@ export function NewsPage() {
                 Subscribe to receive email notifications of new issues and journal
                 announcements.
               </p>
-              <a
-                href={`mailto:${JOURNAL_INFO.contactEmail}?subject=Subscribe to journal announcements`}
-                className="font-sans text-sm text-accent hover:underline"
+              <Button
+                size="sm"
+                onClick={() => openAlerts(["new-issue", "news"])}
+                className="font-sans bg-primary text-primary-foreground hover:bg-primary/90 mt-1"
               >
-                {JOURNAL_INFO.contactEmail}
-              </a>
+                Subscribe to alerts
+              </Button>
             </div>
           </div>
 
@@ -99,31 +106,29 @@ export function NewsPage() {
               <h3 className="font-serif text-base font-semibold text-primary mb-3 border-b border-border pb-2">
                 Categories
               </h3>
-              <ul className="space-y-2 font-sans text-sm">
-                <li className="flex items-center justify-between">
-                  <span className="text-foreground/80">Issues</span>
-                  <Badge variant="secondary" className="font-sans text-[10px]">
-                    {NEWS_ITEMS.filter((n) => n.category === "Issue").length}
-                  </Badge>
-                </li>
-                <li className="flex items-center justify-between">
-                  <span className="text-foreground/80">Announcements</span>
-                  <Badge variant="secondary" className="font-sans text-[10px]">
-                    {NEWS_ITEMS.filter((n) => n.category === "Announcement").length}
-                  </Badge>
-                </li>
-                <li className="flex items-center justify-between">
-                  <span className="text-foreground/80">Awards</span>
-                  <Badge variant="secondary" className="font-sans text-[10px]">
-                    {NEWS_ITEMS.filter((n) => n.category === "Award").length}
-                  </Badge>
-                </li>
-                <li className="flex items-center justify-between">
-                  <span className="text-foreground/80">Editorial</span>
-                  <Badge variant="secondary" className="font-sans text-[10px]">
-                    {NEWS_ITEMS.filter((n) => n.category === "Editorial").length}
-                  </Badge>
-                </li>
+              <ul className="space-y-1 font-sans text-sm">
+                {[
+                  { label: "All news", value: null },
+                  { label: "Issues", value: "Issue" },
+                  { label: "Announcements", value: "Announcement" },
+                  { label: "Awards", value: "Award" },
+                  { label: "Editorial", value: "Editorial" },
+                ].map((c) => (
+                  <li key={c.label}>
+                    <button
+                      onClick={() => navigate("news", c.value ? { params: { category: c.value } } : undefined)}
+                      aria-pressed={category === c.value}
+                      className={`w-full flex items-center justify-between px-2 py-1.5 rounded-sm transition-colors ${
+                        category === c.value ? "bg-primary text-primary-foreground" : "text-foreground/80 hover:bg-secondary"
+                      }`}
+                    >
+                      <span>{c.label}</span>
+                      <Badge variant="secondary" className="font-sans text-[10px]">
+                        {c.value ? NEWS_ITEMS.filter((n) => n.category === c.value).length : NEWS_ITEMS.length}
+                      </Badge>
+                    </button>
+                  </li>
+                ))}
               </ul>
             </div>
 

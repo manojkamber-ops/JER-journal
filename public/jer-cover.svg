@@ -1,39 +1,20 @@
 <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 300 410" fill="none">
-  <!-- Cover background: deep navy -->
-  <rect x="0" y="0" width="300" height="410" fill="#0c2a4d"/>
-  <!-- Top gold band -->
-  <rect x="0" y="0" width="300" height="8" fill="#b0894f"/>
-  <!-- Decorative side gold rule -->
-  <rect x="18" y="60" width="2" height="320" fill="#b0894f" opacity="0.6"/>
-
-  <!-- Issue badge (top right) -->
-  <text x="282" y="40" text-anchor="end" font-family="Georgia, serif" font-size="11" fill="#d4ab68" letter-spacing="1.5">VOLUME 30</text>
-  <text x="282" y="55" text-anchor="end" font-family="Georgia, serif" font-size="11" fill="#d4ab68" letter-spacing="1.5">ISSUE 3 · 2025</text>
-
-  <!-- Journal title -->
-  <text x="36" y="100" font-family="Georgia, serif" font-size="22" font-weight="700" fill="#f7f3e9" letter-spacing="0.3">Journal of</text>
-  <text x="36" y="128" font-family="Georgia, serif" font-size="22" font-weight="700" fill="#f7f3e9" letter-spacing="0.3">Economic</text>
-  <text x="36" y="156" font-family="Georgia, serif" font-size="22" font-weight="700" fill="#f7f3e9" letter-spacing="0.3">Research</text>
-
-  <!-- Gold rule under title -->
-  <rect x="36" y="172" width="180" height="1.5" fill="#b0894f"/>
-
-  <!-- Subtitle -->
-  <text x="36" y="194" font-family="Georgia, serif" font-style="italic" font-size="11" fill="#d4ab68">A Peer-Reviewed Open Access Journal</text>
-
-  <!-- Article preview -->
-  <text x="36" y="240" font-family="Georgia, serif" font-size="10" fill="#f7f3e9" opacity="0.75" letter-spacing="1">IN THIS ISSUE</text>
-  <rect x="36" y="248" width="50" height="1" fill="#b0894f"/>
-  <text x="36" y="270" font-family="Georgia, serif" font-size="10" fill="#f7f3e9">Artificial Intelligence, Productivity,</text>
-  <text x="36" y="284" font-family="Georgia, serif" font-size="10" fill="#f7f3e9">and Wage Inequality</text>
-  <text x="36" y="304" font-family="Georgia, serif" font-style="italic" font-size="9" fill="#d4ab68">Choi, Yang &amp; Dubois</text>
-
-  <text x="36" y="328" font-family="Georgia, serif" font-size="10" fill="#f7f3e9">Monetary Policy Transmission</text>
-  <text x="36" y="342" font-family="Georgia, serif" font-size="10" fill="#f7f3e9">in Emerging Asia</text>
-  <text x="36" y="362" font-family="Georgia, serif" font-style="italic" font-size="9" fill="#d4ab68">Park, Chen &amp; Kumar</text>
-
-  <!-- Publisher footer -->
-  <rect x="0" y="385" width="300" height="25" fill="#08213d"/>
-  <text x="36" y="402" font-family="Georgia, serif" font-size="9" fill="#d4ab68" letter-spacing="0.8">HANYANG UNIVERSITY · SEOUL</text>
-  <text x="282" y="402" text-anchor="end" font-family="Georgia, serif" font-size="9" fill="#f7f3e9" opacity="0.8">ISSN 1226-4261</text>
+  <!-- AOM-style cover: maroon field, white title panel, sweeping wave -->
+  <rect width="300" height="410" fill="#823130"/>
+  <path d="M0 300 C 80 250, 170 360, 300 290 L300 410 L0 410 Z" fill="#6e2726"/>
+  <path d="M0 330 C 90 290, 180 390, 300 320 L300 410 L0 410 Z" fill="#ffffff" opacity="0.92"/>
+  <text x="22" y="40" font-family="Source Sans 3, Helvetica, Arial, sans-serif" font-size="11" fill="#f3dede" letter-spacing="1">Journal of</text>
+  <text x="22" y="56" font-family="Source Sans 3, Helvetica, Arial, sans-serif" font-size="11" fill="#f3dede" letter-spacing="1">Economic Research</text>
+  <rect x="22" y="78" width="186" height="66" fill="#ffffff"/>
+  <text x="32" y="106" font-family="Georgia, serif" font-size="22" fill="#2b2b2b">Economic</text>
+  <text x="32" y="132" font-family="Georgia, serif" font-size="22" fill="#2b2b2b">Research</text>
+  <text x="22" y="172" font-family="Source Sans 3, Helvetica, Arial, sans-serif" font-size="10" fill="#f3dede" letter-spacing="1.2">VOLUME 30 · ISSUE 3 · JULY 2025</text>
+  <g stroke="#ffffff" stroke-opacity="0.18">
+    <line x1="232" y1="0" x2="232" y2="300"/>
+    <line x1="246" y1="0" x2="246" y2="296"/>
+    <line x1="260" y1="0" x2="260" y2="292"/>
+  </g>
+  <rect x="22" y="372" width="14" height="14" fill="#823130"/>
+  <text x="42" y="383" font-family="Source Sans 3, Helvetica, Arial, sans-serif" font-size="9" font-weight="700" fill="#823130" letter-spacing="0.6">HANYANG UNIVERSITY</text>
+  <text x="278" y="383" text-anchor="end" font-family="Source Sans 3, Helvetica, Arial, sans-serif" font-size="9" fill="#5f5f5f">ISSN 1226-4261</text>
 </svg>

@@ -2,6 +2,7 @@
 
 import { useState } from "react";
 import { JOURNAL_INFO } from "@/data/journal";
+import { api, useSession } from "../session";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { Textarea } from "@/components/ui/textarea";
@@ -27,15 +28,29 @@ import {
   Globe2,
   Clock,
   Printer,
+  Loader2,
 } from "lucide-react";
 
 export function ContactPage() {
+  const { user } = useSession();
   const [submitted, setSubmitted] = useState(false);
+  const [busy, setBusy] = useState(false);
+  const [error, setError] = useState<string | null>(null);
 
-  const handleSubmit = (e: React.FormEvent) => {
+  const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
-    setSubmitted(true);
-    window.scrollTo({ top: 0, behavior: "smooth" });
+    const body = Object.fromEntries(new FormData(e.currentTarget));
+    if (!body.subject) return setError("Please select a subject.");
+    setBusy(true);
+    setError(null);
+    try {
+      await api("/api/contact", { method: "POST", body: JSON.stringify(body) });
+      setSubmitted(true);
+    } catch (err) {
+      setError((err as Error).message);
+    } finally {
+      setBusy(false);
+    }
   };
 
   return (
@@ -125,7 +140,8 @@ export function ContactPage() {
                 Journal Identifier
               </h3>
               <p className="font-sans text-sm text-foreground/85 mb-2">
-                ISSN: <span className="font-mono">{JOURNAL_INFO.issnPrint}</span> (print &amp; online)
+                ISSN: <span className="font-mono">{JOURNAL_INFO.issnPrint}</span> (print) · eISSN:{" "}
+                <span className="font-mono">{JOURNAL_INFO.issnOnline}</span> (online)
               </p>
               <p className="font-sans text-sm text-foreground/85 mb-2">
                 DOI prefix: <span className="font-mono">{JOURNAL_INFO.doiPrefix}</span>
@@ -179,6 +195,8 @@ export function ContactPage() {
                         </Label>
                         <Input
                           id="name"
+                          name="name"
+                          defaultValue={user?.name}
                           required
                           placeholder="Your name"
                           className="mt-1.5 font-sans"
@@ -190,7 +208,9 @@ export function ContactPage() {
                         </Label>
                         <Input
                           id="email"
+                          name="email"
                           type="email"
+                          defaultValue={user?.email}
                           required
                           placeholder="you@institution.edu"
                           className="mt-1.5 font-sans"
@@ -205,6 +225,8 @@ export function ContactPage() {
                         </Label>
                         <Input
                           id="org"
+                          name="organisation"
+                          defaultValue={user?.affiliation ?? undefined}
                           placeholder="Your university or organisation"
                           className="mt-1.5 font-sans"
                         />
@@ -213,7 +235,7 @@ export function ContactPage() {
                         <Label htmlFor="topic" className="font-sans text-sm font-medium">
                           Subject <span className="text-destructive">*</span>
                         </Label>
-                        <Select required>
+                        <Select name="subject" required>
                           <SelectTrigger className="mt-1.5 font-sans">
                             <SelectValue placeholder="Select a subject" />
                           </SelectTrigger>
@@ -235,6 +257,7 @@ export function ContactPage() {
                       </Label>
                       <Textarea
                         id="msg"
+                        name="message"
                         required
                         rows={6}
                         placeholder="Please describe your inquiry. If referencing a specific article, please include its DOI or article ID."
@@ -243,7 +266,7 @@ export function ContactPage() {
                     </div>
 
                     <div className="bg-secondary/40 border border-border rounded-md p-3 flex items-start gap-2">
-                      <input type="checkbox" required className="mt-1" />
+                      <input id="privacy" type="checkbox" required className="mt-1" />
                       <Label htmlFor="privacy" className="font-sans text-xs text-foreground/80 cursor-pointer">
                         I consent to the processing of my personal data in accordance
                         with the journal&apos;s privacy policy for the purpose of responding
@@ -251,12 +274,18 @@ export function ContactPage() {
                       </Label>
                     </div>
 
+                    {error && (
+                      <p role="alert" className="font-sans text-sm text-destructive bg-destructive/10 border border-destructive/30 rounded-sm px-3 py-2">
+                        {error}
+                      </p>
+                    )}
                     <Button
                       type="submit"
                       size="lg"
+                      disabled={busy}
                       className="font-sans bg-primary text-primary-foreground hover:bg-primary/90"
                     >
-                      <Send className="w-4 h-4 mr-2" />
+                      {busy ? <Loader2 className="w-4 h-4 mr-2 animate-spin" /> : <Send className="w-4 h-4 mr-2" />}
                       Send Message
                     </Button>
                   </form>
@@ -274,30 +303,35 @@ export function ContactPage() {
               Find Us
             </h3>
           </div>
-          <div className="aspect-[16/7] bg-secondary/30 flex items-center justify-center relative">
-            <div className="absolute inset-0 opacity-20" style={{
-              backgroundImage: `
-                linear-gradient(to right, var(--border) 1px, transparent 1px),
-                linear-gradient(to bottom, var(--border) 1px, transparent 1px)
-              `,
-              backgroundSize: "40px 40px",
-            }} />
-            <div className="text-center relative">
-              <MapPin className="w-10 h-10 mx-auto text-accent mb-2" />
-              <p className="font-serif text-base font-semibold text-primary">
-                Hanyang University, Seoul Campus
-              </p>
-              <p className="font-sans text-xs text-muted-foreground mt-1">
+          <div className="grid md:grid-cols-3">
+            <iframe
+              title="Map of Hanyang University, Seoul Campus"
+              src="https://www.openstreetmap.org/export/embed.html?bbox=127.0368%2C37.5528%2C127.0538%2C37.5618&layer=mapnik&marker=37.5573%2C127.0453"
+              className="md:col-span-2 w-full aspect-[16/9] md:aspect-auto md:min-h-[320px] border-0"
+              loading="lazy"
+            />
+            <div className="p-6 flex flex-col justify-center">
+              <p className="font-serif text-base font-semibold text-primary">Hanyang University, Seoul Campus</p>
+              <p className="font-sans text-sm text-muted-foreground mt-1">
+                College of Economics and Finance<br />
                 222 Wangsimni-ro, Seongdong-gu, Seoul 04763
               </p>
-              <a
-                href="https://www.hanyang.ac.kr/"
-                target="_blank"
-                rel="noopener noreferrer"
-                className="font-sans text-xs text-accent hover:underline mt-2 inline-block"
-              >
-                View on university map →
-              </a>
+              <p className="font-sans text-sm text-muted-foreground mt-3">
+                Subway: Hanyang Univ. Station (Line 2), Exit 2
+              </p>
+              <div className="flex flex-wrap gap-3 mt-4 font-sans text-sm">
+                <a
+                  href="https://www.google.com/maps/search/?api=1&query=Hanyang+University+222+Wangsimni-ro+Seoul"
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  className="text-accent hover:underline"
+                >
+                  Get directions →
+                </a>
+                <a href="https://www.hanyang.ac.kr/" target="_blank" rel="noopener noreferrer" className="text-accent hover:underline">
+                  University website →
+                </a>
+              </div>
             </div>
           </div>
         </div>

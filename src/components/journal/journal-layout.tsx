@@ -14,9 +14,14 @@ import { AuthorGuidelinesPage } from "./pages/author-guidelines-page";
 import { PoliciesPage } from "./pages/policies-page";
 import { NewsPage } from "./pages/news-page";
 import { ContactPage } from "./pages/contact-page";
+import { AccountPage } from "./pages/account-page";
+import { LegalPage } from "./pages/legal-page";
+import { SessionProvider } from "./session";
+import { ReaderPage } from "./pages/reader-page";
+import { articleByDoi } from "@/lib/doi";
 
 function PageRouter() {
-  const { page, articleId } = useNav();
+  const { page, articleId, params } = useNav();
 
   switch (page) {
     case "home":
@@ -26,11 +31,11 @@ function PageRouter() {
     case "editorial-board":
       return <EditorialBoardPage />;
     case "current-issue":
-      return <CurrentIssuePage />;
+      return <CurrentIssuePage key={`${params.volume}-${params.issue}`} />;
     case "archive":
-      return <ArchivePage />;
+      return <ArchivePage key={params.q ?? ""} />;
     case "article":
-      return <ArticleViewPage articleId={articleId} />;
+      return <ArticleViewPage key={articleId} articleId={articleId} />;
     case "submission":
       return <SubmissionPage />;
     case "author-guidelines":
@@ -41,21 +46,58 @@ function PageRouter() {
       return <NewsPage />;
     case "contact":
       return <ContactPage />;
+    case "account":
+      return <AccountPage />;
+    case "legal":
+      return <LegalPage />;
+    case "doi":
+      return <DoiNotFound />;
     default:
       return <HomePage />;
   }
 }
 
-export function JournalLayout({ children }: { children?: React.ReactNode }) {
+// The ePub-style reader is full screen, without the site header and footer
+function Shell() {
+  const { page, articleId } = useNav();
+  if (page === "reader") return <ReaderPage key={articleId} articleId={articleId} />;
+  if (page === "doi") {
+    // DOI resolver: a JER DOI opens the paper as a PDF
+    const article = articleId ? articleByDoi(articleId) : undefined;
+    if (article) return <ReaderPage key={article.id} articleId={article.id} defaultView="pdf" />;
+  }
+  return (
+    <div className="min-h-screen flex flex-col bg-background">
+      <Header />
+      <main className="flex-1">
+        <PageRouter />
+      </main>
+      <Footer />
+    </div>
+  );
+}
+
+export function JournalLayout() {
   return (
     <NavProvider>
-      <div className="min-h-screen flex flex-col bg-background">
-        <Header />
-        <main className="flex-1">
-          <PageRouter />
-        </main>
-        <Footer />
-      </div>
+      <SessionProvider>
+        <Shell />
+      </SessionProvider>
     </NavProvider>
+  );
+}
+
+function DoiNotFound() {
+  const { articleId, navigate } = useNav();
+  return (
+    <div className="container mx-auto px-4 py-24 text-center max-w-xl">
+      <h1 className="text-[26px] font-bold text-primary mb-2">DOI not found</h1>
+      <p className="text-[16px] text-[#616161] mb-6">
+        No article in the Journal of Economic Research has the DOI <span className="font-mono">{articleId}</span>.
+      </p>
+      <button onClick={() => navigate("archive", articleId ? { params: { q: articleId } } : undefined)} className="h-10 px-5 bg-[var(--aom-button)] text-white font-semibold">
+        Search the archive
+      </button>
+    </div>
   );
 }

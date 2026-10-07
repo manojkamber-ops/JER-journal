@@ -13,7 +13,7 @@ export function ArticleCard({ article, compact = false }: { article: Article; co
   return (
     <article
       className="group bg-white border border-gray-200 rounded-sm p-4 hover:border-accent hover:shadow-md transition-all cursor-pointer"
-      onClick={() => navigate("article", { articleId: article.id })}
+      onClick={() => navigate("reader", { articleId: article.id })}
     >
       <div className="flex items-center gap-2 mb-1.5 flex-wrap">
         <Badge variant="outline" className="font-sans text-[10px] uppercase tracking-wide border-accent text-accent">
@@ -67,7 +67,7 @@ export function ArticleListItem({ article }: { article: Article }) {
   return (
     <article
       className="py-4 border-b border-gray-200 last:border-0 cursor-pointer hover:bg-gray-50 transition-colors px-4 -mx-4"
-      onClick={() => navigate("article", { articleId: article.id })}
+      onClick={() => navigate("reader", { articleId: article.id })}
     >
       <div className="flex items-baseline gap-3 mb-1 flex-wrap">
         <Badge variant="outline" className="font-sans text-[10px] uppercase tracking-wide border-accent text-accent">
@@ -144,7 +144,7 @@ export function JELBadge({ code }: { code: string }) {
 
 export function CorrespondingAuthorNote({ article }: { article: Article }) {
   const corresponding = article.authors.find((a) => a.corresponding);
-  if (!corresponding) return null;
+  if (!corresponding?.email) return null;
   return (
     <p className="font-sans text-xs text-muted-foreground mt-2 flex items-center gap-1.5">
       <Mail className="w-3 h-3" />

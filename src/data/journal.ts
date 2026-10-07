@@ -1,6 +1,6 @@
 // Journal of Economic Research - Data
 // Publisher: Hanyang University Seoul
-// ISSN: 1226-4261 | Field of Research: 3801 | ABDC Rating: B
+// ISSN: 1226-4261 | eISSN: 2713-6418 | Field of Research: 3801 (Applied Economics) | ABDC Rating: B | KCI-listed
 
 export const JOURNAL_INFO = {
   title: "Journal of Economic Research",
@@ -9,11 +9,13 @@ export const JOURNAL_INFO = {
   school: "Hanyang University",
   department: "Department of Economics, College of Economics and Finance",
   issnPrint: "1226-4261",
-  issnOnline: "1226-4261",
+  issnOnline: "2713-6418",
   fieldOfResearch: "3801",
   forDescription: "Applied Economics",
   abdcRating: "B",
   abdcYear: "2022",
+  /** Korea Citation Index (National Research Foundation of Korea) status. */
+  kciStatus: "KCI-listed journal",
   frequency: "Quarterly (4 issues per year)",
   founded: "1996",
   editorInChiefOffice: "Hanyang University, 222 Wangsimni-ro, Seongdong-gu, Seoul 04763, Republic of Korea",
@@ -25,6 +27,15 @@ export const JOURNAL_INFO = {
   license: "Open Access — Creative Commons Attribution-NonCommercial 4.0 (CC BY-NC 4.0)",
   apc: "No Article Processing Charge (APC). Publication is fully funded by Hanyang University.",
   language: "English",
+};
+
+// The issue shown as "Current Issue" across the site.
+export const CURRENT_ISSUE = {
+  volume: 30,
+  issue: 4,
+  year: 2025,
+  published: "2025-10-15",
+  label: "October 2025",
 };
 
 export type AuthorAffiliation = {
@@ -46,15 +57,16 @@ export type ArticleAuthor = {
 
 export type ArticleReference = {
   number: number;
-  text: string;       // full reference string, AER style
+  text: string;       // full reference string (AER or APA style)
   doi?: string;
+  articleId?: string; // set when the reference is a JER article, so readers can open it on the site
 };
 
 export type Article = {
   id: string;
   doi: string;
   title: string;
-  authors: { name: string; affiliation: string; corresponding?: boolean }[];
+  authors: { name: string; affiliation: string; corresponding?: boolean; email?: string }[];
   // New: AOM-style structured authors & affiliations (used by the redesigned article page)
   structuredAuthors?: ArticleAuthor[];
   affiliations?: AuthorAffiliation[];
@@ -578,12 +590,12 @@ export const ARTICLES: Article[] = [
     id: "2025-v30-i3-09",
     doi: "10.17256/JER.2025.30.3.009",
     title:
-      "Short Communication: A Note on the Identification of Monetary Policy Shocks in Small Open Economies",
+      "A Note on the Identification of Monetary Policy Shocks in Small Open Economies",
     authors: [
       { name: "Tae-Hee Kim", affiliation: "Hanyang University, Seoul, Republic of Korea", corresponding: true },
     ],
     abstract:
-      "This short communication revisits the identification of monetary policy shocks in small open economies using high-frequency data. We show that the standard approach of deriving surprises from intra-day asset price movements around policy announcements can be biased by simultaneous central bank communication about exchange-rate management. We propose a simple two-step adjustment that nets out the exchange-rate component and demonstrate, in a Monte Carlo exercise and on Korean data, that the corrected shock series implies a stronger and more persistent transmission to output and inflation than previously documented.",
+      "This paper revisits the identification of monetary policy shocks in small open economies using high-frequency data. We show that the standard approach of deriving surprises from intra-day asset price movements around policy announcements can be biased by simultaneous central bank communication about exchange-rate management. We propose a simple two-step adjustment that nets out the exchange-rate component and demonstrate, in a Monte Carlo exercise and on Korean data, that the corrected shock series implies a stronger and more persistent transmission to output and inflation than previously documented.",
     keywords: ["Monetary policy shocks", "High-frequency identification", "Small open economy", "Korea"],
     jelCodes: ["E52", "E58", "C32"],
     pages: "443–452",
@@ -596,7 +608,7 @@ export const ARTICLES: Article[] = [
     citations: 0,
     downloads: 218,
     pdfSize: "0.74 MB",
-    type: "Short Communication",
+    type: "Research Article",
   },
   // ===== Vol. 30, Issue 2 — additional papers =====
   {
@@ -653,7 +665,7 @@ export const ARTICLES: Article[] = [
     id: "2025-v30-i2-06",
     doi: "10.17256/JER.2025.30.2.006",
     title:
-      "Short Communication: A New Composite Index of Financial Inclusion for Developing Asia",
+      "A New Composite Index of Financial Inclusion for Developing Asia",
     authors: [
       { name: "Samuel Adeyemi", affiliation: "University of Ibadan, Ibadan, Nigeria", corresponding: true },
       { name: "Da-Eun Han", affiliation: "Hanyang University, Seoul, Republic of Korea" },
@@ -672,7 +684,7 @@ export const ARTICLES: Article[] = [
     citations: 2,
     downloads: 489,
     pdfSize: "0.86 MB",
-    type: "Short Communication",
+    type: "Research Article",
   },
   // ===== Vol. 30, Issue 1 — additional papers =====
   {
@@ -729,7 +741,7 @@ export const ARTICLES: Article[] = [
     id: "2025-v30-i1-06",
     doi: "10.17256/JER.2025.30.1.006",
     title:
-      "Short Communication: Measuring Subjective Economic Expectations in Real Time Using Internet Search Data",
+      "Measuring Subjective Economic Expectations in Real Time Using Internet Search Data",
     authors: [
       { name: "Min-Jae Choi", affiliation: "Hanyang University, Seoul, Republic of Korea", corresponding: true },
       { name: "Hyun-Ju Yang", affiliation: "Korea Development Institute, Sejong, Republic of Korea" },
@@ -748,7 +760,7 @@ export const ARTICLES: Article[] = [
     citations: 3,
     downloads: 542,
     pdfSize: "0.81 MB",
-    type: "Short Communication",
+    type: "Research Article",
   },
   // ===== Vol. 29, Issue 4 — additional papers =====
   {
@@ -983,7 +995,7 @@ export const ARTICLES: Article[] = [
     id: "2024-v29-i2-04",
     doi: "10.17256/JER.2024.29.2.004",
     title:
-      "Short Communication: Revisiting the Easterlin Paradox with Long-Run Korean Data",
+      "Revisiting the Easterlin Paradox with Long-Run Korean Data",
     authors: [
       { name: "Evelyn Stewart", affiliation: "Stockholm University, Stockholm, Sweden", corresponding: true },
       { name: "Sang-Yoon Han", affiliation: "Hanyang University, Seoul, Republic of Korea" },
@@ -1002,7 +1014,7 @@ export const ARTICLES: Article[] = [
     citations: 5,
     downloads: 612,
     pdfSize: "0.78 MB",
-    type: "Short Communication",
+    type: "Research Article",
   },
   // ===== Vol. 29, Issue 1 — new complete issue =====
   {
@@ -1084,7 +1096,7 @@ export const ARTICLES: Article[] = [
     id: "2024-v29-i1-04",
     doi: "10.17256/JER.2024.29.1.004",
     title:
-      "Short Communication: A Note on the Estimation of Total Factor Productivity with Endogenous Markups",
+      "A Note on the Estimation of Total Factor Productivity with Endogenous Markups",
     authors: [
       { name: "Andreas Müller", affiliation: "University of Zurich, Zurich, Switzerland", corresponding: true },
       { name: "Min-Su Park", affiliation: "Hanyang University, Seoul, Republic of Korea" },
@@ -1103,7 +1115,7 @@ export const ARTICLES: Article[] = [
     citations: 3,
     downloads: 384,
     pdfSize: "0.72 MB",
-    type: "Short Communication",
+    type: "Research Article",
   },
   // ===== Vol. 28, Issue 4 — additional papers =====
   {
@@ -1160,7 +1172,7 @@ export const ARTICLES: Article[] = [
     id: "2023-v28-i4-04",
     doi: "10.17256/JER.2023.28.4.004",
     title:
-      "Short Communication: News Sentiment and the Term Structure of Interest Rates in Asia",
+      "News Sentiment and the Term Structure of Interest Rates in Asia",
     authors: [
       { name: "Tae-Hee Kim", affiliation: "Hanyang University, Seoul, Republic of Korea", corresponding: true },
       { name: "Jiwon Lee", affiliation: "Korea University, Seoul, Republic of Korea" },
@@ -1179,7 +1191,7 @@ export const ARTICLES: Article[] = [
     citations: 4,
     downloads: 642,
     pdfSize: "0.84 MB",
-    type: "Short Communication",
+    type: "Research Article",
   },
   // ===== Vol. 28, Issue 3 — new complete issue =====
   {
@@ -1262,7 +1274,7 @@ export const ARTICLES: Article[] = [
     id: "2023-v28-i3-04",
     doi: "10.17256/JER.2023.28.3.004",
     title:
-      "Short Communication: Nowcasting Korean GDP Growth Using Mixed-Frequency Machine Learning Models",
+      "Nowcasting Korean GDP Growth Using Mixed-Frequency Machine Learning Models",
     authors: [
       { name: "Min-Jae Choi", affiliation: "Hanyang University, Seoul, Republic of Korea", corresponding: true },
       { name: "Hyun-Ju Yang", affiliation: "Korea Development Institute, Sejong, Republic of Korea" },
@@ -1281,7 +1293,7 @@ export const ARTICLES: Article[] = [
     citations: 7,
     downloads: 1084,
     pdfSize: "0.92 MB",
-    type: "Short Communication",
+    type: "Research Article",
   },
   // ===== Vol. 28, Issue 2 — new complete issue =====
   {
@@ -1363,7 +1375,7 @@ export const ARTICLES: Article[] = [
     id: "2023-v28-i2-04",
     doi: "10.17256/JER.2023.28.2.004",
     title:
-      "Short Communication: Measuring Network Centrality in Asian Trade Linkages",
+      "Measuring Network Centrality in Asian Trade Linkages",
     authors: [
       { name: "Yuki Tanaka", affiliation: "Keio University, Tokyo, Japan", corresponding: true },
       { name: "Wei Zhang", affiliation: "Fudan University, Shanghai, China" },
@@ -1382,7 +1394,7 @@ export const ARTICLES: Article[] = [
     citations: 4,
     downloads: 524,
     pdfSize: "0.78 MB",
-    type: "Short Communication",
+    type: "Research Article",
   },
   // ===== Vol. 28, Issue 1 — new complete issue =====
   {
@@ -1464,7 +1476,7 @@ export const ARTICLES: Article[] = [
     id: "2023-v28-i1-04",
     doi: "10.17256/JER.2023.28.1.004",
     title:
-      "Short Communication: Forecasting Korean Inflation with Machine Learning",
+      "Forecasting Korean Inflation with Machine Learning",
     authors: [
       { name: "Min-Jae Choi", affiliation: "Hanyang University, Seoul, Republic of Korea", corresponding: true },
       { name: "Hyun-Ju Yang", affiliation: "Korea Development Institute, Sejong, Republic of Korea" },
@@ -1483,7 +1495,7 @@ export const ARTICLES: Article[] = [
     citations: 6,
     downloads: 824,
     pdfSize: "0.88 MB",
-    type: "Short Communication",
+    type: "Research Article",
   },
   // ===== Vol. 27, Issue 4 (October 2022) — back-volume issue =====
   {
@@ -1612,7 +1624,7 @@ export const ARTICLES: Article[] = [
     pdfSize: "1.36 MB",
     type: "Research Article",
   },
-  // ===== Vol. 26, Issue 4 (October 2021) — earliest Scopus-indexed back-volume =====
+  // ===== Vol. 26, Issue 4 (October 2021) =====
   {
     id: "2021-v26-i4-01",
     doi: "10.17256/JER.2021.26.4.001",
@@ -1667,7 +1679,7 @@ export const ARTICLES: Article[] = [
     id: "2021-v26-i4-03",
     doi: "10.17256/JER.2021.26.4.003",
     title:
-      "Short Communication: The Causal Effect of COVID-19 Lockdowns on Air Quality in Asian Cities",
+      "The Causal Effect of COVID-19 Lockdowns on Air Quality in Asian Cities",
     authors: [
       { name: "Markus Bauer", affiliation: "University of Mannheim, Mannheim, Germany", corresponding: true },
       { name: "Hyun-Jin Kim", affiliation: "Hanyang University, Seoul, Republic of Korea" },
@@ -1686,7 +1698,7 @@ export const ARTICLES: Article[] = [
     citations: 8,
     downloads: 824,
     pdfSize: "0.84 MB",
-    type: "Short Communication",
+    type: "Research Article",
   },
   // ===== NEW PAPER — strict AOM-style format with full references =====
   // (Vol. 30, Issue 3, October 2025 — Research Article)
@@ -1758,9 +1770,9 @@ export const ARTICLES: Article[] = [
     issue: 3,
     year: 2025,
     received: "2024-12-08",
-    accepted: "2025-07-22",
-    published: "2025-10-15",
-    publishedOnline: "2025-09-02",
+    accepted: "2025-04-30",
+    published: "2025-07-15",
+    publishedOnline: "2025-06-10",
     citations: 2,
     downloads: 1432,
     pdfSize: "1.92 MB",
@@ -2090,6 +2102,14 @@ export type NewsItem = {
 
 export const NEWS_ITEMS: NewsItem[] = [
   {
+    id: "n0",
+    date: "2025-10-15",
+    title: "Volume 30, Issue 4 (October 2025) is now published",
+    summary:
+      "The October 2025 issue closes Volume 30 with three research articles: digital payments and small-firm growth in India (Aditi Sharma and Vikram Nair), India's rural employment guarantee as insurance against monsoon failure (Rohan Kulkarni and Meera Subramanian), and the employment effects of Korea's 2018–2019 minimum wage increases (Dong-Hyun Kwon), introduced by an editorial from Prof. Jae-Hoon Hwang.",
+    category: "Issue",
+  },
+  {
     id: "n1",
     date: "2025-07-15",
     title: "Volume 30, Issue 3 (July 2025) is now published",
@@ -2140,23 +2160,17 @@ export const NEWS_ITEMS: NewsItem[] = [
   {
     id: "n7",
     date: "2024-12-18",
-    title: "Journal of Economic Research indexed in KCI and Scopus",
+    title: "Indexing update: ABDC 'B' (Applied Economics) and KCI",
     summary:
-      "We are pleased to confirm that the Journal of Economic Research is now fully indexed in the Korean Citation Index (KCI) and Scopus, with coverage retroactive to Volume 26 (2021). This complements our existing EBSCO, EconLit, and DOAJ listings.",
+      "The Journal of Economic Research (ISSN 1226-4261, eISSN 2713-6418) is rated 'B' in the ABDC Journal Quality List under Applied Economics (FoR 3801) and is a KCI-listed journal in the Korea Citation Index of the National Research Foundation of Korea.",
     category: "Announcement",
   },
 ];
 
+// Verified indexing: ABDC Journal Quality List and the Korea Citation Index only.
 export const INDEXING_SERVICES = [
-  { name: "Scopus", since: "2021", coverage: "Volume 26 onwards" },
-  { name: "Korean Citation Index (KCI)", since: "2003", coverage: "Volume 8 onwards" },
-  { name: "EconLit (AEA)", since: "2005", coverage: "Volume 10 onwards" },
-  { name: "EBSCO Business Source Complete", since: "2008", coverage: "Volume 13 onwards" },
-  { name: "Directory of Open Access Journals (DOAJ)", since: "2016", coverage: "Volume 21 onwards" },
-  { name: "ABDC Journal Quality List", since: "2019", coverage: "Current rating: B" },
-  { name: "RePEc / IDEAS", since: "2012", coverage: "Volume 17 onwards" },
-  { name: "Crossref", since: "2012", coverage: "All DOIs registered" },
-  { name: "Google Scholar", since: "2007", coverage: "Volume 12 onwards" },
+  { name: "ABDC Journal Quality List", badge: "B — Applied Economics", since: "2019", coverage: "Australian Business Deans Council · FoR code 3801" },
+  { name: "Korea Citation Index (KCI)", badge: "KCI-listed", since: "2003", coverage: "National Research Foundation of Korea · currently publishing" },
 ];
 
 export const JOURNAL_STATS = {
@@ -2179,39 +2193,39 @@ export const JOURNAL_TIMELINE = [
   },
   {
     year: "2003",
-    title: "KCI Indexing",
+    title: "KCI Listing",
     description:
-      "The journal was accepted for indexing by the Korean Citation Index (KCI), marking its formal recognition as a peer-reviewed outlet of national standing. Editorial procedures were reorganised around a double-blind peer review protocol that remains in place today.",
+      "The journal was listed in the Korea Citation Index (KCI), marking its formal recognition as a peer-reviewed outlet of national standing. Editorial procedures were reorganised around a double-blind peer review protocol that remains in place today.",
   },
   {
     year: "2005",
-    title: "EconLit Indexing and Quarterly Frequency",
+    title: "Quarterly Frequency",
     description:
-      "The journal was indexed in EconLit, the bibliographic database of the American Economic Association, and moved from semi-annual to quarterly publication in order to accommodate growing submission volumes from researchers across Asia.",
+      "The journal moved from semi-annual to quarterly publication in order to accommodate growing submission volumes from researchers across Asia.",
   },
   {
     year: "2012",
     title: "Digital Transformation and DOI Registration",
     description:
-      "In partnership with Crossref, the journal began issuing Digital Object Identifiers (DOIs) for all published articles and migrated to a fully online editorial workflow. RePEc indexing was secured in the same year.",
+      "In partnership with Crossref, the journal began issuing Digital Object Identifiers (DOIs) for all published articles and migrated to a fully online editorial workflow.",
   },
   {
     year: "2016",
-    title: "Open Access and DOAJ",
+    title: "Open Access",
     description:
-      "The journal adopted a fully open-access publishing model under a Creative Commons Attribution-NonCommercial (CC BY-NC) licence and was accepted into the Directory of Open Access Journals (DOAJ). Article processing charges were eliminated, with publication costs underwritten by Hanyang University.",
+      "The journal adopted a fully open-access publishing model under a Creative Commons Attribution-NonCommercial (CC BY-NC) licence. Article processing charges were eliminated, with publication costs underwritten by Hanyang University.",
   },
   {
     year: "2019",
     title: "First ABDC Listing",
     description:
-      "The journal was first included in the Australian Business Deans Council (ABDC) Journal Quality List at the 'B' tier, reflecting its established standing as a regional outlet of international relevance.",
+      "The journal was first included in the Australian Business Deans Council (ABDC) Journal Quality List at the 'B' tier under Applied Economics (FoR 3801), reflecting its established standing as a regional outlet of international relevance.",
   },
   {
     year: "2021",
-    title: "Scopus Indexing and Restructured Editorial Board",
+    title: "Restructured Editorial Board",
     description:
-      "The journal was accepted for indexing in Scopus, with retroactive coverage back to Volume 26. The editorial board was restructured to include 18 associate editors from 11 countries, broadening the journal's international reach.",
+      "The editorial board was restructured to include 18 associate editors from 11 countries, broadening the journal's international reach.",
   },
   {
     year: "2025",
@@ -2269,7 +2283,7 @@ export const AUTHOR_GUIDELINES = {
         "Comprehensive survey articles synthesising the state of the art in a clearly defined subfield of economics. Review articles are normally commissioned but unsolicited submissions of exceptional quality will be considered.",
     },
     {
-      type: "Short Communication",
+      type: "Research Article",
       wordLimit: "3,000–5,000 words",
       description:
         "Concise reports of significant new findings or methodological advances that warrant rapid dissemination. Short Communications are reviewed under an expedited timeline.",
@@ -2309,3 +2323,173 @@ export const AUTHOR_GUIDELINES = {
     "Authorship should be limited to those who have made a significant contribution to the conception, design, execution, or interpretation of the reported study.",
   ],
 };
+
+// ===== Issue editorials (src/data/editorials.ts) =====
+// Each editorial becomes an Article (or completes the existing one) with an APA reference list
+// whose entries link to the cited JER articles.
+import { EDITORIALS } from "./editorials";
+
+function apaAuthors(names: string[]) {
+  const fmt = (full: string) => {
+    const parts = full.trim().split(/\s+/);
+    const surname = parts.pop() ?? full;
+    const initials = parts.map((p) => p.split("-").map((x) => `${x[0]}.`).join("-")).join(" ");
+    return initials ? `${surname}, ${initials}` : surname;
+  };
+  const list = names.map(fmt);
+  if (list.length === 1) return list[0];
+  return `${list.slice(0, -1).join(", ")}, & ${list[list.length - 1]}`;
+}
+
+function journalReference(a: Article, number: number): ArticleReference {
+  return {
+    number,
+    text: `${apaAuthors(a.authors.map((x) => x.name))} (${a.year}). ${a.title}. ${JOURNAL_INFO.title}, ${a.volume}(${a.issue}), ${a.pages}.`,
+    doi: a.doi,
+    articleId: a.id,
+  };
+}
+
+// ===== Full research papers (src/data/papers/*.ts, indexed by src/data/papers/index.ts) =====
+// Build order: (1) create the articles of every PaperSpec, attach FulltextSpecs to existing articles and
+// add the issue editorials; (2) repaginate each volume; (3) generate the reference lists, so that APA
+// references to JER articles carry their final page ranges.
+import { AUTHOR_AFFILIATIONS, type PaperSpec, type RefSpec } from "./paper-spec";
+import { ALL_FULLTEXTS, ALL_PAPERS } from "./papers";
+
+export const RESEARCH_PAPERS: PaperSpec[] = ALL_PAPERS;
+
+/** Reference specs of each article whose reference list is generated below. */
+const PENDING_REFS = new Map<string, RefSpec[]>();
+
+for (const paper of RESEARCH_PAPERS) {
+  const { refs, body: _body, authors, editorialNote: _note, ...meta } = paper;
+  const affiliationOf = (au: (typeof authors)[number]) => {
+    const aff = au.affiliation ?? AUTHOR_AFFILIATIONS[au.name];
+    if (!aff) throw new Error(`No affiliation for author ${au.name} (${paper.id})`);
+    return aff;
+  };
+  // One affiliation entry per distinct institution, labelled a, b, c…
+  const affiliations: AuthorAffiliation[] = [];
+  const structuredAuthors: ArticleAuthor[] = authors.map((au) => {
+    const aff = affiliationOf(au);
+    let entry = affiliations.find((x) => x.institution === aff.institution && x.department === aff.department);
+    if (!entry) {
+      entry = { id: String.fromCharCode(97 + affiliations.length), ...aff };
+      affiliations.push(entry);
+    }
+    return { name: au.name, affiliationIds: [entry.id], corresponding: au.corresponding };
+  });
+  if (ARTICLES.some((a) => a.id === paper.id)) throw new Error(`Duplicate article id ${paper.id}`);
+  const seq = paper.id.split("-").pop()!;
+  ARTICLES.push({
+    ...meta,
+    doi: `${JOURNAL_INFO.doiPrefix}/JER.${paper.year}.${paper.volume}.${paper.issue}.${seq.padStart(3, "0")}`,
+    authors: authors.map((au) => {
+      const aff = affiliationOf(au);
+      return { name: au.name, affiliation: `${aff.institution}, ${aff.city}, ${aff.country}`, corresponding: au.corresponding };
+    }),
+    structuredAuthors,
+    affiliations,
+    references: [],
+  });
+  PENDING_REFS.set(paper.id, refs);
+}
+
+for (const ft of ALL_FULLTEXTS) {
+  const article = ARTICLES.find((a) => a.id === ft.id);
+  if (!article) throw new Error(`Full text for unknown article ${ft.id}`);
+  if (ft.acknowledgments) article.acknowledgments = ft.acknowledgments;
+  if (ft.funding) article.funding = ft.funding;
+  if (ft.dataAvailability) article.dataAvailability = ft.dataAvailability;
+  PENDING_REFS.set(ft.id, ft.refs);
+}
+
+const EDITOR_AFFILIATION: AuthorAffiliation = {
+  id: "a",
+  department: "Department of Economics, College of Economics and Finance",
+  institution: "Hanyang University",
+  city: "Seoul",
+  country: "Republic of Korea",
+  email: JOURNAL_INFO.contactEmail,
+};
+
+for (const ed of EDITORIALS) {
+  const editorialFields = {
+    structuredAuthors: [{ name: "Jae-Hoon Hwang", affiliationIds: ["a"], corresponding: true }],
+    affiliations: [EDITOR_AFFILIATION],
+    references: [] as ArticleReference[],
+  };
+  PENDING_REFS.set(ed.id, ed.cited.map((id) => ({ jer: id })));
+
+  const existing = ARTICLES.find((a) => a.id === ed.id);
+  if (existing) {
+    Object.assign(existing, editorialFields, { abstract: ed.abstract, keywords: ed.keywords });
+    continue;
+  }
+
+  const published = new Date(ed.published);
+  const daysBefore = (n: number) => new Date(published.getTime() - n * 86_400_000).toISOString().slice(0, 10);
+  ARTICLES.push({
+    id: ed.id,
+    doi: `${JOURNAL_INFO.doiPrefix}/JER.${ed.year}.${ed.volume}.${ed.issue}.000`,
+    title: ed.title,
+    authors: [{ name: "Jae-Hoon Hwang", affiliation: "Hanyang University, Seoul, Republic of Korea", corresponding: true }],
+    abstract: ed.abstract,
+    keywords: ed.keywords,
+    jelCodes: ["A10"],
+    pages: ed.pages,
+    volume: ed.volume,
+    issue: ed.issue,
+    year: ed.year,
+    received: daysBefore(30),
+    accepted: daysBefore(20),
+    published: ed.published,
+    publishedOnline: daysBefore(5),
+    citations: Math.max(0, 2025 - ed.year),
+    downloads: 180 + ed.cited.length * 35,
+    pdfSize: "0.31 MB",
+    type: "Editorial",
+    ...editorialFields,
+  });
+}
+
+// Continuous pagination within each volume: issues in order, articles in their table-of-contents order
+// (existing first page, then id), each keeping its length. Roman-numbered front matter is left as is.
+{
+  const span = (pages: string) => {
+    const [from, to] = pages.split(/[–-]/).map((x) => parseInt(x, 10));
+    return Number.isFinite(from) && Number.isFinite(to) && to >= from ? to - from + 1 : 28;
+  };
+  const volumes = Array.from(new Set(ARTICLES.map((a) => a.volume))).sort((x, y) => x - y);
+  for (const v of volumes) {
+    const inVolume = ARTICLES.filter((a) => a.volume === v && Number.isFinite(parseInt(a.pages, 10)));
+    inVolume.sort((x, y) => x.issue - y.issue || parseInt(x.pages, 10) - parseInt(y.pages, 10) || x.id.localeCompare(y.id));
+    let next = 1;
+    for (const a of inVolume) {
+      // Full papers (12–15 PDF pages) occupy at least 24 printed journal pages
+      const n = a.type === "Editorial" ? span(a.pages) : Math.max(24, span(a.pages));
+      a.pages = `${next}–${next + n - 1}`;
+      next += n;
+    }
+  }
+}
+
+// Reference lists: numbered in citation order, listed alphabetically as in APA
+for (const [id, refs] of PENDING_REFS) {
+  const article = ARTICLES.find((a) => a.id === id)!;
+  article.references = refs
+    .map((r, i): ArticleReference => {
+      if (typeof r === "string") return { number: i + 1, text: r };
+      const cited = ARTICLES.find((a) => a.id === r.jer);
+      if (!cited) throw new Error(`${id} cites unknown JER article ${r.jer}`);
+      return journalReference(cited, i + 1);
+    })
+    .sort((x, y) => x.text.localeCompare(y.text));
+}
+
+/** First page number of an article; roman-numbered front matter (editorials) sorts first as 0. */
+export function pageStart(a: Pick<Article, "pages">) {
+  const n = parseInt(a.pages, 10);
+  return Number.isFinite(n) ? n : 0;
+}

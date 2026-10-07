@@ -1,7 +1,7 @@
 <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 64 64" fill="none">
-  <rect x="2" y="2" width="60" height="60" rx="6" fill="#0c2a4d" stroke="#b0894f" stroke-width="2"/>
+  <rect x="2" y="2" width="60" height="60" rx="6" fill="#823130" stroke="#e9c9c8" stroke-width="2"/>
   <text x="32" y="26" text-anchor="middle" font-family="Georgia, serif" font-size="11" font-weight="700" fill="#f7f3e9" letter-spacing="0.5">JER</text>
-  <line x1="14" y1="32" x2="50" y2="32" stroke="#b0894f" stroke-width="1.2"/>
-  <text x="32" y="44" text-anchor="middle" font-family="Georgia, serif" font-size="6.5" fill="#d4ab68" letter-spacing="0.8">EST. 1996</text>
+  <line x1="14" y1="32" x2="50" y2="32" stroke="#e9c9c8" stroke-width="1.2"/>
+  <text x="32" y="44" text-anchor="middle" font-family="Georgia, serif" font-size="6.5" fill="#ffffff" letter-spacing="0.8">EST. 1996</text>
   <text x="32" y="54" text-anchor="middle" font-family="Georgia, serif" font-size="5.5" fill="#f7f3e9" letter-spacing="0.6">HANYANG UNIV.</text>
 </svg>

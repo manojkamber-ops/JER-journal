@@ -1,9 +1,10 @@
 "use client";
 
-import { useState } from "react";
-import { Search, Menu, X, ChevronDown, User, Bell } from "lucide-react";
+import { useEffect, useRef, useState } from "react";
+import { Search, Menu, X, ChevronDown, User, Bell, LogOut, Bookmark, FileText } from "lucide-react";
 import { useNav, type PageId } from "./nav-context";
-import { JOURNAL_INFO } from "@/data/journal";
+import { NEWS_ITEMS } from "@/data/journal";
+import { useSession } from "./session";
 import {
   DropdownMenu,
   DropdownMenuContent,
@@ -12,10 +13,10 @@ import {
   DropdownMenuLabel,
   DropdownMenuSeparator,
 } from "@/components/ui/dropdown-menu";
-import { Input } from "@/components/ui/input";
-import { Button } from "@/components/ui/button";
 
-const NAV_ITEMS: { label: string; page: PageId; children?: { label: string; page: PageId }[] }[] = [
+type NavItem = { label: string; page: PageId; children?: { label: string; page: PageId; anchor?: string }[] };
+
+const NAV_ITEMS: NavItem[] = [
   { label: "Journal Home", page: "home" },
   {
     label: "About",
@@ -34,214 +35,243 @@ const NAV_ITEMS: { label: string; page: PageId; children?: { label: string; page
     children: [
       { label: "Submit a Manuscript", page: "submission" },
       { label: "Author Guidelines", page: "author-guidelines" },
-      { label: "Peer Review Process", page: "policies" },
+      { label: "Peer Review Process", page: "policies", anchor: "peer-review" },
     ],
   },
-  { label: "News &amp; Announcements", page: "news" },
-  { label: "Contact", page: "contact" },
+  { label: "News", page: "news" },
+  { label: "Contact Us", page: "contact" },
 ];
+
+/** AOM-style icon button: icon with a small label underneath. */
+function IconButton({ icon: Icon, label, onClick, dot }: { icon: typeof Search; label: string; onClick?: () => void; dot?: boolean }) {
+  return (
+    <button onClick={onClick} className="relative flex flex-col items-center gap-1 px-2 sm:px-3 text-[#212121] hover:text-primary">
+      <Icon className="w-5 h-5" strokeWidth={2.2} />
+      {dot && <span className="absolute top-0 right-2 sm:right-3 w-2 h-2 rounded-full bg-primary" />}
+      <span className="text-[11px] leading-none whitespace-nowrap">{label}</span>
+    </button>
+  );
+}
 
 export function Header() {
   const { navigate, page } = useNav();
+  const { user, signOut, openAuth, openAlerts } = useSession();
   const [mobileOpen, setMobileOpen] = useState(false);
+  const [searchOpen, setSearchOpen] = useState(false);
   const [searchQuery, setSearchQuery] = useState("");
+  const searchRef = useRef<HTMLInputElement>(null);
+
+  useEffect(() => {
+    if (searchOpen) searchRef.current?.focus();
+  }, [searchOpen]);
 
   const handleSearch = (e: React.FormEvent) => {
     e.preventDefault();
-    if (searchQuery.trim()) {
-      navigate("archive");
-      setSearchQuery("");
-    }
+    const q = searchQuery.trim();
+    navigate("archive", q ? { params: { q } } : undefined);
+    setSearchQuery("");
+    setSearchOpen(false);
+    setMobileOpen(false);
   };
 
+  const go = (p: PageId, anchor?: string) => {
+    navigate(p, anchor ? { anchor } : undefined);
+    setMobileOpen(false);
+  };
+  const goAccount = (tab?: string) => navigate("account", tab ? { params: { tab } } : undefined);
+  const isActive = (item: NavItem) => page === item.page || !!item.children?.some((c) => c.page === page);
+
   return (
-    <header className="sticky top-0 z-50 bg-white shadow-sm border-b border-gray-200">
-      {/* === Top utility bar (AOM-style) === */}
-      <div className="bg-gray-50 border-b border-gray-200">
-        <div className="container mx-auto px-4 flex items-center justify-between h-9 text-[11px] font-sans">
-          <div className="flex items-center gap-4 text-gray-600">
-            <a
-              href="https://www.hanyang.ac.kr/"
-              target="_blank"
-              rel="noopener noreferrer"
-              className="hover:text-accent transition-colors"
+    <>
+      {/* === White masthead: logo left, icon actions right === */}
+      <header className="bg-white">
+        <div className="container mx-auto px-4 h-[84px] sm:h-[104px] flex items-center justify-between gap-4">
+          <button onClick={() => go("home")} className="flex items-center gap-3 text-left" aria-label="Journal of Economic Research home">
+            <img src="/jer-logo.svg" alt="" className="w-11 h-11 sm:w-14 sm:h-14 rounded-sm" width={56} height={56} />
+            <span className="leading-none">
+              <span className="block text-[11px] sm:text-[13px] tracking-[0.32em] text-[#4a4a4a] uppercase">Journal of</span>
+              <span className="block text-[22px] sm:text-[32px] text-primary tracking-tight mt-0.5">Economic Research</span>
+            </span>
+          </button>
+
+          <div className="flex items-center">
+            <IconButton icon={Search} label="Search" onClick={() => setSearchOpen((o) => !o)} />
+
+            <DropdownMenu>
+              <DropdownMenuTrigger asChild>
+                <span>
+                  <IconButton icon={Bell} label="Alerts" dot />
+                </span>
+              </DropdownMenuTrigger>
+              <DropdownMenuContent align="end" className="w-80 rounded-sm">
+                <DropdownMenuLabel className="text-xs uppercase tracking-wide text-gray-500">Latest announcements</DropdownMenuLabel>
+                <DropdownMenuSeparator />
+                {NEWS_ITEMS.slice(0, 4).map((n) => (
+                  <DropdownMenuItem
+                    key={n.id}
+                    onClick={() => navigate("news", { anchor: `news-${n.id}` })}
+                    className="cursor-pointer flex-col items-start gap-0.5 py-2"
+                  >
+                    <span className="text-[10px] uppercase tracking-wide text-primary font-semibold">
+                      {n.category} · {new Date(n.date).toLocaleDateString("en-GB", { day: "numeric", month: "short", year: "numeric" })}
+                    </span>
+                    <span className="text-sm text-[#212121] leading-snug">{n.title}</span>
+                  </DropdownMenuItem>
+                ))}
+                <DropdownMenuSeparator />
+                <DropdownMenuItem onClick={() => openAlerts(["new-issue", "news"])} className="cursor-pointer text-sm">
+                  <Bell className="w-4 h-4" /> Get email alerts
+                </DropdownMenuItem>
+              </DropdownMenuContent>
+            </DropdownMenu>
+
+            {user ? (
+              <DropdownMenu>
+                <DropdownMenuTrigger asChild>
+                  <span>
+                    <IconButton icon={User} label="My Account" />
+                  </span>
+                </DropdownMenuTrigger>
+                <DropdownMenuContent align="end" className="w-56 rounded-sm">
+                  <DropdownMenuLabel className="font-normal">
+                    <span className="block text-sm font-semibold text-primary">{user.name}</span>
+                    <span className="block text-xs text-gray-500 truncate">{user.email}</span>
+                  </DropdownMenuLabel>
+                  <DropdownMenuSeparator />
+                  <DropdownMenuItem onClick={() => goAccount("saved")} className="cursor-pointer"><Bookmark className="w-4 h-4" /> Saved articles</DropdownMenuItem>
+                  <DropdownMenuItem onClick={() => goAccount("submissions")} className="cursor-pointer"><FileText className="w-4 h-4" /> My submissions</DropdownMenuItem>
+                  <DropdownMenuItem onClick={() => goAccount("profile")} className="cursor-pointer"><User className="w-4 h-4" /> Profile &amp; alerts</DropdownMenuItem>
+                  <DropdownMenuSeparator />
+                  <DropdownMenuItem onClick={() => { signOut(); if (page === "account") navigate("home"); }} className="cursor-pointer">
+                    <LogOut className="w-4 h-4" /> Sign out
+                  </DropdownMenuItem>
+                </DropdownMenuContent>
+              </DropdownMenu>
+            ) : (
+              <IconButton icon={User} label="Sign in" onClick={() => openAuth("signin")} />
+            )}
+
+            <button
+              onClick={() => setMobileOpen((o) => !o)}
+              className="lg:hidden ml-1 p-2 text-[#212121]"
+              aria-label="Toggle navigation menu"
+              aria-expanded={mobileOpen}
             >
-              Hanyang University
-            </a>
-            <span className="text-gray-300">|</span>
-            <button className="hover:text-accent transition-colors">Sign In</button>
-            <span className="text-gray-300">|</span>
-            <button className="hover:text-accent transition-colors">Register</button>
-            <span className="text-gray-300 hidden sm:inline">|</span>
-            <button className="hidden sm:inline hover:text-accent transition-colors">Subscribe</button>
-          </div>
-          <div className="flex items-center gap-3">
-            <span className="hidden md:inline text-gray-500">ISSN {JOURNAL_INFO.issnPrint}</span>
-            <span className="text-gray-300 hidden md:inline">|</span>
-            <button className="hover:text-accent transition-colors flex items-center gap-1" aria-label="Notifications">
-              <Bell className="w-3.5 h-3.5" />
-            </button>
-            <span className="text-gray-300">|</span>
-            <button className="hover:text-accent transition-colors flex items-center gap-1">
-              <User className="w-3.5 h-3.5" />
-              <span className="hidden sm:inline">My Account</span>
+              {mobileOpen ? <X className="w-6 h-6" /> : <Menu className="w-6 h-6" />}
             </button>
           </div>
         </div>
-      </div>
 
-      {/* === Masthead (AOM-style: logo left, journal title center, search right) === */}
-      <div className="border-b border-gray-200 bg-white">
-        <div className="container mx-auto px-4 py-5 flex items-center justify-between gap-6">
-          {/* Logo + journal title */}
-          <button
-            onClick={() => navigate("home")}
-            className="flex items-center gap-4 text-left group"
-            aria-label="Journal of Economic Research home"
-          >
-            <img
-              src="/jer-logo.svg"
-              alt="Journal of Economic Research logo"
-              className="w-14 h-14 flex-shrink-0 rounded-md group-hover:opacity-95 transition-opacity"
-              width={56}
-              height={56}
-            />
-            <div>
-              <h1 className="font-serif text-2xl sm:text-3xl font-bold text-primary leading-tight tracking-tight">
-                Journal of Economic Research
-              </h1>
-              <p className="font-sans text-xs sm:text-sm text-gray-500 mt-1">
-                Published by the Department of Economics · Hanyang University, Seoul
-              </p>
-            </div>
-          </button>
-
-          {/* Search bar (desktop) */}
-          <form onSubmit={handleSearch} className="hidden lg:flex items-center gap-2 flex-shrink-0">
-            <div className="relative">
-              <Input
+        {/* Search panel (opened from the Search icon) */}
+        {searchOpen && (
+          <div className="border-t border-border bg-[#f5f5f5]">
+            <form onSubmit={handleSearch} className="container mx-auto px-4 py-3 flex gap-2">
+              <label htmlFor="site-search" className="sr-only">Search the journal</label>
+              <input
+                ref={searchRef}
+                id="site-search"
                 type="search"
-                placeholder="Search this journal…"
                 value={searchQuery}
                 onChange={(e) => setSearchQuery(e.target.value)}
-                className="w-72 pl-9 bg-white border-gray-300 font-sans text-sm rounded-sm"
-                aria-label="Search journal articles"
+                placeholder="Search titles, authors, keywords or DOI"
+                className="flex-1 min-w-0 h-10 px-3 border border-[#c9c9c9] bg-white text-[15px] focus:outline-none focus:border-primary"
               />
-              <Search className="absolute left-3 top-1/2 -translate-y-1/2 w-4 h-4 text-gray-400" />
-            </div>
-            <Button type="submit" size="sm" className="font-sans rounded-sm bg-primary">
-              Search
-            </Button>
-          </form>
+              <button type="submit" className="h-10 px-5 bg-[var(--aom-button)] text-white font-semibold hover:bg-primary">
+                Search
+              </button>
+              <button type="button" onClick={() => setSearchOpen(false)} className="h-10 px-2 text-gray-500 hover:text-primary" aria-label="Close search">
+                <X className="w-5 h-5" />
+              </button>
+            </form>
+          </div>
+        )}
+      </header>
 
-          {/* Mobile menu button */}
-          <button
-            onClick={() => setMobileOpen(!mobileOpen)}
-            className="lg:hidden p-2 -mr-2 text-primary"
-            aria-label="Toggle navigation menu"
-          >
-            {mobileOpen ? <X className="w-6 h-6" /> : <Menu className="w-6 h-6" />}
-          </button>
-        </div>
-      </div>
-
-      {/* === Secondary navigation bar (AOM-style horizontal nav) === */}
-      <nav className="bg-primary border-b border-primary hidden lg:block">
+      {/* === Maroon main navigation (sticky, AOM style) === */}
+      <nav className="sticky top-0 z-50 bg-primary border-b border-[#b8b8b8] hidden lg:block" aria-label="Main">
         <div className="container mx-auto px-4">
-          <ul className="flex items-center font-sans text-sm">
-            {NAV_ITEMS.map((item) => {
-              const isActive = page === item.page;
-              if (item.children) {
-                return (
-                  <li key={item.label} className="relative">
-                    <DropdownMenu>
-                      <DropdownMenuTrigger asChild>
-                        <button
-                          className={`flex items-center gap-1 px-5 py-3.5 hover:bg-white/10 transition-colors border-b-[3px] ${
-                            isActive
-                              ? "border-accent text-white font-semibold bg-white/5"
-                              : "border-transparent text-white/95"
-                          }`}
+          <ul className="flex items-center">
+            {NAV_ITEMS.map((item) =>
+              item.children ? (
+                <li key={item.label}>
+                  <DropdownMenu>
+                    <DropdownMenuTrigger asChild>
+                      <button
+                        className={`flex items-center gap-1.5 px-4 h-12 text-[14px] font-bold uppercase text-white hover:bg-black/15 ${
+                          isActive(item) ? "bg-black/20" : ""
+                        }`}
+                      >
+                        {item.label}
+                        <ChevronDown className="w-3.5 h-3.5" />
+                      </button>
+                    </DropdownMenuTrigger>
+                    <DropdownMenuContent align="start" className="w-60 rounded-none border-t-2 border-t-primary p-0">
+                      {item.children.map((child) => (
+                        <DropdownMenuItem
+                          key={child.label}
+                          onClick={() => go(child.page, child.anchor)}
+                          className="cursor-pointer rounded-none px-4 py-2.5 text-[15px] focus:bg-[#f5f5f5] focus:text-primary"
                         >
-                          <span dangerouslySetInnerHTML={{ __html: item.label }} />
-                          <ChevronDown className="w-3 h-3 opacity-70" />
-                        </button>
-                      </DropdownMenuTrigger>
-                      <DropdownMenuContent align="start" className="w-64 rounded-sm">
-                        <DropdownMenuLabel className="font-serif text-sm uppercase tracking-wide text-gray-500">
-                          <span dangerouslySetInnerHTML={{ __html: item.label }} />
-                        </DropdownMenuLabel>
-                        <DropdownMenuSeparator />
-                        {item.children.map((child) => (
-                          <DropdownMenuItem
-                            key={child.label}
-                            onClick={() => navigate(child.page)}
-                            className="cursor-pointer font-sans text-sm py-2"
-                          >
-                            {child.label}
-                          </DropdownMenuItem>
-                        ))}
-                      </DropdownMenuContent>
-                    </DropdownMenu>
-                  </li>
-                );
-              }
-              return (
+                          {child.label}
+                        </DropdownMenuItem>
+                      ))}
+                    </DropdownMenuContent>
+                  </DropdownMenu>
+                </li>
+              ) : (
                 <li key={item.label}>
                   <button
-                    onClick={() => navigate(item.page)}
-                    className={`px-5 py-3.5 hover:bg-white/10 transition-colors border-b-[3px] text-white ${
-                      isActive
-                        ? "border-accent font-semibold bg-white/5"
-                        : "border-transparent"
-                    }`}
+                    onClick={() => go(item.page)}
+                    aria-current={isActive(item) ? "page" : undefined}
+                    className={`px-4 h-12 text-[14px] font-bold uppercase text-white hover:bg-black/15 ${isActive(item) ? "bg-black/20" : ""}`}
                   >
-                    <span dangerouslySetInnerHTML={{ __html: item.label }} />
+                    {item.label}
                   </button>
                 </li>
-              );
-            })}
+              )
+            )}
           </ul>
         </div>
       </nav>
 
-      {/* Mobile menu */}
+      {/* Mobile drawer */}
+      <div className="lg:hidden h-1.5 bg-primary" />
       {mobileOpen && (
-        <div className="lg:hidden border-b border-gray-200 bg-white">
-          <div className="container mx-auto px-4 py-4">
-            <form onSubmit={handleSearch} className="flex items-center gap-2 mb-4">
-              <div className="relative flex-1">
-                <Input
-                  type="search"
-                  placeholder="Search articles…"
-                  value={searchQuery}
-                  onChange={(e) => setSearchQuery(e.target.value)}
-                  className="pl-9 bg-white border-gray-300 font-sans text-sm rounded-sm"
-                />
-                <Search className="absolute left-3 top-1/2 -translate-y-1/2 w-4 h-4 text-gray-400" />
-              </div>
-              <Button type="submit" size="sm" className="font-sans bg-primary">Go</Button>
-            </form>
-            <ul className="space-y-1 font-sans">
-              {NAV_ITEMS.map((item) => (
-                <li key={item.label}>
-                  <button
-                    onClick={() => {
-                      navigate(item.page);
-                      setMobileOpen(false);
-                    }}
-                    className={`w-full text-left px-3 py-2.5 rounded-sm hover:bg-gray-100 ${
-                      page === item.page ? "bg-gray-100 text-primary font-semibold" : "text-gray-700"
-                    }`}
-                  >
-                    <span dangerouslySetInnerHTML={{ __html: item.label }} />
-                  </button>
-                </li>
-              ))}
-            </ul>
-          </div>
+        <div className="lg:hidden bg-primary text-white">
+          <form onSubmit={handleSearch} className="container mx-auto px-4 pt-4 flex gap-2">
+            <input
+              type="search"
+              value={searchQuery}
+              onChange={(e) => setSearchQuery(e.target.value)}
+              placeholder="Search the journal"
+              aria-label="Search the journal"
+              className="flex-1 min-w-0 h-10 px-3 text-[#212121] bg-white"
+            />
+            <button type="submit" className="h-10 px-4 bg-[var(--aom-button)] font-semibold border border-white/40">Go</button>
+          </form>
+          <ul className="container mx-auto px-4 py-3">
+            {NAV_ITEMS.flatMap((item) => [
+              <li key={item.label}>
+                <button
+                  onClick={() => go(item.page)}
+                  className={`w-full text-left py-2.5 text-[14px] font-bold uppercase border-b border-white/15 ${isActive(item) ? "text-white" : "text-white/90"}`}
+                >
+                  {item.label}
+                </button>
+              </li>,
+              ...(item.children ?? [])
+                .filter((c) => c.label !== "Journal Information" && c.label !== "Submit a Manuscript")
+                .map((c) => (
+                  <li key={`${item.label}-${c.label}`}>
+                    <button onClick={() => go(c.page, c.anchor)} className="w-full text-left py-2 pl-4 text-[14px] text-white/85 border-b border-white/10">
+                      {c.label}
+                    </button>
+                  </li>
+                )),
+            ])}
+          </ul>
         </div>
       )}
-    </header>
+    </>
   );
 }

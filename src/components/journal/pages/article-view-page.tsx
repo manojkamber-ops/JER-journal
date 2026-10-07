@@ -1,7 +1,13 @@
 "use client";
 
 import { ARTICLES, JOURNAL_INFO } from "@/data/journal";
+import { useEffect } from "react";
 import { useNav } from "../nav-context";
+import { useArticleActions } from "../article-actions";
+import { DoiLink } from "../doi-link";
+import { formatCitation, CITATION_FORMATS, citationFilename } from "@/lib/citations";
+import { downloadText } from "@/lib/download";
+import { toast } from "@/hooks/use-toast";
 import { Button } from "@/components/ui/button";
 import { Badge } from "@/components/ui/badge";
 import {
@@ -31,14 +37,23 @@ import {
   FileDown,
   Link2,
   Eye,
+  BookmarkCheck,
+  BookOpen,
 } from "lucide-react";
 
 export function ArticleViewPage({ articleId }: { articleId: string | null }) {
-  const { navigate } = useNav();
+  const { navigate, params } = useNav();
   const article = ARTICLES.find((a) => a.id === articleId) ?? ARTICLES[0];
+  const actions = useArticleActions(article);
 
-  const authorList = article.authors.map((a) => a.name).join(", ");
-  const citationText = `${authorList} (${article.year}). ${article.title}. Journal of Economic Research, ${article.volume}(${article.issue}), ${article.pages}. https://doi.org/${article.doi}`;
+  // "To cite this article" links in PDF cover sheets open the citation dialog directly
+  const openCiteFromLink = params.cite === "1";
+  useEffect(() => {
+    if (openCiteFromLink) actions.cite();
+  }, [openCiteFromLink]);
+  const citationText = formatCitation(article, "apa");
+  const issueLink = () =>
+    navigate("current-issue", { params: { volume: String(article.volume), issue: String(article.issue) } });
 
   const relatedArticles = ARTICLES.filter(
     (a) =>
@@ -61,11 +76,13 @@ export function ArticleViewPage({ articleId }: { articleId: string | null }) {
         <div className="container mx-auto px-4 py-2.5 font-sans text-xs text-gray-600">
           <button onClick={() => navigate("home")} className="hover:text-accent">Journal Home</button>
           <ChevronRight className="inline w-3 h-3 mx-1.5" />
-          <button onClick={() => navigate("current-issue")} className="hover:text-accent">Current Issue</button>
+          <button onClick={() => navigate("archive")} className="hover:text-accent">All Issues</button>
           <ChevronRight className="inline w-3 h-3 mx-1.5" />
-          <span className="text-primary font-medium">
+          <button onClick={issueLink} className="hover:text-accent">
             Vol. {article.volume}, No. {article.issue} ({article.year})
-          </span>
+          </button>
+          <ChevronRight className="inline w-3 h-3 mx-1.5" />
+          <span className="text-primary font-medium">{article.type}</span>
         </div>
       </div>
 
@@ -83,15 +100,13 @@ export function ArticleViewPage({ articleId }: { articleId: string | null }) {
                   Volume {article.volume}, Issue {article.issue} ({article.year}) · pp. {article.pages}
                 </span>
                 <span className="text-gray-300">|</span>
-                <a
-                  href={`https://doi.org/${article.doi}`}
+                <DoiLink
+                  doi={article.doi}
                   className="font-mono text-xs text-accent hover:underline flex items-center gap-1"
-                  target="_blank"
-                  rel="noopener noreferrer"
                 >
                   <Link2 className="w-3 h-3" />
                   {article.doi}
-                </a>
+                </DoiLink>
               </div>
 
               <h1 className="font-serif text-2xl sm:text-3xl lg:text-4xl font-bold text-primary leading-tight mb-4">
@@ -200,29 +215,42 @@ export function ArticleViewPage({ articleId }: { articleId: string | null }) {
 
               {/* Action bar */}
               <div className="flex flex-wrap items-center gap-2 mb-7 pb-5 border-b border-gray-200">
-                <Button size="sm" className="font-sans bg-primary text-white hover:bg-primary/90 rounded-sm">
+                <Button size="sm" onClick={actions.downloadPdf} className="font-sans bg-primary text-white hover:bg-primary/90 rounded-sm">
                   <Download className="w-4 h-4 mr-1.5" />
                   Download PDF ({article.pdfSize})
                 </Button>
-                <Button size="sm" variant="outline" className="font-sans rounded-sm">
-                  <FileText className="w-4 h-4 mr-1.5" />
-                  Full Text
+                <Button
+                  size="sm"
+                  variant="outline"
+                  onClick={() => navigate("reader", { articleId: article.id })}
+                  className="font-sans rounded-sm"
+                >
+                  <BookOpen className="w-4 h-4 mr-1.5" />
+                  Read Full Text (ePub)
                 </Button>
-                <Button size="sm" variant="outline" className="font-sans rounded-sm">
+                <Button size="sm" variant="outline" onClick={actions.cite} className="font-sans rounded-sm">
                   <Quote className="w-4 h-4 mr-1.5" />
                   Cite Article
                 </Button>
-                <div className="flex gap-1 ml-auto">
-                  <Button size="sm" variant="ghost" aria-label="Save article" className="font-sans px-2 rounded-sm">
-                    <Bookmark className="w-4 h-4" />
+                <div className="flex gap-1 ml-auto print:hidden">
+                  <Button
+                    size="sm"
+                    variant="ghost"
+                    onClick={actions.toggleSave}
+                    aria-label={actions.saved ? "Remove from library" : "Save article"}
+                    aria-pressed={actions.saved}
+                    title={actions.saved ? "Saved to your library" : "Save to my library"}
+                    className={`font-sans px-2 rounded-sm ${actions.saved ? "text-accent" : ""}`}
+                  >
+                    {actions.saved ? <BookmarkCheck className="w-4 h-4" /> : <Bookmark className="w-4 h-4" />}
                   </Button>
-                  <Button size="sm" variant="ghost" aria-label="Share article" className="font-sans px-2 rounded-sm">
+                  <Button size="sm" variant="ghost" onClick={actions.share} aria-label="Share article" title="Share" className="font-sans px-2 rounded-sm">
                     <Share2 className="w-4 h-4" />
                   </Button>
-                  <Button size="sm" variant="ghost" aria-label="Print article" className="font-sans px-2 rounded-sm">
+                  <Button size="sm" variant="ghost" onClick={actions.print} aria-label="Print article" title="Print" className="font-sans px-2 rounded-sm">
                     <Printer className="w-4 h-4" />
                   </Button>
-                  <Button size="sm" variant="ghost" aria-label="Email article" className="font-sans px-2 rounded-sm">
+                  <Button size="sm" variant="ghost" onClick={actions.email} aria-label="Email article" title="Email" className="font-sans px-2 rounded-sm">
                     <Mail className="w-4 h-4" />
                   </Button>
                 </div>
@@ -248,7 +276,9 @@ export function ArticleViewPage({ articleId }: { articleId: string | null }) {
                   </div>
                   <div className="border-t border-gray-200 pt-2 mt-2">
                     <dt className="text-gray-500 mb-0.5">DOI</dt>
-                    <dd className="font-mono text-[11px] break-all text-accent">{article.doi}</dd>
+                    <dd className="font-mono text-[11px] break-all text-accent">
+                      <DoiLink doi={article.doi} className="hover:underline">{article.doi}</DoiLink>
+                    </dd>
                   </div>
                 </dl>
                 <div className="mt-4 pt-3 border-t border-gray-200 font-sans text-[11px] text-gray-500">
@@ -267,7 +297,7 @@ export function ArticleViewPage({ articleId }: { articleId: string | null }) {
           <div className="grid lg:grid-cols-12 gap-8">
             <div className="lg:col-span-9">
               {/* Abstract */}
-              <div className="mb-8">
+              <div id="full-text" className="mb-8 scroll-mt-40">
                 <h2 className="font-serif text-xl font-bold text-primary mb-3 pb-1 border-b-2 border-accent inline-block">
                   Abstract
                 </h2>
@@ -327,7 +357,7 @@ export function ArticleViewPage({ articleId }: { articleId: string | null }) {
 
               {/* Data availability */}
               {article.dataAvailability && (
-                <div className="mb-8 bg-gray-50 border border-gray-200 rounded-sm p-4">
+                <div id="data-availability" className="mb-8 bg-gray-50 border border-gray-200 rounded-sm p-4 scroll-mt-40">
                   <h3 className="font-serif text-base font-semibold text-primary mb-2 flex items-center gap-2">
                     <Database className="w-4 h-4 text-accent" />
                     Data Availability Statement
@@ -356,14 +386,7 @@ export function ArticleViewPage({ articleId }: { articleId: string | null }) {
                         <span className="flex-1 text-justify">
                           {ref.text}
                           {ref.doi && (
-                            <a
-                              href={`https://doi.org/${ref.doi}`}
-                              target="_blank"
-                              rel="noopener noreferrer"
-                              className="ml-1 text-accent hover:underline font-sans text-xs"
-                            >
-                              https://doi.org/{ref.doi}
-                            </a>
+                            <DoiLink doi={ref.doi} className="ml-1 text-accent hover:underline font-sans text-xs" />
                           )}
                         </span>
                       </li>
@@ -395,13 +418,24 @@ export function ArticleViewPage({ articleId }: { articleId: string | null }) {
                 <p className="font-serif text-sm leading-relaxed text-gray-800 bg-gray-50 p-3 border-l-4 border-accent">
                   {citationText}
                 </p>
-                <div className="flex flex-wrap gap-2 mt-3">
-                  <Button size="sm" variant="outline" className="font-sans rounded-sm text-xs">BibTeX</Button>
-                  <Button size="sm" variant="outline" className="font-sans rounded-sm text-xs">RIS</Button>
-                  <Button size="sm" variant="outline" className="font-sans rounded-sm text-xs">EndNote</Button>
-                  <Button size="sm" variant="outline" className="font-sans rounded-sm text-xs">APA</Button>
-                  <Button size="sm" variant="outline" className="font-sans rounded-sm text-xs">Chicago</Button>
-                  <Button size="sm" variant="outline" className="font-sans rounded-sm text-xs">Harvard</Button>
+                <div className="flex flex-wrap gap-2 mt-3 print:hidden">
+                  {CITATION_FORMATS.filter((f) => f.file).map((f) => (
+                    <Button
+                      key={f.id}
+                      size="sm"
+                      variant="outline"
+                      onClick={() => {
+                        downloadText(formatCitation(article, f.id), citationFilename(article, f.file!.ext), f.file!.type);
+                        toast({ title: `${f.label} citation downloaded` });
+                      }}
+                      className="font-sans rounded-sm text-xs"
+                    >
+                      <Download className="w-3 h-3 mr-1" /> {f.label}
+                    </Button>
+                  ))}
+                  <Button size="sm" variant="outline" onClick={actions.cite} className="font-sans rounded-sm text-xs">
+                    APA · Chicago · Harvard · MLA
+                  </Button>
                 </div>
               </div>
             </div>
@@ -417,16 +451,45 @@ export function ArticleViewPage({ articleId }: { articleId: string | null }) {
                     </h3>
                   </div>
                   <ul className="divide-y divide-gray-200 font-sans text-sm">
-                    <ToolItem icon={Download} label="Download PDF" sub={`${article.pdfSize}`} />
-                    <ToolItem icon={FileText} label="Full Text (HTML)" />
-                    <ToolItem icon={Quote} label="Cite this article" />
-                    <ToolItem icon={FileDown} label="Download citation" sub="BibTeX / RIS / EndNote" />
-                    <ToolItem icon={Share2} label="Share" sub="Email / X / LinkedIn" />
-                    <ToolItem icon={Bookmark} label="Save to my library" />
-                    <ToolItem icon={Printer} label="Print this article" />
-                    <ToolItem icon={Eye} label="Permissions" sub="Reprint &amp; reuse" />
-                    <ToolItem icon={ShieldCheck} label="Supplementary materials" />
-                    <ToolItem icon={Award} label="Track citations" sub="Cited by {n} articles" />
+                    <ToolItem icon={Download} label="Download PDF" sub={`${article.pdfSize}`} onClick={actions.downloadPdf} />
+                    <ToolItem
+                      icon={BookOpen}
+                      label="Read in ePub reader"
+                      sub="Full text · adjustable display"
+                      onClick={() => navigate("reader", { articleId: article.id })}
+                    />
+                    <ToolItem icon={Quote} label="Cite this article" onClick={actions.cite} />
+                    <ToolItem
+                      icon={FileDown}
+                      label="Download citation"
+                      sub="RIS (EndNote, Zotero, Mendeley)"
+                      onClick={() => downloadText(formatCitation(article, "ris"), citationFilename(article, "ris"), "application/x-research-info-systems")}
+                    />
+                    <ToolItem icon={Share2} label="Share" sub="Email / X / LinkedIn / Facebook" onClick={actions.share} />
+                    <ToolItem
+                      icon={actions.saved ? BookmarkCheck : Bookmark}
+                      label={actions.saved ? "Saved to my library" : "Save to my library"}
+                      sub={actions.saved ? "Click to remove" : undefined}
+                      onClick={actions.toggleSave}
+                    />
+                    <ToolItem icon={Printer} label="Print this article" onClick={actions.print} />
+                    <ToolItem icon={Eye} label="Permissions" sub="Reprint &amp; reuse (CC BY-NC 4.0)" onClick={() => navigate("policies", { anchor: "open-access" })} />
+                    <ToolItem
+                      icon={ShieldCheck}
+                      label="Supplementary materials"
+                      sub={article.dataAvailability ? "Replication data statement" : "None for this article"}
+                      onClick={() =>
+                        article.dataAvailability
+                          ? document.getElementById("data-availability")?.scrollIntoView({ behavior: "smooth" })
+                          : toast({ title: "No supplementary materials", description: "The authors did not deposit supplementary files for this article." })
+                      }
+                    />
+                    <ToolItem
+                      icon={Award}
+                      label="Track citations"
+                      sub={`Cited by ${article.citations} articles · get alerts`}
+                      onClick={actions.trackCitations}
+                    />
                   </ul>
                 </div>
 
@@ -498,7 +561,7 @@ export function ArticleViewPage({ articleId }: { articleId: string | null }) {
       {/* === Navigation back === */}
       <section className="bg-white border-t border-gray-200">
         <div className="container mx-auto px-4 py-8 flex flex-wrap items-center justify-between gap-3">
-          <Button variant="outline" onClick={() => navigate("current-issue")} className="font-sans rounded-sm">
+          <Button variant="outline" onClick={issueLink} className="font-sans rounded-sm">
             <ChevronLeft className="w-4 h-4 mr-1.5" />
             Back to Volume {article.volume}, Issue {article.issue}
           </Button>
@@ -525,14 +588,16 @@ function ToolItem({
   icon: Icon,
   label,
   sub,
+  onClick,
 }: {
   icon: React.ComponentType<{ className?: string }>;
   label: string;
   sub?: string;
+  onClick: () => void;
 }) {
   return (
     <li>
-      <button className="w-full flex items-center gap-2.5 px-4 py-2.5 hover:bg-gray-50 transition-colors text-left">
+      <button onClick={onClick} className="w-full flex items-center gap-2.5 px-4 py-2.5 hover:bg-gray-50 transition-colors text-left">
         <Icon className="w-4 h-4 text-accent flex-shrink-0" />
         <span className="flex-1 min-w-0">
           <span className="block text-sm text-gray-800 leading-tight">{label}</span>
