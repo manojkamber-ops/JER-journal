@@ -7,12 +7,16 @@ import { toast } from "@/hooks/use-toast";
 import { routeUrl } from "./nav-context";
 import { doiUrl } from "@/lib/doi";
 import { useSession } from "./session";
+import { hasFullText } from "@/data/article-bodies";
 
 /** All per-article actions (PDF, cite, share, save, print, email) in one place. */
 export function useArticleActions(article: Article) {
   const session = useSession();
   return {
     saved: session.isSaved(article.id),
+    /** false when only the abstract and references are public; the full paper is then requested from the authors */
+    fullText: hasFullText(article.id),
+    requestFullText: () => session.openRequest(article),
     downloadPdf() {
       downloadBlob(articlePdf(article), `JER-${article.doi.split("/").pop()}.pdf`);
       toast({ title: "PDF downloaded", description: article.title });

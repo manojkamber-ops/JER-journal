@@ -1,0 +1,48 @@
+// Vol. 31, No. 2 (August 2026) — abstract and references only (full paper on request from the authors).
+import type { PaperSpec } from "../paper-spec";
+
+export const paper: PaperSpec = {
+  id: "2026-v31-i2-12",
+  title: "Time-of-Use Pricing and Residential Peak Demand: Smart-Meter Evidence from Japan",
+  authors: [
+    { name: "Takumi Okabayashi", corresponding: true, affiliation: { department: "Graduate School of Economics", institution: "University of Tokyo", city: "Tokyo", country: "Japan" } },
+    { name: "Pimchanok Srisawat", affiliation: { department: "Faculty of Economics", institution: "Chulalongkorn University", city: "Bangkok", country: "Thailand" } },
+  ],
+  abstract:
+    "As electricity systems integrate variable renewable energy, shaping household demand through time-varying prices is a central policy question. This paper evaluates the response of residential consumers to time-of-use tariffs using half-hourly smart-meter data from 640,000 households served by two regional utilities in Japan between 2019 and 2024. Customers could opt into the tariff, but a billing-system migration moved some customers by default on dates unrelated to their consumption, providing quasi-random variation which we exploit with an event-study design. Evening peak consumption (5 to 9 pm) falls by 8.7 per cent after the switch, implying an own-price elasticity of -0.14 during peak hours, while off-peak consumption rises by 3.2 per cent. Overall electricity use is unchanged. Responses are about twice as large among households with automated appliances and those with rooftop solar and batteries, and increase over the first year as households learn. We estimate that scaling the tariff to the whole service area would lower peak capacity needs by 3.9 per cent, saving roughly 41 billion yen in capacity costs per year. Distributional analysis shows that low-income households gain on average.",
+  keywords: ["time-of-use pricing", "electricity demand", "smart meters", "peak load", "energy transition"],
+  jelCodes: ["Q41", "L94", "D12", "Q48"],
+  pages: "1–18",
+  volume: 31,
+  issue: 2,
+  year: 2026,
+  received: "2025-07-28",
+  accepted: "2026-05-28",
+  published: "2026-08-15",
+  publishedOnline: "2026-08-11",
+  citations: 2,
+  downloads: 376,
+  pdfSize: "0.42 MB",
+  type: "Research Article",
+  editorialNote: "Switching to a time-of-use tariff reduced residential evening peak consumption by 8.7 per cent, with an own-price elasticity of -0.14 during peak hours. Savings were larger for households with automated appliances and for homes with rooftop solar.",
+  refs: [
+    "Allcott, H. (2011). Rethinking real-time electricity pricing. Resource and Energy Economics, 33(4), 820–842.",
+    "Allcott, H. (2011). Social norms and energy conservation. Journal of Public Economics, 95(9–10), 1082–1095.",
+    "Allcott, H., & Rogers, T. (2014). The short-run and long-run effects of behavioral interventions: Experimental evidence from energy conservation. American Economic Review, 104(10), 3003–3037.",
+    "Bollinger, B. K., & Hartmann, W. R. (2020). Information vs. automation and implications for dynamic pricing. Management Science, 66(1), 290–314.",
+    "Borenstein, S. (2005). The long-run efficiency of real-time electricity pricing. The Energy Journal, 26(3), 93–116.",
+    "Borenstein, S. (2012). The redistributional impact of nonlinear electricity pricing. American Economic Journal: Economic Policy, 4(3), 56–90.",
+    "Borenstein, S., & Bushnell, J. B. (2022). Do two electricity pricing wrongs make a right? Cost recovery, externalities, and efficiency. American Economic Journal: Economic Policy, 14(4), 80–110.",
+    "Callaway, B., & Sant'Anna, P. H. C. (2021). Difference-in-differences with multiple time periods. Journal of Econometrics, 225(2), 200–230.",
+    "Fabra, N., Rapson, D., Reguant, M., & Wang, J. (2021). Estimating the elasticity to real-time pricing: Evidence from the Spanish electricity market. AEA Papers and Proceedings, 111, 425–429.",
+    "Faruqui, A., & Sergici, S. (2010). Household response to dynamic pricing of electricity: A survey of 15 experiments. Journal of Regulatory Economics, 38(2), 193–225.",
+    "Harding, M., & Sexton, S. (2017). Household response to time-varying electricity prices. Annual Review of Resource Economics, 9, 337–359.",
+    "Ito, K. (2014). Do consumers respond to marginal or average price? Evidence from nonlinear electricity pricing. American Economic Review, 104(2), 537–563.",
+    "Ito, K., Ida, T., & Tanaka, M. (2018). Moral suasion and economic incentives: Field experimental evidence from energy demand. American Economic Journal: Economic Policy, 10(1), 240–267.",
+    "Jessoe, K., & Rapson, D. (2014). Knowledge is (less) power: Experimental evidence from residential energy use. American Economic Review, 104(4), 1417–1438.",
+    "Joskow, P. L., & Wolfram, C. D. (2012). Dynamic pricing of electricity. American Economic Review, 102(3), 381–385.",
+    "Reiss, P. C., & White, M. W. (2005). Household electricity demand, revisited. Review of Economic Studies, 72(3), 853–883.",
+    "Sun, L., & Abraham, S. (2021). Estimating dynamic treatment effects in event studies with heterogeneous treatment effects. Journal of Econometrics, 225(2), 175–199.",
+    "Wolak, F. A. (2011). Do residential customers respond to hourly prices? Evidence from a dynamic pricing experiment. American Economic Review, 101(3), 83–87.",
+  ],
+};

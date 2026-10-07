@@ -44,6 +44,7 @@ import {
   Plus,
   Bookmark,
   BookmarkCheck,
+  Lock,
   Printer,
   Mail,
   Maximize,
@@ -782,12 +783,18 @@ export function ReaderPage({ articleId, defaultView = "epub" }: { articleId: str
                   body.map((s) => <Section key={s.id} section={s} size={settings.size} text={theme.text} rule={theme.rule} muted={theme.muted} rich={rich} />)
                 ) : (
                   <section id="r-full-text" className="mt-14 text-center" style={{ fontFamily: "var(--font-source-sans), sans-serif" }}>
-                    <p style={{ fontSize: settings.size * 0.9, color: theme.muted }}>
-                      The complete text of this article is provided in the PDF version.
-                    </p>
-                    <div className="mt-5 flex flex-wrap justify-center gap-3 text-[15px]">
-                      <button onClick={() => setView("pdf")} className="h-10 px-5 font-bold text-white" style={{ background: TEAL }}>Open PDF view</button>
-                      <button onClick={downloadPdf} className="h-10 px-5 font-bold border-2" style={{ borderColor: TEAL, color: TEAL }}>Download PDF</button>
+                    <div className="mx-auto max-w-[560px] border px-6 py-8" style={{ borderColor: theme.rule }}>
+                      <Lock className="w-9 h-9 mx-auto" style={{ color: TEAL }} aria-hidden />
+                      <p className="mt-3 font-bold" style={{ fontSize: settings.size * 1.05 }}>Full text available on request</p>
+                      <p className="mt-2" style={{ fontSize: settings.size * 0.9, color: theme.muted }}>
+                        Only the abstract and references of this article are public. The authors share the full paper with readers who ask for it.
+                      </p>
+                      <div className="mt-5 flex flex-wrap justify-center gap-3 text-[15px]">
+                        <button onClick={actions.requestFullText} className="h-10 px-5 font-bold text-white inline-flex items-center gap-2" style={{ background: TEAL }}>
+                          <Lock className="w-4 h-4" aria-hidden /> Request full paper from the authors
+                        </button>
+                        <button onClick={() => setView("pdf")} className="h-10 px-5 font-bold border-2" style={{ borderColor: TEAL, color: TEAL }}>Open PDF (abstract &amp; references)</button>
+                      </div>
                     </div>
                   </section>
                 )}

@@ -543,8 +543,12 @@ function writeArticle(doc: PdfDoc, a: Article) {
     }
   } else if (!editorial) {
     doc.space(8);
-    doc.text("The full text of this article is available in the online reader:", { font: "F3", size: 10, color: GREY });
-    doc.text(`${base}#/reader/${a.id}`, { font: "F4", size: 9, link: `${base}#/reader/${a.id}` });
+    doc.text("FULL TEXT AVAILABLE ON REQUEST", { font: "F2", size: 9, color: GOLD });
+    doc.text(
+      "Only the abstract and references of this article are public. The authors share the full paper on request; use the request button on the article page:",
+      { font: "F3", size: 10, color: GREY }
+    );
+    doc.text(`${base}#/article/${a.id}`, { font: "F4", size: 9, link: `${base}#/article/${a.id}` });
   }
 
   if (a.acknowledgments) { doc.heading("Acknowledgments"); doc.text(cite(a.acknowledgments), { align: "justify" }); }

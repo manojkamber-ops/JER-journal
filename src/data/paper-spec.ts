@@ -14,7 +14,8 @@ export type PaperSpec = Omit<Article, "authors" | "structuredAuthors" | "affilia
   authors: { name: string; corresponding?: boolean; affiliation?: Affiliation }[];
   /** Cited as [n] / {n} in the body, numbered in the order listed here. */
   refs: RefSpec[];
-  body: BodySection[];
+  /** Full text. Omit for an abstract-only paper: the site then shows its abstract and references, and the full paper is requested from the authors. */
+  body?: BodySection[];
   /** One or two sentences summarising the findings, used by the issue editorial (not shown on the paper). */
   editorialNote?: string;
 };
@@ -26,7 +27,8 @@ export type PaperSpec = Omit<Article, "authors" | "structuredAuthors" | "affilia
 export type FulltextSpec = {
   id: string;
   refs: RefSpec[];
-  body: BodySection[];
+  /** Omit for a references-only entry: the article stays abstract-only but gains a reference list. */
+  body?: BodySection[];
   acknowledgments?: string;
   funding?: string;
   dataAvailability?: string;

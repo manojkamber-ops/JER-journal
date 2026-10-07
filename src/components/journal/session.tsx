@@ -3,7 +3,7 @@
 import { createContext, useCallback, useContext, useEffect, useState, type ReactNode } from "react";
 import type { Article } from "@/data/journal";
 import { toast } from "@/hooks/use-toast";
-import { AuthDialog, AlertsDialog, CiteDialog, ShareDialog, type AuthMode } from "./dialogs";
+import { AuthDialog, AlertsDialog, CiteDialog, RequestDialog, ShareDialog, type AuthMode } from "./dialogs";
 
 export type SessionUser = { id: string; email: string; name: string; affiliation: string | null };
 
@@ -20,6 +20,7 @@ type SessionValue = {
   openAlerts: (topics?: string[]) => void;
   openCite: (articles: Article | Article[]) => void;
   openShare: (article: Article) => void;
+  openRequest: (article: Article) => void;
 };
 
 const SessionContext = createContext<SessionValue | null>(null);
@@ -43,6 +44,7 @@ export function SessionProvider({ children }: { children: ReactNode }) {
   const [alerts, setAlerts] = useState<{ open: boolean; topics: string[] }>({ open: false, topics: [] });
   const [cite, setCite] = useState<Article[] | null>(null);
   const [share, setShare] = useState<Article | null>(null);
+  const [request, setRequest] = useState<Article | null>(null);
 
   const refresh = useCallback(async () => {
     try {
@@ -125,6 +127,7 @@ export function SessionProvider({ children }: { children: ReactNode }) {
     openAlerts: (topics = ["new-issue"]) => setAlerts({ open: true, topics }),
     openCite: (a) => setCite(Array.isArray(a) ? a : [a]),
     openShare: (a) => setShare(a),
+    openRequest: (a) => setRequest(a),
   };
 
   return (
@@ -146,6 +149,12 @@ export function SessionProvider({ children }: { children: ReactNode }) {
       />
       <CiteDialog articles={cite} onOpenChange={(open) => !open && setCite(null)} />
       <ShareDialog article={share} onOpenChange={(open) => !open && setShare(null)} />
+      <RequestDialog
+        article={request}
+        defaultName={user?.name}
+        defaultEmail={user?.email}
+        onOpenChange={(open) => !open && setRequest(null)}
+      />
     </SessionContext.Provider>
   );
 }

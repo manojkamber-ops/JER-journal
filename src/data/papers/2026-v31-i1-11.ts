@@ -1,0 +1,47 @@
+// Vol. 31, No. 1 (February 2026) — abstract and references only (full paper on request from the authors).
+import type { PaperSpec } from "../paper-spec";
+
+export const paper: PaperSpec = {
+  id: "2026-v31-i1-11",
+  title: "Women's Reservation in Urban Local Bodies and Public Goods Provision: Evidence from India",
+  authors: [
+    { name: "Shruti Banerjea", corresponding: true, affiliation: { department: "Centre for Economic Studies and Planning", institution: "Jawaharlal Nehru University", city: "New Delhi", country: "India" } },
+    { name: "Mohit Agnihotri", affiliation: { department: "Centre for Economic Studies and Planning", institution: "Jawaharlal Nehru University", city: "New Delhi", country: "India" } },
+  ],
+  abstract:
+    "A large literature documents that political reservation for women in village councils changes the allocation of public goods in rural India, but evidence for urban local bodies, where governments manage larger budgets and more complex services, is scarce. This paper studies the rotation of ward seats reserved for women in municipal corporations across eight Indian states between 2012 and 2024. We construct a ward-level dataset from municipal budgets, council records, complaint portals and satellite measures of service coverage. Because reservation is assigned by rotation or lottery, we compare reserved and unreserved wards within the same municipality in a design that controls for ward characteristics and past reservation status. Wards reserved for women experience a 13 percent increase in spending on water supply and sanitation and an 8 percent rise in street lighting coverage, while capital spending on roads is unchanged. Citizen service requests registered on municipal portals rise by 9 percent, and resolution times fall by 11 percent. We find no evidence of weaker fiscal discipline or higher arrears. Effects persist after a ward returns to open competition, suggesting durable changes in citizen engagement. The results highlight how representation shapes urban service delivery in fast-growing cities.",
+  keywords: ["political reservation", "gender and politics", "local governance", "public goods", "India"],
+  jelCodes: ["D72", "H41", "J16", "O18"],
+  pages: "1–21",
+  volume: 31,
+  issue: 1,
+  year: 2026,
+  received: "2025-03-17",
+  accepted: "2025-11-12",
+  published: "2026-02-15",
+  publishedOnline: "2026-02-03",
+  citations: 2,
+  downloads: 570,
+  pdfSize: "0.51 MB",
+  type: "Research Article",
+  editorialNote: "Wards randomly reserved for women see 13 percent more spending on water and sanitation and a 9 percent rise in citizen service requests, with no loss in fiscal discipline.",
+  refs: [
+    "Afridi, F., Iversen, V., & Sharan, M. R. (2017). Women political leaders, corruption, and learning: Evidence from a large public program in India. Economic Development and Cultural Change, 66(1), 1–30.",
+    "Ban, R., & Rao, V. (2008). Tokenism or agency? The impact of women's reservations on village democracies in South India. Economic Development and Cultural Change, 56(3), 501–530.",
+    "Beaman, L., Chattopadhyay, R., Duflo, E., Pande, R., & Topalova, P. (2009). Powerful women: Does exposure reduce bias? Quarterly Journal of Economics, 124(4), 1497–1540.",
+    "Beaman, L., Duflo, E., Pande, R., & Topalova, P. (2012). Female leadership raises aspirations and educational attainment for girls: A policy experiment in India. Science, 335(6068), 582–586.",
+    "Besley, T., & Case, A. (2003). Political institutions and policy choices: Evidence from the United States. Journal of Economic Literature, 41(1), 7–73.",
+    "Besley, T., & Coate, S. (1997). An economic model of representative democracy. Quarterly Journal of Economics, 112(1), 85–114.",
+    "Bhavnani, R. R. (2009). Do electoral quotas work after they are withdrawn? Evidence from a natural experiment in India. American Political Science Review, 103(1), 23–35.",
+    "Brollo, F., & Troiano, U. (2016). What happens when a woman wins an election? Evidence from close races in Brazil. Journal of Development Economics, 122, 28–45.",
+    "Calonico, S., Cattaneo, M. D., & Titiunik, R. (2014). Robust nonparametric confidence intervals for regression-discontinuity designs. Econometrica, 82(6), 2295–2326.",
+    "Cattaneo, M. D., Jansson, M., & Ma, X. (2020). Simple local polynomial density estimators. Journal of the American Statistical Association, 115(531), 1449–1455.",
+    "Chattopadhyay, R., & Duflo, E. (2004). Women as policy makers: Evidence from a randomized policy experiment in India. Econometrica, 72(5), 1409–1443.",
+    "Clots-Figueras, I. (2011). Women in politics: Evidence from the Indian States. Journal of Public Economics, 95(7–8), 664–690.",
+    "Duflo, E. (2012). Women empowerment and economic development. Journal of Economic Literature, 50(4), 1051–1079.",
+    "Ferreira, F., & Gyourko, J. (2014). Does gender matter for political leadership? The case of U.S. mayors. Journal of Public Economics, 112, 24–39.",
+    "Imbens, G. W., & Lemieux, T. (2008). Regression discontinuity designs: A guide to practice. Journal of Econometrics, 142(2), 615–635.",
+    "Lee, D. S., Moretti, E., & Butler, M. J. (2004). Do voters affect or elect policies? Evidence from the U.S. House. Quarterly Journal of Economics, 119(3), 807–859.",
+    "Pande, R. (2003). Can mandated political representation increase policy influence for disadvantaged minorities? Theory and evidence from India. American Economic Review, 93(4), 1132–1151.",
+  ],
+};

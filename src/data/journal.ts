@@ -31,11 +31,11 @@ export const JOURNAL_INFO = {
 
 // The issue shown as "Current Issue" across the site.
 export const CURRENT_ISSUE = {
-  volume: 30,
-  issue: 4,
-  year: 2025,
-  published: "2025-10-15",
-  label: "October 2025",
+  volume: 31,
+  issue: 2,
+  year: 2026,
+  published: "2026-08-15",
+  label: "August 2026",
 };
 
 export type AuthorAffiliation = {
@@ -2102,6 +2102,22 @@ export type NewsItem = {
 
 export const NEWS_ITEMS: NewsItem[] = [
   {
+    id: "n00",
+    date: "2026-08-15",
+    title: "Volume 31, Issue 2 (August 2026) is now published",
+    summary:
+      "The August 2026 issue contains thirteen articles, four in full text and nine as abstracts with references, on generative AI and worker productivity, the Phillips curve in Korea and Japan, extreme heat and factory output, risk-sharing after the Lombok earthquakes and participatory budgeting in Korean municipalities. Full papers can be requested from the authors with the lock symbol beside each article.",
+    category: "Issue",
+  },
+  {
+    id: "n01",
+    date: "2026-02-15",
+    title: "Volume 31, Issue 1 (February 2026) is now published",
+    summary:
+      "The first issue of Volume 31 contains thirteen articles, four in full text, on generative AI and entry-level hiring in India, school closures and housing values in Korea, the EU carbon border adjustment mechanism, wartime displacement and long-run development, and more.",
+    category: "Issue",
+  },
+  {
     id: "n0",
     date: "2025-10-15",
     title: "Volume 30, Issue 4 (October 2025) is now published",
@@ -2360,7 +2376,7 @@ import { ALL_FULLTEXTS, ALL_PAPERS } from "./papers";
 export const RESEARCH_PAPERS: PaperSpec[] = ALL_PAPERS;
 
 /** Articles that have a full text (complete papers and full texts attached to existing articles). */
-const FULL_TEXT_IDS = new Set<string>([...ALL_PAPERS.map((p) => p.id), ...ALL_FULLTEXTS.map((p) => p.id)]);
+const FULL_TEXT_IDS = new Set<string>([...ALL_PAPERS.filter((p) => p.body).map((p) => p.id), ...ALL_FULLTEXTS.filter((p) => p.body).map((p) => p.id)]);
 
 /** Reference specs of each article whose reference list is generated below. */
 const PENDING_REFS = new Map<string, RefSpec[]>();

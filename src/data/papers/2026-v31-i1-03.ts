@@ -1,0 +1,45 @@
+// Vol. 31, No. 1 (February 2026) — abstract and references only (full paper on request from the authors).
+import type { PaperSpec } from "../paper-spec";
+
+export const paper: PaperSpec = {
+  id: "2026-v31-i1-03",
+  title: "Climate Transition Risk and Bank Credit Allocation: Evidence from Indian Banks",
+  authors: [
+    { name: "Debashis Chakravarty", corresponding: true, affiliation: { department: "Economics and Planning Unit", institution: "Indian Statistical Institute, Delhi Centre", city: "New Delhi", country: "India" } },
+    { name: "Ritu Malhotra", affiliation: { department: "Department of Finance", institution: "Indira Gandhi Institute of Development Research", city: "Mumbai", country: "India" } },
+  ],
+  abstract:
+    "How do banks in emerging economies respond when the transition to a low-carbon economy becomes a credible policy objective? This paper examines credit allocation by Indian scheduled commercial banks around India's 2021 pledge to reach net-zero emissions by 2070. We combine a loan-level dataset covering about 9,400 corporate borrowers from 2017 to 2024 with plant-level emissions data and bank balance-sheet records. Using a Khwaja-Mian specification with borrower-time fixed effects, we compare lending by banks with different pre-pledge exposure to the same borrower. Banks in the top tercile of carbon-intensive exposure reduced new loan commitments to high-emitting firms by 6.3 percent relative to the bottom tercile, and raised loan spreads by 14 basis points. Public sector banks adjusted far less than private banks, and the reduction is concentrated among borrowers without access to bond markets. Only 11 percent of the withdrawn credit was reallocated to renewable energy and low-emission firms, and overall credit to affected borrowers fell, with investment declining by 3.1 percent. The findings indicate that transition risk is already priced in bank lending, but that reallocation toward green activity is slow where bank ownership and borrower alternatives are limited.",
+  keywords: ["climate risk", "bank lending", "transition risk", "credit allocation", "India"],
+  jelCodes: ["G21", "Q54", "E51", "G28"],
+  pages: "1–20",
+  volume: 31,
+  issue: 1,
+  year: 2026,
+  received: "2025-02-10",
+  accepted: "2025-11-05",
+  published: "2026-02-15",
+  publishedOnline: "2026-01-30",
+  citations: 1,
+  downloads: 520,
+  pdfSize: "0.47 MB",
+  type: "Research Article",
+  editorialNote: "Indian banks with larger exposure to carbon-intensive borrowers tightened credit to them by 6.3 percent after the 2021 net-zero announcement, but redirected only a small share to green sectors.",
+  refs: [
+    "Battiston, S., Mandel, A., Monasterolo, I., Schütze, F., & Visentin, G. (2017). A climate stress-test of the financial system. Nature Climate Change, 7(4), 283–288.",
+    "Bernanke, B. S., & Gertler, M. (1995). Inside the black box: The credit channel of monetary policy transmission. Journal of Economic Perspectives, 9(4), 27–48.",
+    "Bolton, P., & Kacperczyk, M. (2021). Do investors care about carbon risk? Journal of Financial Economics, 142(2), 517–549.",
+    "Bolton, P., & Kacperczyk, M. (2023). Global pricing of carbon-transition risk. Journal of Finance, 78(6), 3677–3754.",
+    "Chava, S. (2014). Environmental externalities and cost of capital. Management Science, 60(9), 2223–2247.",
+    "Giglio, S., Kelly, B., & Stroebel, J. (2021). Climate finance. Annual Review of Financial Economics, 13, 15–36.",
+    "Hong, H., Karolyi, G. A., & Scheinkman, J. A. (2020). Climate finance. Review of Financial Studies, 33(3), 1011–1023.",
+    "Ilhan, E., Sautner, Z., & Vilkov, G. (2021). Carbon tail risk. Review of Financial Studies, 34(3), 1540–1571.",
+    "Jiménez, G., Ongena, S., Peydró, J.-L., & Saurina, J. (2012). Credit supply and monetary policy: Identifying the bank balance-sheet channel with loan applications. American Economic Review, 102(5), 2301–2326.",
+    "Khwaja, A. I., & Mian, A. (2008). Tracing the impact of bank liquidity shocks: Evidence from an emerging market. American Economic Review, 98(4), 1413–1442.",
+    "Krueger, P., Sautner, Z., & Starks, L. T. (2020). The importance of climate risks for institutional investors. Review of Financial Studies, 33(3), 1067–1111.",
+    "Painter, M. (2020). An inconvenient cost: The effects of climate change on municipal bonds. Journal of Financial Economics, 135(2), 468–482.",
+    "Pástor, Ľ., Stambaugh, R. F., & Taylor, L. A. (2021). Sustainable investing in equilibrium. Journal of Financial Economics, 142(2), 550–571.",
+    "Sautner, Z., van Lent, L., Vilkov, G., & Zhang, R. (2023). Firm-level climate change exposure. Journal of Finance, 78(3), 1449–1498.",
+    "Stroebel, J., & Wurgler, J. (2021). What do you think about climate finance? Journal of Financial Economics, 142(2), 487–498.",
+  ],
+};

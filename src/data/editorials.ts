@@ -25,6 +25,54 @@ export type EditorialSpec = {
 
 export const EDITORIALS: EditorialSpec[] = [
   /* ================================================================ */
+  /* Volume 31, Issue 2 — August 2026 (current issue)   */
+  /* ================================================================ */
+  {
+    id: "2026-v31-i2-ed",
+    volume: 31,
+    issue: 2,
+    year: 2026,
+    published: "2026-08-15",
+    pages: "i–iii",
+    title: "Editorial: Productivity, Prices and Public Services After the Pandemic",
+    abstract:
+      "The Editor-in-Chief introduces eleven articles on productivity in the age of AI, post-pandemic inflation, extreme heat, disaster risk-sharing and the delivery of public services, two of them in full text and nine as abstracts with references, with the full papers available on request from the authors.",
+    keywords: ["Editorial", "Generative AI", "Climate policy", "Public services"],
+    cited: ["2026-v31-i2-01", "2026-v31-i2-02", "2026-v31-i2-03", "2026-v31-i2-04", "2026-v31-i2-06", "2026-v31-i2-07", "2026-v31-i2-08", "2026-v31-i2-09", "2026-v31-i2-10", "2026-v31-i2-12", "2026-v31-i2-13"],
+    paragraphs: [
+      "This issue of the Journal of Economic Research (JER), Volume 31, Number 2, brings together eleven articles on productivity in the age of AI, post-pandemic inflation, extreme heat, disaster risk-sharing and the delivery of public services. Two of them appear in full in this issue; for the remaining nine, readers will find the abstract and the references on our website, and the full paper can be requested from the authors with one click on the lock symbol beside the full-text link. We hope this model, which lets authors decide how widely to circulate their manuscripts while the journal keeps the record of their work open and citable, will serve our community well.",
+      "The first group of articles concerns work, households and public policy. Staggered access to a code-completion assistant raised output per developer-month by 11.4 per cent, with gains of 19 per cent for workers in the bottom experience tercile. Quality measured by defect rates did not deteriorate [1]. Using city-level price panels for Korea and Japan, the authors find that the Phillips-curve slope roughly doubled after 2021 and that inflation persistence rose from 0.52 to 0.71. Japan's slope remained about half of Korea's, consistent with lower wage pass-through [2]. A 2019 dispatch-zone reform cut ambulance response times by 1.8 minutes in treated districts, raising out-of-hospital cardiac arrest survival to discharge by 2.1 percentage points (14 per cent). Benefits were largest for night-time calls [3].",
+      "The second group turns to markets, banks and prices. Adding breakfast to the midday meal in pilot districts raised attendance by 2.6 percentage points and mathematics test scores by 0.09 standard deviations. The effects were two to three times larger for girls from the poorest households [4]. Deposit outflows at Korean mutual credit cooperatives in early 2023 rose by 3.1 percentage points for each standard-deviation increase in local social media rumour intensity, even for fully insured accounts. Public guarantee announcements reversed roughly 70 per cent of withdrawals within two weeks [5]. Coffee growers on sustainability-certified contracts earned 17 per cent higher net income per hectare and faced 23 per cent lower price risk. Gains were concentrated among farms above one hectare, while the smallest farms were disproportionately excluded [6].",
+      "A third group studies firms, farms and the way institutions shape economic outcomes. Households with larger kinship networks cut consumption by 11 percentage points less after the Lombok earthquakes. Informal transfers, however, covered only 18 per cent of the damage, and network insurance weakened sharply when the whole village was affected [7]. After Jio's 2016 entry, the effective price per gigabyte of mobile data fell by 91 per cent and monthly data use per subscriber rose nearly eightfold. Estimated consumer surplus gains were about 12 per cent of annual household telecommunication spending, with larger gains in rural circles [8]. Prefectures hosting nineteenth-century treaty ports have a 22 per cent higher manufacturing employment share today, but about three quarters of this gap reflects persistent port-hinterland trade links rather than local institutions. Effects fade beyond 150 kilometres from the coast [9].",
+      "The final group of articles returns to public services, development and method. Switching to a time-of-use tariff reduced residential evening peak consumption by 8.7 per cent, with an own-price elasticity of -0.14 during peak hours. Savings were larger for households with automated appliances and for homes with rooftop solar [10]. Standard first-generation tests reject a unit root in Asian real exchange rates in 71 per cent of specifications, but the rate falls to 38 per cent once common factors are filtered. Half-lives of deviations are 2.9 years in the corrected specification [11].",
+      "Taken together, the eleven articles show how much the effects of a policy or a technology depend on who is exposed to it and on the institutions that deliver it. I am grateful to the Associate Editors who handled the submissions in this issue — Lakshmi Iyer, Keiko Sato, Min-Jae Choi, Wei Zhang and Samuel Adeyemi — and to the reviewers who supported them with careful and timely reports.",
+    ],
+  },
+  /* ================================================================ */
+  /* Volume 31, Issue 1 — February 2026                 */
+  /* ================================================================ */
+  {
+    id: "2026-v31-i1-ed",
+    volume: 31,
+    issue: 1,
+    year: 2026,
+    published: "2026-02-15",
+    pages: "i–iii",
+    title: "Editorial: Work, Demography and Climate — Policy in Times of Technological Change",
+    abstract:
+      "The Editor-in-Chief introduces ten articles on artificial intelligence and labour markets, demographic change, climate and trade policy, and the long shadow of historical shocks, one of them in full text and nine as abstracts with references, with the full papers available on request from the authors.",
+    keywords: ["Editorial", "Generative AI", "Demography", "Climate policy"],
+    cited: ["2026-v31-i1-01", "2026-v31-i1-02", "2026-v31-i1-03", "2026-v31-i1-05", "2026-v31-i1-06", "2026-v31-i1-08", "2026-v31-i1-09", "2026-v31-i1-11", "2026-v31-i1-12", "2026-v31-i1-13"],
+    paragraphs: [
+      "This issue of the Journal of Economic Research (JER), Volume 31, Number 1, brings together ten articles on artificial intelligence and labour markets, demographic change, climate and trade policy, and the long shadow of historical shocks. One of them appears in full in this issue; for the remaining nine, readers will find the abstract and the references on our website, and the full paper can be requested from the authors with one click on the lock symbol beside the full-text link. We hope this model, which lets authors decide how widely to circulate their manuscripts while the journal keeps the record of their work open and citable, will serve our community well.",
+      "The first group of articles concerns work, households and public policy. Firms that deployed generative AI coding assistants cut fresher hiring by 11 percent relative to matched non-adopters, while mid-career hiring was unchanged; the decline is concentrated in routine testing and support roles [1]. A KRW 1 million birth grant raises the fertility rate by 0.9 percent, at roughly KRW 190 million per additional birth, with 40 percent of the response reflecting timing shifts [2]. Indian banks with larger exposure to carbon-intensive borrowers tightened credit to them by 6.3 percent after the 2021 net-zero announcement, but redirected only a small share to green sectors [3].",
+      "The second group turns to markets, banks and prices. Each percentage point of higher perceived inflation raises negotiated wage settlements by 0.21 percentage point, with pass-through roughly twice as large in firms with unionised workforces [4]. Rollout of eSanjeevani health and wellness centres raised outpatient consultations in treated rural blocks by 17 percent and cut travel distance to a physician by a third, with little crowding out of in-person care [5]. Broiler growers under integrator contracts earn 24 percent higher net income per cycle than independents but face a 38 percent larger income risk from contract termination [6].",
+      "A third group studies firms, farms and the way institutions shape economic outcomes. Conventional standard errors in shift-share regressions understate uncertainty by up to 40 percent under spatial correlation; the revised confidence intervals for India's 1991 tariff reform widen accordingly [7]. Wards randomly reserved for women see 13 percent more spending on water and sanitation and a 9 percent rise in citizen service requests, with no loss in fiscal discipline [8]. Adoption of repricing software by online grocers raised margins by 3.8 percent in concentrated product categories, with no effect where more than four rivals compete [9].",
+      "The final group of articles returns to public services, development and method. Extending school meals to all Grade 1 to 6 pupils in covered divisions raised reading scores by 0.09 standard deviations and reduced absenteeism by 1.4 days per year, at a cost of about USD 36 per pupil [10].",
+      "Taken together, the ten articles show how much the effects of a policy or a technology depend on who is exposed to it and on the institutions that deliver it. I am grateful to the Associate Editors who handled the submissions in this issue — Lakshmi Iyer, Keiko Sato, Min-Jae Choi, Wei Zhang and Samuel Adeyemi — and to the reviewers who supported them with careful and timely reports.",
+    ],
+  },
+  /* ================================================================ */
   /* Volume 30, Issue 4 — October 2025                                */
   /* ================================================================ */
   {

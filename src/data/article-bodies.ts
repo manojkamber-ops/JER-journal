@@ -138,5 +138,8 @@ for (const ed of EDITORIALS) {
 
 // Full research papers (src/data/papers/): complete PaperSpecs and full texts for articles defined in journal.ts
 for (const paper of [...ALL_PAPERS, ...ALL_FULLTEXTS]) {
-  ARTICLE_BODIES[paper.id] = paper.body;
+  if (paper.body) ARTICLE_BODIES[paper.id] = paper.body;
 }
+
+/** True when the article's full text is on the site; otherwise only its abstract and references are public. */
+export const hasFullText = (articleId: string) => Boolean(ARTICLE_BODIES[articleId]);

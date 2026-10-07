@@ -12,7 +12,9 @@ import { copyText, downloadText } from "@/lib/download";
 import { routeUrl } from "./nav-context";
 import { doiUrl } from "@/lib/doi";
 import { api } from "./session";
-import { Copy, Download, Mail, Link2, Linkedin, Twitter, Facebook, Bell, CheckCircle2, Loader2 } from "lucide-react";
+import { Textarea } from "@/components/ui/textarea";
+import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@/components/ui/select";
+import { Copy, Download, Mail, Link2, Linkedin, Twitter, Facebook, Bell, CheckCircle2, Loader2, Lock } from "lucide-react";
 
 export type AuthMode = "signin" | "register";
 
@@ -386,6 +388,146 @@ export function ShareDialog({ article, onOpenChange }: { article: Article | null
             </div>
           </div>
         ))}
+      </DialogContent>
+    </Dialog>
+  );
+}
+
+/* ------------------------------------------------------------------ */
+/* Request the full paper from the authors                             */
+/* ------------------------------------------------------------------ */
+const REQUEST_PURPOSES = ["Research", "Teaching", "Policy work", "Literature review", "Other"];
+
+export function RequestDialog({
+  article,
+  defaultName,
+  defaultEmail,
+  onOpenChange,
+}: {
+  article: Article | null;
+  defaultName?: string;
+  defaultEmail?: string;
+  onOpenChange: (open: boolean) => void;
+}) {
+  if (!article) return null;
+  return <RequestForm key={article.id} article={article} defaultName={defaultName} defaultEmail={defaultEmail} onOpenChange={onOpenChange} />;
+}
+
+function RequestForm({
+  article,
+  defaultName,
+  defaultEmail,
+  onOpenChange,
+}: {
+  article: Article;
+  defaultName?: string;
+  defaultEmail?: string;
+  onOpenChange: (open: boolean) => void;
+}) {
+  const [name, setName] = useState(defaultName ?? "");
+  const [email, setEmail] = useState(defaultEmail ?? "");
+  const [organisation, setOrganisation] = useState("");
+  const [purpose, setPurpose] = useState(REQUEST_PURPOSES[0]);
+  const [note, setNote] = useState("");
+  const [busy, setBusy] = useState(false);
+  const [error, setError] = useState<string | null>(null);
+  const [sent, setSent] = useState(false);
+  const corresponding = article.authors.find((a) => a.corresponding) ?? article.authors[0];
+
+  async function submit(e: React.FormEvent) {
+    e.preventDefault();
+    setError(null);
+    setBusy(true);
+    try {
+      await api("/api/contact", {
+        method: "POST",
+        body: JSON.stringify({
+          name,
+          email,
+          organisation,
+          subject: `Full-text request: ${article.title}`,
+          message: [
+            `Request for the full text of: ${article.title}`,
+            `Authors: ${article.authors.map((a) => a.name).join(", ")} (corresponding author: ${corresponding.name})`,
+            `JER Vol. ${article.volume}, No. ${article.issue} (${article.year}); DOI ${article.doi}`,
+            `Purpose: ${purpose}`,
+            note ? `\nMessage from the requester:\n${note}` : "",
+          ].join("\n"),
+        }),
+      });
+      setSent(true);
+    } catch (err) {
+      setError((err as Error).message);
+    } finally {
+      setBusy(false);
+    }
+  }
+
+  return (
+    <Dialog open onOpenChange={onOpenChange}>
+      <DialogContent className="sm:max-w-lg rounded-sm">
+        <DialogHeader>
+          <div className="flex items-center gap-2">
+            <Lock className="w-5 h-5 text-accent" aria-hidden />
+            <DialogTitle className="font-serif text-2xl text-primary">Request the full paper</DialogTitle>
+          </div>
+          <DialogDescription className="font-serif line-clamp-3">{article.title}</DialogDescription>
+        </DialogHeader>
+
+        {sent ? (
+          <div className="space-y-4 text-center py-4">
+            <CheckCircle2 className="w-10 h-10 mx-auto text-green-700" aria-hidden />
+            <p className="font-serif text-lg text-primary">Request sent</p>
+            <p className="font-sans text-sm text-gray-600 leading-relaxed">
+              The editorial office has passed your request to {corresponding.name}, the corresponding author. The authors decide who receives
+              the manuscript and will reply to <strong>{email}</strong>.
+            </p>
+            <Button onClick={() => onOpenChange(false)} className="font-sans bg-primary hover:bg-primary/90 rounded-sm">
+              Close
+            </Button>
+          </div>
+        ) : (
+          <form onSubmit={submit} className="space-y-3.5">
+            <p className="font-sans text-sm text-gray-600 leading-relaxed">
+              Only the abstract and references of this article are public. The authors share the full paper on request — tell us who you are and
+              why you would like to read it.
+            </p>
+            <div className="grid sm:grid-cols-2 gap-3">
+              <div>
+                <Label htmlFor="req-name" className="font-sans text-xs text-gray-500">Your name *</Label>
+                <Input id="req-name" required value={name} onChange={(e) => setName(e.target.value)} className="mt-1 font-sans" autoComplete="name" />
+              </div>
+              <div>
+                <Label htmlFor="req-email" className="font-sans text-xs text-gray-500">Email *</Label>
+                <Input id="req-email" type="email" required value={email} onChange={(e) => setEmail(e.target.value)} className="mt-1 font-sans" autoComplete="email" />
+              </div>
+            </div>
+            <div className="grid sm:grid-cols-2 gap-3">
+              <div>
+                <Label htmlFor="req-org" className="font-sans text-xs text-gray-500">Institution</Label>
+                <Input id="req-org" value={organisation} onChange={(e) => setOrganisation(e.target.value)} className="mt-1 font-sans" autoComplete="organization" />
+              </div>
+              <div>
+                <Label className="font-sans text-xs text-gray-500">Purpose</Label>
+                <Select value={purpose} onValueChange={setPurpose}>
+                  <SelectTrigger className="mt-1 font-sans"><SelectValue /></SelectTrigger>
+                  <SelectContent>
+                    {REQUEST_PURPOSES.map((p) => <SelectItem key={p} value={p}>{p}</SelectItem>)}
+                  </SelectContent>
+                </Select>
+              </div>
+            </div>
+            <div>
+              <Label htmlFor="req-note" className="font-sans text-xs text-gray-500">Message to the authors (optional)</Label>
+              <Textarea id="req-note" rows={3} value={note} onChange={(e) => setNote(e.target.value)} className="mt-1 font-sans" />
+            </div>
+            <FormError message={error} />
+            <Button type="submit" disabled={busy} className="w-full font-sans bg-primary hover:bg-primary/90 rounded-sm">
+              {busy && <Loader2 className="w-4 h-4 mr-2 animate-spin" />}
+              Send request to the authors
+            </Button>
+          </form>
+        )}
       </DialogContent>
     </Dialog>
   );

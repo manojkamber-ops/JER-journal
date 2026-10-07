@@ -1,0 +1,47 @@
+// Vol. 31, No. 2 (August 2026) — abstract and references only (full paper on request from the authors).
+import type { PaperSpec } from "../paper-spec";
+
+export const paper: PaperSpec = {
+  id: "2026-v31-i2-10",
+  title: "Treaty Ports and the Long-Run Geography of Industry in China",
+  authors: [
+    { name: "Wei-Ling Zhuang", corresponding: true, affiliation: { department: "School of Economics", institution: "Peking University", city: "Beijing", country: "China" } },
+    { name: "Jun Hao Ong", affiliation: { department: "Department of Economics", institution: "National University of Singapore", city: "Singapore", country: "Singapore" } },
+  ],
+  abstract:
+    "This paper revisits the long-run effects of the Chinese treaty ports opened to foreign trade after 1842 on the spatial distribution of industry. We construct a prefecture-level dataset linking historical records on port openings, early modern railway lines and treaty-era factories to modern economic census data from 2004 to 2018. To address endogenous port selection, we exploit a set of ports designated through treaty negotiations whose locations were determined by pre-existing naval geography and river navigability, comparing them with prefectures that were shortlisted but not opened. Treaty-port prefectures have a manufacturing employment share 22 per cent higher than comparable prefectures, and 1.9 times the density of firms in export-intensive industries. A mediation analysis shows that about 75 per cent of the persistent gap operates through market-access advantages from historical trade links and railway connections, whereas contemporary institutional quality and human capital account for less than a fifth. Effects decline with distance from the port and disappear beyond roughly 150 kilometres. The results favour a path-dependent agglomeration interpretation over an institutional-legacy one, and caution against generalising colonial-era effects across settings.",
+  keywords: ["treaty ports", "economic history", "industrial clustering", "institutions", "China"],
+  jelCodes: ["N95", "R12", "O14", "N65"],
+  pages: "1–20",
+  volume: 31,
+  issue: 2,
+  year: 2026,
+  received: "2025-08-12",
+  accepted: "2026-05-14",
+  published: "2026-08-15",
+  publishedOnline: "2026-08-02",
+  citations: 2,
+  downloads: 512,
+  pdfSize: "0.44 MB",
+  type: "Research Article",
+  editorialNote: "Prefectures hosting nineteenth-century treaty ports have a 22 per cent higher manufacturing employment share today, but about three quarters of this gap reflects persistent port-hinterland trade links rather than local institutions. Effects fade beyond 150 kilometres from the coast.",
+  refs: [
+    "Acemoglu, D., Johnson, S., & Robinson, J. A. (2001). The colonial origins of comparative development: An empirical investigation. American Economic Review, 91(5), 1369–1401.",
+    "Autor, D. H., Dorn, D., & Hanson, G. H. (2013). The China syndrome: Local labor market effects of import competition in the United States. American Economic Review, 103(6), 2121–2168.",
+    "Banerjee, A., & Iyer, L. (2005). History, institutions, and economic performance: The legacy of colonial land tenure systems in India. American Economic Review, 95(4), 1190–1213.",
+    "Bleakley, H., & Lin, J. (2012). Portage and path dependence. Quarterly Journal of Economics, 127(2), 587–644.",
+    "Davis, D. R., & Weinstein, D. E. (2002). Bones, bombs, and break points: The geography of economic activity. American Economic Review, 92(5), 1269–1289.",
+    "Dell, M. (2010). The persistent effects of Peru's mining mita. Econometrica, 78(6), 1863–1903.",
+    "Donaldson, D. (2018). Railroads of the Raj: Estimating the impact of transportation infrastructure. American Economic Review, 108(4–5), 899–934.",
+    "Donaldson, D., & Hornbeck, R. (2016). Railroads and American economic growth: A \"market access\" approach. Quarterly Journal of Economics, 131(2), 799–858.",
+    "Ellison, G., & Glaeser, E. L. (1997). Geographic concentration in U.S. manufacturing industries: A dartboard approach. Journal of Political Economy, 105(5), 889–927.",
+    "Faber, B. (2014). Trade integration, market size, and industrialization: Evidence from China's National Trunk Highway System. Review of Economic Studies, 81(3), 1046–1070.",
+    "Hornung, E. (2014). Immigration and the diffusion of technology: The Huguenot diaspora in Prussia. American Economic Review, 104(1), 84–122.",
+    "Jia, R. (2014). The legacies of forced freedom: China's treaty ports. Review of Economics and Statistics, 96(4), 596–608.",
+    "Krugman, P. (1991). Increasing returns and economic geography. Journal of Political Economy, 99(3), 483–499.",
+    "Michalopoulos, S., & Papaioannou, E. (2013). Pre-colonial ethnic institutions and contemporary African development. Econometrica, 81(1), 113–152.",
+    "Nunn, N. (2008). The long-term effects of Africa's slave trades. Quarterly Journal of Economics, 123(1), 139–176.",
+    "Nunn, N. (2009). The importance of history for economic development. Annual Review of Economics, 1, 65–92.",
+    "Redding, S. J., & Sturm, D. M. (2008). The costs of remoteness: Evidence from German division and reunification. American Economic Review, 98(5), 1766–1797.",
+  ],
+};

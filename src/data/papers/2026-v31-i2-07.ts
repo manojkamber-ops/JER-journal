@@ -1,0 +1,48 @@
+// Vol. 31, No. 2 (August 2026) — abstract and references only (full paper on request from the authors).
+import type { PaperSpec } from "../paper-spec";
+
+export const paper: PaperSpec = {
+  id: "2026-v31-i2-07",
+  title: "Contract Farming and Smallholder Livelihoods: Evidence from Vietnam's Central Highlands Coffee Sector",
+  authors: [
+    { name: "Nguyen Quoc Bao", corresponding: true, affiliation: { department: "School of Economics", institution: "Australian National University", city: "Canberra", country: "Australia" } },
+    { name: "Thao Linh Tran", affiliation: { department: "Faculty of Agricultural Economics", institution: "Vietnam National University of Agriculture", city: "Hanoi", country: "Vietnam" } },
+  ],
+  abstract:
+    "Contract farming is promoted as a route for smallholders to access inputs, technical support and premium markets, but selection into contracts complicates evaluation. We use a three-wave household panel of 1,840 coffee-growing households in Dak Lak, Lam Dong and Gia Lai provinces, surveyed in 2018, 2021 and 2024, together with firm-level contract rosters from five exporters. Because exporters expanded sustainability-certified procurement into villages in a staggered sequence driven by proximity to processing plants, we estimate household fixed-effect models with village-level exposure instruments. Contract participation raises net coffee income per hectare by 17 per cent and reduces the coefficient of variation of farm-gate prices faced by 23 per cent, mainly through forward pricing and quality premia. Yields rise by 9 per cent, driven by improved fertiliser and shade-tree management. However, farms below one hectare are 14 percentage points less likely to be offered a contract, and effects for those who participate are small. Female-headed households benefit less from technical training. The results suggest that contract farming can raise incomes but needs complementary measures, such as cooperative aggregation, to include the smallest growers.",
+  keywords: ["contract farming", "smallholders", "coffee", "value chains", "Vietnam"],
+  jelCodes: ["Q12", "O13", "L14", "D22"],
+  pages: "1–16",
+  volume: 31,
+  issue: 2,
+  year: 2026,
+  received: "2025-09-08",
+  accepted: "2026-05-21",
+  published: "2026-08-15",
+  publishedOnline: "2026-08-05",
+  citations: 0,
+  downloads: 321,
+  pdfSize: "0.41 MB",
+  type: "Research Article",
+  editorialNote: "Coffee growers on sustainability-certified contracts earned 17 per cent higher net income per hectare and faced 23 per cent lower price risk. Gains were concentrated among farms above one hectare, while the smallest farms were disproportionately excluded.",
+  refs: [
+    "Aker, J. C. (2010). Information from markets near and far: Mobile phones and agricultural markets in Niger. American Economic Journal: Applied Economics, 2(3), 46–59.",
+    "Ashraf, N., Giné, X., & Karlan, D. (2009). Finding missing markets (and a disturbing epilogue): Evidence from an export crop adoption and marketing intervention in Kenya. American Journal of Agricultural Economics, 91(4), 973–990.",
+    "Barrett, C. B., Bachke, M. E., Bellemare, M. F., Michelson, H. C., Narayanan, S., & Walker, T. F. (2012). Smallholder participation in contract farming: Comparative evidence from five countries. World Development, 40(4), 715–730.",
+    "Bellemare, M. F. (2012). As you sow, so shall you reap: The welfare impacts of contract farming. World Development, 40(7), 1418–1434.",
+    "Bellemare, M. F., & Novak, L. (2017). Contract farming and food security. American Journal of Agricultural Economics, 99(2), 357–378.",
+    "Bertrand, M., Duflo, E., & Mullainathan, S. (2004). How much should we trust differences-in-differences estimates? Quarterly Journal of Economics, 119(1), 249–275.",
+    "Duflo, E., Kremer, M., & Robinson, J. (2011). Nudging farmers to use fertilizer: Theory and experimental evidence from Kenya. American Economic Review, 101(6), 2350–2390.",
+    "Foster, A. D., & Rosenzweig, M. R. (2010). Microeconomics of technology adoption. Annual Review of Economics, 2, 395–424.",
+    "Goyal, A. (2010). Information, direct access to farmers, and rural market performance in central India. American Economic Journal: Applied Economics, 2(3), 22–45.",
+    "Jensen, R. (2007). The digital provide: Information (technology), market performance, and welfare in the South Indian fisheries sector. Quarterly Journal of Economics, 122(3), 879–924.",
+    "Maertens, M., & Swinnen, J. F. M. (2009). Trade, standards, and poverty: Evidence from Senegal. World Development, 37(1), 161–178.",
+    "Michelson, H., Reardon, T., & Perez, F. (2012). Small farmers and big retail: Trade-offs of supplying supermarkets in Nicaragua. World Development, 40(2), 342–354.",
+    "Minten, B., Randrianarison, L., & Swinnen, J. F. M. (2009). Global retail chains and poor farmers: Evidence from Madagascar. World Development, 37(11), 1728–1741.",
+    "Miyata, S., Minot, N., & Hu, D. (2009). Impact of contract farming on income: Linking small farmers, packers, and supermarkets in China. World Development, 37(11), 1781–1790.",
+    "Rao, E. J. O., & Qaim, M. (2011). Supermarkets, farm household income, and poverty: Insights from Kenya. World Development, 39(5), 784–796.",
+    "Reardon, T., Barrett, C. B., Berdegué, J. A., & Swinnen, J. F. M. (2009). Agrifood industry transformation and small farmers in developing countries. World Development, 37(11), 1717–1727.",
+    "Suri, T. (2011). Selection and comparative advantage in technology adoption. Econometrica, 79(1), 159–209.",
+    "Warning, M., & Key, N. (2002). The social performance and distributional consequences of contract farming: An equilibrium analysis of the Arachide de Bouche program in Senegal. World Development, 30(2), 255–263.",
+  ],
+};

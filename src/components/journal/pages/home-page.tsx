@@ -45,7 +45,7 @@ export function HomePage() {
   const publishedLabel = new Date(CURRENT_ISSUE.published).toLocaleDateString("en-GB", { day: "numeric", month: "long", year: "numeric" });
 
   // Featured = the new AI paper
-  const featuredArticle = ARTICLES.find((a) => a.id === "2025-v30-i4-01") ?? ARTICLES[0];
+  const featuredArticle = ARTICLES.find((a) => a.id === "2026-v31-i2-02") ?? ARTICLES[0];
   const featuredActions = useArticleActions(featuredArticle);
 
   // Most recent (latest published, top 6)

@@ -1,0 +1,47 @@
+// Vol. 31, No. 2 (August 2026) — abstract and references only (full paper on request from the authors).
+import type { PaperSpec } from "../paper-spec";
+
+export const paper: PaperSpec = {
+  id: "2026-v31-i2-09",
+  title: "Entry, Pricing and Consumer Welfare in Mobile Data Markets: Evidence from Reliance Jio's Launch in India",
+  authors: [
+    { name: "Siddharth Mukherjee", corresponding: true, affiliation: { department: "Indira Gandhi Institute of Development Research", institution: "IGIDR", city: "Mumbai", country: "India" } },
+    { name: "Francesca Moretti", affiliation: { department: "Department of Economics", institution: "Bocconi University", city: "Milan", country: "Italy" } },
+  ],
+  abstract:
+    "This paper analyses how the 2016 entry of a low-price, fourth-generation operator reshaped competition and consumer welfare in India's mobile data market. We combine regulator data on quarterly subscribers, usage and revenue by telecom circle with 3.2 million plan-level price observations from 2015 to 2022. Using staggered rollout of network coverage across 22 circles as quasi-experimental variation, we estimate that entry cut the effective price per gigabyte by 91 per cent and raised monthly data consumption per subscriber from 0.3 to 2.4 gigabytes. Incumbent operators responded with bundled plans and exit through consolidation, reducing the number of private operators from eight to three by 2021. We estimate a nested-logit demand system with plan characteristics and recover markups and consumer surplus. Entry increased annual consumer surplus per subscriber by an amount equal to about 12 per cent of household telecom spending, with larger gains in rural circles where prior data use was minimal. Counterfactual simulations show that post-consolidation markups rose by 9 per cent relative to the peak-competition period, partially eroding earlier welfare gains. We discuss the implications for merger review in emerging-market telecommunications.",
+  keywords: ["market entry", "telecommunications", "mobile data", "consumer welfare", "India"],
+  jelCodes: ["L11", "L96", "D12", "O33"],
+  pages: "1–21",
+  volume: 31,
+  issue: 2,
+  year: 2026,
+  received: "2025-05-27",
+  accepted: "2026-03-30",
+  published: "2026-08-15",
+  publishedOnline: "2026-08-10",
+  citations: 3,
+  downloads: 904,
+  pdfSize: "0.47 MB",
+  type: "Research Article",
+  editorialNote: "After Jio's 2016 entry, the effective price per gigabyte of mobile data fell by 91 per cent and monthly data use per subscriber rose nearly eightfold. Estimated consumer surplus gains were about 12 per cent of annual household telecommunication spending, with larger gains in rural circles.",
+  refs: [
+    "Aghion, P., Bloom, N., Blundell, R., Griffith, R., & Howitt, P. (2005). Competition and innovation: An inverted-U relationship. Quarterly Journal of Economics, 120(2), 701–728.",
+    "Aghion, P., Blundell, R., Griffith, R., Howitt, P., & Prantl, S. (2009). The effects of entry on incumbent innovation and productivity. Review of Economics and Statistics, 91(1), 20–32.",
+    "Aker, J. C., & Mbiti, I. M. (2010). Mobile phones and economic development in Africa. Journal of Economic Perspectives, 24(3), 207–232.",
+    "Ashenfelter, O., & Hosken, D. (2010). The effect of mergers on consumer prices: Evidence from five mergers on the enforcement margin. Journal of Law and Economics, 53(3), 417–466.",
+    "Berry, S., Levinsohn, J., & Pakes, A. (1995). Automobile prices in market equilibrium. Econometrica, 63(4), 841–890.",
+    "Bertrand, M., Duflo, E., & Mullainathan, S. (2004). How much should we trust differences-in-differences estimates? Quarterly Journal of Economics, 119(1), 249–275.",
+    "Bresnahan, T. F., & Reiss, P. C. (1991). Entry and competition in concentrated markets. Journal of Political Economy, 99(5), 977–1009.",
+    "Callaway, B., & Sant'Anna, P. H. C. (2021). Difference-in-differences with multiple time periods. Journal of Econometrics, 225(2), 200–230.",
+    "Genakos, C., Valletti, T., & Verboven, F. (2018). Evaluating market consolidation in mobile communications. Economic Policy, 33(93), 45–100.",
+    "Goolsbee, A., & Syverson, C. (2008). How do incumbents respond to the threat of entry? Evidence from the major airlines. Quarterly Journal of Economics, 123(4), 1611–1633.",
+    "Jensen, R. (2007). The digital provide: Information (technology), market performance, and welfare in the South Indian fisheries sector. Quarterly Journal of Economics, 122(3), 879–924.",
+    "Jeziorski, P. (2014). Effects of mergers in two-sided markets: The US radio industry. American Economic Journal: Microeconomics, 6(4), 35–73.",
+    "Laffont, J.-J., Rey, P., & Tirole, J. (1998). Network competition: II. Price discrimination. RAND Journal of Economics, 29(1), 38–56.",
+    "Nevo, A. (2001). Measuring market power in the ready-to-eat cereal industry. Econometrica, 69(2), 307–342.",
+    "Röller, L.-H., & Waverman, L. (2001). Telecommunications infrastructure and economic development: A simultaneous approach. American Economic Review, 91(4), 909–923.",
+    "Seim, K., & Viard, V. B. (2011). The effect of market structure on cellular technology adoption and pricing. RAND Journal of Economics, 42(2), 221–251.",
+    "Weyl, E. G., & Fabinger, M. (2013). Pass-through as an economic tool: Principles of incidence under imperfect competition. Journal of Political Economy, 121(3), 528–583.",
+  ],
+};

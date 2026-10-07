@@ -2,8 +2,9 @@
 
 import { useMemo, useState } from "react";
 import { ARTICLES, CURRENT_ISSUE, pageStart, type Article } from "@/data/journal";
-import { ChevronDown, ChevronLeft, ChevronRight, FileText, BookOpen, Download } from "lucide-react";
+import { ChevronDown, ChevronLeft, ChevronRight, FileText, BookOpen, Download, Lock } from "lucide-react";
 import { useNav } from "../nav-context";
+import { useArticleActions } from "../article-actions";
 import { JournalBanner } from "../journal-banner";
 import { issuePdf } from "@/lib/pdf";
 import { formatCitations } from "@/lib/citations";
@@ -199,6 +200,7 @@ export function CurrentIssuePage() {
 
 function TocItem({ article: a }: { article: Article }) {
   const { navigate } = useNav();
+  const actions = useArticleActions(a);
   const [open, setOpen] = useState(false);
   const openReader = () => navigate("reader", { articleId: a.id });
   const openAbstract = () => navigate("article", { articleId: a.id, anchor: "full-text" });
@@ -242,9 +244,15 @@ function TocItem({ article: a }: { article: Article }) {
         <div className="flex items-center font-bold text-[#9e9e9e] print:hidden">
           <button onClick={openAbstract} className="hover:text-primary">Abstract</button>
           <span className="mx-2.5 text-[#c9c9c9]">|</span>
-          <button onClick={openReader} className="hover:text-primary">Full text</button>
+          {actions.fullText ? (
+            <button onClick={openReader} className="hover:text-primary">Full text</button>
+          ) : (
+            <button onClick={actions.requestFullText} className="flex items-center gap-1 hover:text-primary" title="Full text is available from the authors on request">
+              <Lock className="w-3.5 h-3.5" aria-hidden /> Full text
+            </button>
+          )}
           <span className="mx-2.5 text-[#c9c9c9]">|</span>
-          <button onClick={openReader} className="hover:text-primary">PDF/EPUB</button>
+          <button onClick={openReader} className="hover:text-primary">{actions.fullText ? "PDF/EPUB" : "PDF"}</button>
         </div>
       </div>
 

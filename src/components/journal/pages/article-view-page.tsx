@@ -39,6 +39,7 @@ import {
   Eye,
   BookmarkCheck,
   BookOpen,
+  Lock,
 } from "lucide-react";
 
 export function ArticleViewPage({ articleId }: { articleId: string | null }) {
@@ -217,17 +218,24 @@ export function ArticleViewPage({ articleId }: { articleId: string | null }) {
               <div className="flex flex-wrap items-center gap-2 mb-7 pb-5 border-b border-gray-200">
                 <Button size="sm" onClick={actions.downloadPdf} className="font-sans bg-primary text-white hover:bg-primary/90 rounded-sm">
                   <Download className="w-4 h-4 mr-1.5" />
-                  Download PDF ({article.pdfSize})
+                  Download PDF{actions.fullText ? ` (${article.pdfSize})` : " (abstract & references)"}
                 </Button>
-                <Button
-                  size="sm"
-                  variant="outline"
-                  onClick={() => navigate("reader", { articleId: article.id })}
-                  className="font-sans rounded-sm"
-                >
-                  <BookOpen className="w-4 h-4 mr-1.5" />
-                  Read Full Text (ePub)
-                </Button>
+                {actions.fullText ? (
+                  <Button
+                    size="sm"
+                    variant="outline"
+                    onClick={() => navigate("reader", { articleId: article.id })}
+                    className="font-sans rounded-sm"
+                  >
+                    <BookOpen className="w-4 h-4 mr-1.5" />
+                    Read Full Text (ePub)
+                  </Button>
+                ) : (
+                  <Button size="sm" variant="outline" onClick={actions.requestFullText} className="font-sans rounded-sm border-accent text-accent hover:bg-accent hover:text-white transition-colors duration-200">
+                    <Lock className="w-4 h-4 mr-1.5" />
+                    Full Text: Request from Authors
+                  </Button>
+                )}
                 <Button size="sm" variant="outline" onClick={actions.cite} className="font-sans rounded-sm">
                   <Quote className="w-4 h-4 mr-1.5" />
                   Cite Article
@@ -451,13 +459,22 @@ export function ArticleViewPage({ articleId }: { articleId: string | null }) {
                     </h3>
                   </div>
                   <ul className="divide-y divide-gray-200 font-sans text-sm">
-                    <ToolItem icon={Download} label="Download PDF" sub={`${article.pdfSize}`} onClick={actions.downloadPdf} />
                     <ToolItem
-                      icon={BookOpen}
-                      label="Read in ePub reader"
-                      sub="Full text · adjustable display"
-                      onClick={() => navigate("reader", { articleId: article.id })}
+                      icon={Download}
+                      label="Download PDF"
+                      sub={actions.fullText ? `${article.pdfSize}` : "Abstract and references"}
+                      onClick={actions.downloadPdf}
                     />
+                    {actions.fullText ? (
+                      <ToolItem
+                        icon={BookOpen}
+                        label="Read in ePub reader"
+                        sub="Full text · adjustable display"
+                        onClick={() => navigate("reader", { articleId: article.id })}
+                      />
+                    ) : (
+                      <ToolItem icon={Lock} label="Request full paper" sub="Sent to the authors" onClick={actions.requestFullText} />
+                    )}
                     <ToolItem icon={Quote} label="Cite this article" onClick={actions.cite} />
                     <ToolItem
                       icon={FileDown}

@@ -1,0 +1,45 @@
+// Vol. 31, No. 1 (February 2026) — abstract and references only (full paper on request from the authors).
+import type { PaperSpec } from "../paper-spec";
+
+export const paper: PaperSpec = {
+  id: "2026-v31-i1-09",
+  title: "Shift-Share Designs under Spatial Correlation: Simulation Evidence and an Application to Indian Districts",
+  authors: [
+    { name: "Callum Reid", corresponding: true, affiliation: { department: "Research School of Economics", institution: "Australian National University", city: "Canberra", country: "Australia" } },
+    { name: "Anika Joshi", affiliation: { department: "Research School of Economics", institution: "Australian National University", city: "Canberra", country: "Australia" } },
+  ],
+  abstract:
+    "Shift-share instruments are among the most widely used identification strategies in applied economics, yet standard inference may be unreliable when regional shocks are correlated across space. This paper studies how spatial correlation in industry shares and local shocks affects the size and power of inference for shift-share regressions. We conduct Monte Carlo experiments calibrated to the industrial structure of 640 Indian districts and compare conventional clustered standard errors, exposure-robust standard errors and spatial-HAC estimators with a new hybrid correction that combines exposure-robust variance estimation with distance-based kernels. Under moderate spatial correlation, conventional clustered standard errors understate sampling uncertainty by up to 40 percent, and empirical rejection rates for a nominal 5 percent test reach 17 percent. The hybrid correction brings rejection rates to between 5 and 7 percent in all designs considered, at a modest cost in power. We then revisit the district-level effects of India's 1991 tariff reform on poverty and manufacturing employment. Point estimates are unchanged, but confidence intervals widen by 31 percent on average, and the employment effect is no longer significant at the 5 percent level. We provide code and practical recommendations for researchers working with regional trade and technology shocks in developing economies.",
+  keywords: ["shift-share instruments", "spatial correlation", "inference", "trade liberalisation", "India"],
+  jelCodes: ["C21", "C26", "F16", "R12"],
+  pages: "1–16",
+  volume: 31,
+  issue: 1,
+  year: 2026,
+  received: "2025-01-08",
+  accepted: "2025-09-30",
+  published: "2026-02-15",
+  publishedOnline: "2026-01-31",
+  citations: 2,
+  downloads: 950,
+  pdfSize: "0.43 MB",
+  type: "Research Article",
+  editorialNote: "Conventional standard errors in shift-share regressions understate uncertainty by up to 40 percent under spatial correlation; the revised confidence intervals for India's 1991 tariff reform widen accordingly.",
+  refs: [
+    "Abadie, A., Athey, S., Imbens, G. W., & Wooldridge, J. M. (2023). When should you adjust standard errors for clustering? Quarterly Journal of Economics, 138(1), 1–35.",
+    "Adão, R., Kolesár, M., & Morales, E. (2019). Shift-share designs: Theory and inference. Quarterly Journal of Economics, 134(4), 1949–2010.",
+    "Andrews, I., Stock, J. H., & Sun, L. (2019). Weak instruments in instrumental variables regression: Theory and practice. Annual Review of Economics, 11, 727–753.",
+    "Autor, D. H., Dorn, D., & Hanson, G. H. (2013). The China syndrome: Local labor market effects of import competition in the United States. American Economic Review, 103(6), 2121–2168.",
+    "Borusyak, K., Hull, P., & Jaravel, X. (2022). Quasi-experimental shift-share research designs. Review of Economic Studies, 89(1), 181–213.",
+    "Bound, J., Jaeger, D. A., & Baker, R. M. (1995). Problems with instrumental variables estimation when the correlation between the instruments and the endogenous explanatory variable is weak. Journal of the American Statistical Association, 90(430), 443–450.",
+    "Cameron, A. C., Gelbach, J. B., & Miller, D. L. (2008). Bootstrap-based improvements for inference with clustered errors. Review of Economics and Statistics, 90(3), 414–427.",
+    "Card, D. (2001). Immigrant inflows, native outflows, and the local labor market impacts of higher immigration. Journal of Labor Economics, 19(1), 22–64.",
+    "Conley, T. G. (1999). GMM estimation with cross sectional dependence. Journal of Econometrics, 92(1), 1–45.",
+    "Goldsmith-Pinkham, P., Sorkin, I., & Swift, H. (2020). Bartik instruments: What, when, why, and how. American Economic Review, 110(8), 2586–2624.",
+    "Kelejian, H. H., & Prucha, I. R. (1999). A generalized moments estimator for the autoregressive parameter in a spatial model. International Economic Review, 40(2), 509–533.",
+    "Kolesár, M., Chetty, R., Friedman, J., Glaeser, E., & Imbens, G. W. (2015). Identification and inference with many invalid instruments. Journal of Business & Economic Statistics, 33(4), 474–484.",
+    "Kovak, B. K. (2013). Regional effects of trade reform: What is the correct measure of liberalization? American Economic Review, 103(5), 1960–1976.",
+    "Staiger, D., & Stock, J. H. (1997). Instrumental variables regression with weak instruments. Econometrica, 65(3), 557–586.",
+    "Topalova, P. (2010). Factor immobility and regional impacts of trade liberalization: Evidence on poverty from India. American Economic Journal: Applied Economics, 2(4), 1–41.",
+  ],
+};

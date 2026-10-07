@@ -1,0 +1,48 @@
+// Vol. 31, No. 2 (August 2026) — abstract and references only (full paper on request from the authors).
+import type { PaperSpec } from "../paper-spec";
+
+export const paper: PaperSpec = {
+  id: "2026-v31-i2-06",
+  title: "Social Media, Deposit Runs and Financial Fragility: Evidence from Korea's 2023 Mutual Credit Cooperative Withdrawals",
+  authors: [
+    { name: "Dong-min Yoo", corresponding: true, affiliation: { department: "Department of Finance", institution: "Sungkyunkwan University", city: "Seoul", country: "South Korea" } },
+    { name: "Hana Ishikawa", affiliation: { department: "Faculty of Economics", institution: "Hitotsubashi University", city: "Tokyo", country: "Japan" } },
+  ],
+  abstract:
+    "This paper studies how social media rumours amplified deposit outflows from Korean mutual credit cooperatives during the liquidity scare of late 2022 and early 2023. We assemble daily deposit data for 1,290 branches, geo-coded online posts mentioning cooperative insolvency, and balance-sheet information on delinquency and real-estate exposure. Exploiting variation in the timing of viral posts originating from outside local areas, and controlling for branch fundamentals through fixed effects and a high-dimensional set of balance-sheet interactions, we find that a one-standard-deviation increase in rumour intensity raised weekly net outflows by 3.1 percentage points. Importantly, 62 per cent of withdrawn funds were below the statutory insurance limit, which suggests that depositors responded to expected liquidity disruption rather than loss. Branches in areas with higher smartphone use and younger depositors experienced larger outflows. Government liquidity support and a temporary expansion of guarantees halted the run, and roughly 70 per cent of withdrawals returned within two weeks. We interpret the results through a global-games model in which social signals raise common beliefs about strategic withdrawals. The findings underscore the role of information transmission in modern bank fragility.",
+  keywords: ["bank runs", "deposit insurance", "social media", "financial contagion", "mutual credit cooperatives"],
+  jelCodes: ["G21", "G28", "G01", "D83"],
+  pages: "1–22",
+  volume: 31,
+  issue: 2,
+  year: 2026,
+  received: "2025-06-24",
+  accepted: "2026-05-07",
+  published: "2026-08-15",
+  publishedOnline: "2026-08-08",
+  citations: 4,
+  downloads: 812,
+  pdfSize: "0.45 MB",
+  type: "Research Article",
+  editorialNote: "Deposit outflows at Korean mutual credit cooperatives in early 2023 rose by 3.1 percentage points for each standard-deviation increase in local social media rumour intensity, even for fully insured accounts. Public guarantee announcements reversed roughly 70 per cent of withdrawals within two weeks.",
+  refs: [
+    "Acharya, V. V., & Mora, N. (2015). A crisis of banks as liquidity providers. Journal of Finance, 70(1), 1–43.",
+    "Allen, F., & Gale, D. (2000). Financial contagion. Journal of Political Economy, 108(1), 1–33.",
+    "Bernanke, B. S. (1983). Nonmonetary effects of the financial crisis in the propagation of the Great Depression. American Economic Review, 73(3), 257–276.",
+    "Bertrand, M., Duflo, E., & Mullainathan, S. (2004). How much should we trust differences-in-differences estimates? Quarterly Journal of Economics, 119(1), 249–275.",
+    "Brunnermeier, M. K., & Pedersen, L. H. (2009). Market liquidity and funding liquidity. Review of Financial Studies, 22(6), 2201–2238.",
+    "Calomiris, C. W., & Mason, J. R. (2003). Fundamentals, panics, and bank distress during the Depression. American Economic Review, 93(5), 1615–1647.",
+    "Chen, Q., Goldstein, I., & Jiang, W. (2010). Payoff complementarities and financial fragility: Evidence from mutual fund outflows. Journal of Financial Economics, 97(2), 239–262.",
+    "Demirgüç-Kunt, A., & Detragiache, E. (2002). Does deposit insurance increase banking system stability? An empirical investigation. Journal of Monetary Economics, 49(7), 1373–1406.",
+    "Diamond, D. W., & Dybvig, P. H. (1983). Bank runs, deposit insurance, and liquidity. Journal of Political Economy, 91(3), 401–419.",
+    "Diamond, D. W., & Rajan, R. G. (2001). Liquidity risk, liquidity creation, and financial fragility: A theory of banking. Journal of Political Economy, 109(2), 287–327.",
+    "Drechsler, I., Savov, A., & Schnabl, P. (2017). The deposits channel of monetary policy. Quarterly Journal of Economics, 132(4), 1819–1876.",
+    "Goldstein, I., & Pauzner, A. (2005). Demand-deposit contracts and the probability of bank runs. Journal of Finance, 60(3), 1293–1327.",
+    "Gorton, G. (1988). Banking panics and business cycles. Oxford Economic Papers, 40(4), 751–781.",
+    "Ioannidou, V. P., & Penas, M. F. (2010). Deposit insurance and bank risk-taking: Evidence from internal loan ratings. Journal of Financial Intermediation, 19(1), 95–115.",
+    "Iyer, R., & Puri, M. (2012). Understanding bank runs: The importance of depositor-bank relationships and networks. American Economic Review, 102(4), 1414–1445.",
+    "Kelly, M., & Ó Gráda, C. (2000). Market contagion: Evidence from the panics of 1854 and 1857. American Economic Review, 90(5), 1110–1124.",
+    "Morris, S., & Shin, H. S. (1998). Unique equilibrium in a model of self-fulfilling currency attacks. American Economic Review, 88(3), 587–597.",
+    "Park, S., & Peristiani, S. (1998). Market discipline by thrift depositors. Journal of Money, Credit and Banking, 30(3), 347–364.",
+  ],
+};

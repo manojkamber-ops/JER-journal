@@ -1,0 +1,45 @@
+// Vol. 31, No. 1 (February 2026) — abstract and references only (full paper on request from the authors).
+import type { PaperSpec } from "../paper-spec";
+
+export const paper: PaperSpec = {
+  id: "2026-v31-i1-05",
+  title: "Inflation Perceptions and Wage Setting at the End of Deflation: Evidence from Japan",
+  authors: [
+    { name: "Ryota Hasegawa", corresponding: true, affiliation: { department: "Graduate School of Economics", institution: "Osaka University", city: "Osaka", country: "Japan" } },
+    { name: "Mayumi Kawamura", affiliation: { department: "Graduate School of Economics", institution: "Hitotsubashi University", city: "Tokyo", country: "Japan" } },
+  ],
+  abstract:
+    "After more than two decades of near-zero inflation, Japan experienced a sustained rise in consumer prices from 2022, accompanied by the largest spring wage increases in three decades. This paper asks how perceptions of inflation, as opposed to realised inflation, feed into wage setting. We link a survey of 4,300 firms that records managers' perceived and expected inflation with firm-level wage settlements, bonus payments and union status for 2021 to 2025. Using variation in the product mix of firm purchases as an instrument for perceived cost increases, we estimate that each percentage point of higher perceived inflation raises negotiated base pay by 0.21 percentage point, controlling for realised price changes, profitability and labour market tightness. Pass-through is roughly twice as large in unionised firms and in firms reporting that competitors raised wages. Firms with upward-biased perceptions also report weaker resistance to price increases, indicating a link between perceptions and price setting. Downward nominal wage rigidity, measured by the mass of zero wage changes, fell from 21 percent of workers in 2019 to 9 percent in 2024. The results imply that the Bank of Japan's communication on inflation can directly influence the wage-price dynamics it seeks to sustain.",
+  keywords: ["inflation perceptions", "wage setting", "Japan", "nominal rigidity", "shunto"],
+  jelCodes: ["E31", "J30", "E52", "D84"],
+  pages: "1–22",
+  volume: 31,
+  issue: 1,
+  year: 2026,
+  received: "2025-03-03",
+  accepted: "2025-10-24",
+  published: "2026-02-15",
+  publishedOnline: "2026-02-02",
+  citations: 4,
+  downloads: 730,
+  pdfSize: "0.55 MB",
+  type: "Research Article",
+  editorialNote: "Each percentage point of higher perceived inflation raises negotiated wage settlements by 0.21 percentage point, with pass-through roughly twice as large in firms with unionised workforces.",
+  refs: [
+    "Ball, L., Mankiw, N. G., & Romer, D. (1988). The new Keynesian economics and the output-inflation trade-off. Brookings Papers on Economic Activity, 1988(1), 1–82.",
+    "Barattieri, A., Basu, S., & Gottschalk, P. (2014). Some evidence on the importance of sticky wages. American Economic Journal: Macroeconomics, 6(1), 70–101.",
+    "Calvo, G. A. (1983). Staggered prices in a utility-maximizing framework. Journal of Monetary Economics, 12(3), 383–398.",
+    "Coibion, O., & Gorodnichenko, Y. (2015). Information rigidity and the expectations formation process: A simple framework and new facts. American Economic Review, 105(8), 2644–2678.",
+    "Coibion, O., Gorodnichenko, Y., & Kumar, S. (2018). How do firms form their expectations? New survey evidence. American Economic Review, 108(9), 2671–2713.",
+    "Coibion, O., Gorodnichenko, Y., & Weber, M. (2022). Monetary policy communications and their effects on household inflation expectations. Journal of Political Economy, 130(6), 1537–1584.",
+    "D'Acunto, F., Malmendier, U., Ospina, J., & Weber, M. (2021). Exposure to grocery prices and inflation expectations. Journal of Political Economy, 129(5), 1615–1639.",
+    "Fehr, E., & Goette, L. (2005). Robustness and real consequences of nominal wage rigidity. Journal of Monetary Economics, 52(4), 779–804.",
+    "Galí, J., & Gertler, M. (1999). Inflation dynamics: A structural econometric analysis. Journal of Monetary Economics, 44(2), 195–222.",
+    "Grigsby, J., Hurst, E., & Yildirmaz, A. (2021). Aggregate nominal wage adjustments: New evidence from administrative payroll data. American Economic Review, 111(2), 428–471.",
+    "Hazell, J., Herreño, J., Nakamura, E., & Steinsson, J. (2022). The slope of the Phillips curve: Evidence from U.S. states. Quarterly Journal of Economics, 137(3), 1299–1344.",
+    "Krugman, P. R. (1998). It's baaack: Japan's slump and the return of the liquidity trap. Brookings Papers on Economic Activity, 1998(2), 137–205.",
+    "Malmendier, U., & Nagel, S. (2016). Learning from inflation experiences. Quarterly Journal of Economics, 131(1), 53–87.",
+    "Mankiw, N. G., & Reis, R. (2002). Sticky information versus sticky prices: A proposal to replace the New Keynesian Phillips curve. Quarterly Journal of Economics, 117(4), 1295–1328.",
+    "Taylor, J. B. (1980). Aggregate dynamics and staggered contracts. Journal of Political Economy, 88(1), 1–23.",
+  ],
+};
