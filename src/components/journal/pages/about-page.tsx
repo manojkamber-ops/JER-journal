@@ -77,10 +77,9 @@ export function AboutPage() {
               </p>
               <p className="font-serif text-base leading-relaxed text-foreground/85">
                 The journal operates a fully open-access model under a Creative Commons
-                Attribution-NonCommercial (CC BY-NC) licence and levies no article
-                processing charges. Publication costs are underwritten by Hanyang
-                University, in keeping with the institution&apos;s commitment to broad
-                dissemination of scholarly research.
+                Attribution-NonCommercial (CC BY-NC) licence. Every article is free to
+                read; publication costs are met through an article processing charge of{" "}
+                {JI.apcAmount} for each accepted article, charged only after acceptance.
               </p>
             </div>
 
@@ -295,8 +294,8 @@ export function AboutPage() {
           </h2>
           <p className="font-serif text-base opacity-90 max-w-2xl mx-auto mb-6">
             We welcome submissions on any topic in economics. Our median time to first
-            decision is {JOURNAL_STATS.averageTimeToFirstDecision} days, with no article
-            processing charges.
+            decision is {JOURNAL_STATS.averageTimeToFirstDecision} days. An article processing
+            charge of {JI.apcAmount} applies to each accepted article.
           </p>
           <div className="flex flex-wrap items-center justify-center gap-3">
             <Button

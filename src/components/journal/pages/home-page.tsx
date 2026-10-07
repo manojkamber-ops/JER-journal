@@ -368,7 +368,7 @@ export function HomePage() {
           </h2>
           <p className="font-serif text-base opacity-90 max-w-2xl mx-auto mb-5">
             We welcome submissions on any topic in economics. Median time to first decision
-            is {JOURNAL_STATS.averageTimeToFirstDecision} days · Average {JOURNAL_STATS.averagePeerReviewers} reviewers per paper · No APC.
+            is {JOURNAL_STATS.averageTimeToFirstDecision} days · Average {JOURNAL_STATS.averagePeerReviewers} reviewers per paper · APC {JOURNAL_INFO.apcAmount} per accepted article.
           </p>
           <div className="flex flex-wrap items-center justify-center gap-3">
             <Button

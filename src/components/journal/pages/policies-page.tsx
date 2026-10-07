@@ -85,8 +85,9 @@ export function PoliciesPage() {
               <p className="font-serif text-base leading-relaxed text-foreground/85 mb-4">
                 The Journal of Economic Research is a fully open-access journal. All
                 published articles are made freely available online immediately upon
-                publication, without subscription barriers or article processing
-                charges. Publication costs are underwritten by Hanyang University.
+                publication, without subscription barriers. Publication costs are met
+                through an article processing charge of {JOURNAL_INFO.apcAmount} for each
+                accepted article, charged only after acceptance.
               </p>
               <div className="grid sm:grid-cols-2 gap-4">
                 <div className="bg-card border border-border rounded-md p-5">
@@ -102,11 +103,11 @@ export function PoliciesPage() {
                 <div className="bg-card border border-border rounded-md p-5">
                   <Heart className="w-5 h-5 text-accent mb-2" />
                   <h3 className="font-serif text-base font-semibold text-primary mb-1">
-                    No APC
+                    APC: {JOURNAL_INFO.apcAmount}
                   </h3>
                   <p className="font-serif text-sm text-foreground/80 leading-relaxed">
-                    No article processing charges. Publication is fully funded by
-                    Hanyang University.
+                    An article processing charge of {JOURNAL_INFO.apcAmount} applies to each
+                    accepted article. Nothing is charged for submission or review.
                   </p>
                 </div>
                 <div className="bg-card border border-border rounded-md p-5">
@@ -221,7 +222,7 @@ export function PoliciesPage() {
                 </div>
                 <div className="flex justify-between gap-2 border-b border-border pb-2">
                   <dt className="text-muted-foreground">APC</dt>
-                  <dd className="font-medium text-accent">None</dd>
+                  <dd className="font-medium text-accent text-right text-xs">{JOURNAL_INFO.apcAmount} per accepted article</dd>
                 </div>
                 <div className="flex justify-between gap-2">
                   <dt className="text-muted-foreground">Ethics framework</dt>

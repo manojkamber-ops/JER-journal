@@ -542,8 +542,7 @@ export function ArticleViewPage({ articleId }: { articleId: string | null }) {
                   <Heart className="w-5 h-5 text-accent mx-auto mb-1" />
                   <p className="font-sans text-xs text-gray-700 leading-relaxed">
                     <strong className="text-primary">Open Access</strong><br />
-                    CC BY-NC 4.0<br />
-                    No APC
+                    CC BY-NC 4.0
                   </p>
                 </div>
               </div>

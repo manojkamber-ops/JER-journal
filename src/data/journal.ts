@@ -25,7 +25,10 @@ export const JOURNAL_INFO = {
   website: "https://jer.hanyang.ac.kr",
   doiPrefix: "10.17256",
   license: "Open Access — Creative Commons Attribution-NonCommercial 4.0 (CC BY-NC 4.0)",
-  apc: "No Article Processing Charge (APC). Publication is fully funded by Hanyang University.",
+  apc: "Article Processing Charge (APC): USD 1,250 per accepted article, payable only if the article is accepted for publication.",
+  /** Article processing charge per accepted article, in US dollars. */
+  apcUsd: 1250,
+  apcAmount: "USD 1,250",
   language: "English",
 };
 
@@ -2229,7 +2232,7 @@ export const JOURNAL_TIMELINE = [
     year: "2016",
     title: "Open Access",
     description:
-      "The journal adopted a fully open-access publishing model under a Creative Commons Attribution-NonCommercial (CC BY-NC) licence. Article processing charges were eliminated, with publication costs underwritten by Hanyang University.",
+      "The journal adopted a fully open-access publishing model under a Creative Commons Attribution-NonCommercial (CC BY-NC) licence. Publication costs were underwritten by Hanyang University.",
   },
   {
     year: "2019",
@@ -2248,6 +2251,12 @@ export const JOURNAL_TIMELINE = [
     title: "30th Anniversary Volume",
     description:
       "With the publication of Volume 30, the journal enters its fourth decade. The 30th anniversary volume opens with articles spanning monetary economics, climate finance, and place-based industrial policy — areas that have come to define the journal's editorial identity.",
+  },
+  {
+    year: "2026",
+    title: "Article Processing Charge",
+    description:
+      "With Volume 31 the journal introduced an article processing charge (APC) of USD 1,250 for each accepted article, charged only after acceptance, to sustain open-access publishing. All articles remain free to read under the CC BY-NC licence.",
   },
 ];
 
@@ -2299,7 +2308,7 @@ export const AUTHOR_GUIDELINES = {
         "Comprehensive survey articles synthesising the state of the art in a clearly defined subfield of economics. Review articles are normally commissioned but unsolicited submissions of exceptional quality will be considered.",
     },
     {
-      type: "Research Article",
+      type: "Short Communication",
       wordLimit: "3,000–5,000 words",
       description:
         "Concise reports of significant new findings or methodological advances that warrant rapid dissemination. Short Communications are reviewed under an expedited timeline.",

@@ -119,8 +119,8 @@ export function SubmissionPage() {
           <p className="font-serif text-lg opacity-90 max-w-3xl">
             The Journal of Economic Research welcomes original research on any topic in
             economics. Submissions are open year-round. Our median time to first
-            decision is {JOURNAL_STATS.averageTimeToFirstDecision} days and there are no
-            article processing charges.
+            decision is {JOURNAL_STATS.averageTimeToFirstDecision} days. An article processing
+            charge of {JOURNAL_INFO.apcAmount} is payable for each accepted article.
           </p>
         </div>
       </section>
@@ -418,6 +418,7 @@ export function SubmissionPage() {
                         "All sources of funding have been disclosed.",
                         "Any potential conflicts of interest have been declared.",
                         "Where applicable, human-subjects or animal-research ethics approval has been obtained and is referenced in the manuscript.",
+                        `I understand that an article processing charge (APC) of ${JOURNAL_INFO.apcAmount} is payable if my article is accepted.`,
                       ].map((decl, idx) => (
                         <label
                           key={idx}
@@ -515,7 +516,7 @@ export function SubmissionPage() {
                   </li>
                   <li className="flex items-start gap-2">
                     <Heart className="w-3.5 h-3.5 mt-0.5 text-accent flex-shrink-0" />
-                    <span>No article processing charges</span>
+                    <span>APC {JOURNAL_INFO.apcAmount}, payable only if accepted</span>
                   </li>
                 </ul>
               </div>

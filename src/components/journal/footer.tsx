@@ -87,7 +87,7 @@ export function Footer() {
           <p className="text-[13px] text-[#616161] leading-relaxed">
             ABDC B (Applied Economics) · KCI-listed<br />
             ISSN {JOURNAL_INFO.issnPrint} · eISSN {JOURNAL_INFO.issnOnline}<br />
-            Open access · CC BY-NC 4.0 · No APC
+            Open access · CC BY-NC 4.0 · APC {JOURNAL_INFO.apcAmount} per accepted article
           </p>
         </div>
 

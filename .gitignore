@@ -62,3 +62,4 @@ db/*.db
 
 # local archives
 *.zip
+uploads/
