@@ -57,8 +57,8 @@ Setup:
 1. sanity.io/manage → Journal of Economic Research → API → Tokens → add a token with **Editor** permissions.
 2. Put it in `.env` as `SANITY_API_WRITE_TOKEN=…` and in Vercel → Settings → Environment Variables.
 3. Import the current issue's papers once: `npm run sanity:push`.
-4. Studio: `cd studio && npm install && npm run dev` (http://localhost:3333), or `npm run deploy` to host it at
-   `https://<name>.sanity.studio`. It has two workspaces: "Current issue papers" and "Form submissions".
+4. Studio: https://jer-journal.sanity.studio (hosted). Locally: `cd studio && npm install && npm run dev` (http://localhost:3333); redeploy with `npm run deploy`. Hosted at
+   https://jer-journal.sanity.studio (already deployed). It has two workspaces: "Current issue papers" and "Form submissions".
 
 ## Deploying
 
