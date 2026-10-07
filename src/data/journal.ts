@@ -133,71 +133,6 @@ export const ARTICLES: Article[] = [
     featured: true,
   },
   {
-    id: "2025-v30-i3-02",
-    doi: "10.17256/JER.2025.30.3.002",
-    title:
-      "Climate Risk Pricing in Sovereign Bond Markets: A Cross-Country Panel Analysis of Asia-Pacific Issuers",
-    authors: [
-      { name: "Jiwon Lee", affiliation: "Korea University, Seoul, Republic of Korea", corresponding: true },
-      { name: "Hyun-Jin Kim", affiliation: "Hanyang University, Seoul, Republic of Korea" },
-    ],
-    abstract:
-      "We examine whether physical and transition climate risks are priced into sovereign bond yields for 24 Asia-Pacific economies over 2010–2023. Constructing country-level composite climate risk indices from granular meteorological and policy data, we document that a one-standard-deviation increase in physical climate risk raises 10-year sovereign yields by 22 basis points on average, while elevated transition risk — proxied by fossil-fuel dependence and the stringency of carbon policy — adds a further 14 basis points. The pricing effect is non-linear and concentrated among economies with shallow insurance penetration and limited fiscal space. We further show that climate-related yield premia widened materially after the 2015 Paris Agreement, consistent with an endogenous repricing as institutional investors integrate climate disclosures. Our results suggest that sovereign debt sustainability frameworks in the region should explicitly incorporate forward-looking climate scenarios.",
-    keywords: [
-      "Climate risk",
-      "Sovereign bonds",
-      "Asia-Pacific",
-      "Yield spreads",
-      "Sustainable finance",
-    ],
-    jelCodes: ["G12", "G15", "Q54", "H63"],
-    pages: "271–302",
-    volume: 30,
-    issue: 3,
-    year: 2025,
-    received: "2024-10-03",
-    accepted: "2025-05-09",
-    published: "2025-07-15",
-    citations: 9,
-    downloads: 1241,
-    pdfSize: "2.07 MB",
-    type: "Research Article",
-    featured: true,
-  },
-  {
-    id: "2025-v30-i3-03",
-    doi: "10.17256/JER.2025.30.3.003",
-    title:
-      "The Causal Effect of University–Industry Collaboration on Regional Innovation Output: Quasi-Experimental Evidence from Korea",
-    authors: [
-      { name: "Da-Hye Song", affiliation: "Seoul National University, Seoul, Republic of Korea" },
-      { name: "Andreas Müller", affiliation: "University of Zurich, Zurich, Switzerland", corresponding: true },
-      { name: "Tae-Hee Kim", affiliation: "Hanyang University, Seoul, Republic of Korea" },
-    ],
-    abstract:
-      "Using a regression discontinuity design around the funding cut-off of Korea's Brain Korea 21 Plus programme, we estimate the causal effect of university–industry R&D collaboration on regional patenting and firm productivity. Treated regions received an average of KRW 6.2 billion in additional collaboration grants per year between 2014 and 2020. We find that treated regions experienced a 17.8 percent increase in patent applications per capita and a 4.1 percent increase in total factor productivity of local SMEs over the subsequent five-year window. Heterogeneity analysis indicates that benefits are concentrated in regions with pre-existing absorptive capacity and are attenuated where inter-firm mobility of researchers is low. The findings inform the design of place-based innovation policy and underscore the importance of human-capital mobility as a transmission channel.",
-    keywords: [
-      "University–industry collaboration",
-      "Regional innovation",
-      "Regression discontinuity",
-      "Patent production",
-      "Korea",
-    ],
-    jelCodes: ["O31", "O33", "O38", "R11", "I23"],
-    pages: "303–328",
-    volume: 30,
-    issue: 3,
-    year: 2025,
-    received: "2024-11-18",
-    accepted: "2025-05-23",
-    published: "2025-07-15",
-    citations: 6,
-    downloads: 983,
-    pdfSize: "1.52 MB",
-    type: "Research Article",
-    featured: true,
-  },
-  {
     id: "2025-v30-i3-04",
     doi: "10.17256/JER.2025.30.3.004",
     title:
@@ -226,69 +161,6 @@ export const ARTICLES: Article[] = [
     citations: 3,
     downloads: 742,
     pdfSize: "1.38 MB",
-    type: "Research Article",
-  },
-  {
-    id: "2025-v30-i3-05",
-    doi: "10.17256/JER.2025.30.3.005",
-    title:
-      "Trade Uncertainty and Global Value Chain Reorganisation: Evidence from Asia-Pacific Firm-Level Data",
-    authors: [
-      { name: "Yuki Tanaka", affiliation: "Keio University, Tokyo, Japan" },
-      { name: "Wei Zhang", affiliation: "Fudan University, Shanghai, China", corresponding: true },
-      { name: "Min-Su Park", affiliation: "Hanyang University, Seoul, Republic of Korea" },
-    ],
-    abstract:
-      "We construct a firm-level measure of trade policy uncertainty using textual analysis of regulatory filings and examine its effect on global value chain restructuring among 4,200 listed manufacturing firms across nine Asia-Pacific economies from 2014 to 2023. Our results indicate that a one-standard-deviation increase in firm-level trade uncertainty is associated with a 6.1 percentage point decline in offshoring intensity and a 3.4 percentage point increase in domestic sourcing within two years. Effects are strongest in electronics and machinery sectors, where the elasticity of reshoring to uncertainty is twice the sample average. We provide evidence that uncertainty-induced reshoring is associated with measurable increases in firm-level R&D expenditure and productivity, suggesting a previously underappreciated channel through which trade policy uncertainty shapes long-run industrial composition.",
-    keywords: [
-      "Trade uncertainty",
-      "Global value chains",
-      "Reshoring",
-      "Firm-level evidence",
-      "Asia-Pacific",
-    ],
-    jelCodes: ["F14", "F23", "F60", "L25"],
-    pages: "357–384",
-    volume: 30,
-    issue: 3,
-    year: 2025,
-    received: "2025-01-09",
-    accepted: "2025-06-19",
-    published: "2025-07-15",
-    citations: 4,
-    downloads: 612,
-    pdfSize: "1.71 MB",
-    type: "Research Article",
-  },
-  {
-    id: "2025-v30-i3-06",
-    doi: "10.17256/JER.2025.30.3.006",
-    title:
-      "Inequality of Opportunity in Educational Attainment: New Decomposition Evidence from Urban China",
-    authors: [
-      { name: "Hong-Mei Wang", affiliation: "Peking University, Beijing, China" },
-      { name: "Sang-Yoon Han", affiliation: "Hanyang University, Seoul, Republic of Korea", corresponding: true },
-    ],
-    abstract:
-      "This paper quantifies the share of educational attainment inequality attributable to circumstances beyond individual control in urban China, drawing on the China Family Panel Studies (2010–2020). Using a parametric ex-ante approach and a Shapley-value decomposition, we estimate that circumstances account for 41 percent of the variance in years of schooling, with parental education and household wealth jointly explaining 63 percent of this share. Decomposing by birth cohort reveals a U-shaped pattern: inequality of opportunity fell from 0.46 in the 1960 cohort to 0.34 in the 1980 cohort, before rebounding to 0.39 for the 2000 cohort. The reversal tracks changes in school-track allocation and the rising private cost of supplementary education, with implications for intergenerational mobility policy.",
-    keywords: [
-      "Inequality of opportunity",
-      "Educational attainment",
-      "Intergenerational mobility",
-      "China",
-      "Shapley decomposition",
-    ],
-    jelCodes: ["D63", "I24", "J62"],
-    pages: "385–410",
-    volume: 30,
-    issue: 3,
-    year: 2025,
-    received: "2025-02-14",
-    accepted: "2025-06-28",
-    published: "2025-07-15",
-    citations: 2,
-    downloads: 528,
-    pdfSize: "1.43 MB",
     type: "Research Article",
   },
   {
@@ -341,56 +213,6 @@ export const ARTICLES: Article[] = [
     type: "Research Article",
   },
   {
-    id: "2025-v30-i2-02",
-    doi: "10.17256/JER.2025.30.2.002",
-    title:
-      "Fiscal Multipliers in Resource-Rich versus Resource-Poor Developing Economies: A Bayesian Approach",
-    authors: [
-      { name: "Samuel Adeyemi", affiliation: "University of Ibadan, Ibadan, Nigeria" },
-      { name: "Hyun-Sung Lim", affiliation: "Hanyang University, Seoul, Republic of Korea", corresponding: true },
-    ],
-    abstract:
-      "We estimate fiscal multipliers for 38 developing economies using a Bayesian panel vector autoregression that allows for heterogeneity across resource-rich and resource-poor country groups. The cumulative output multiplier at the four-year horizon is 0.94 for resource-poor economies but only 0.41 for resource-rich ones, a gap we attribute to absorption capacity and Dutch-disease dynamics. Counterfactual simulations suggest that re-allocating one percent of resource rents to public investment would raise long-run output by 1.7 percent in resource-rich economies.",
-    keywords: ["Fiscal multiplier", "Natural resources", "Bayesian VAR", "Developing economies"],
-    jelCodes: ["E62", "E65", "O23", "Q32"],
-    pages: "149–174",
-    volume: 30,
-    issue: 2,
-    year: 2025,
-    received: "2024-07-02",
-    accepted: "2024-12-30",
-    published: "2025-04-10",
-    citations: 7,
-    downloads: 1102,
-    pdfSize: "1.43 MB",
-    type: "Research Article",
-  },
-  {
-    id: "2025-v30-i2-03",
-    doi: "10.17256/JER.2025.30.2.003",
-    title:
-      "Bank Capital Requirements and SME Lending: Differential Effects Across Business Cycle Phases",
-    authors: [
-      { name: "Anna Petrova", affiliation: "Charles University, Prague, Czech Republic" },
-      { name: "Tae-Woo Lee", affiliation: "Hanyang University, Seoul, Republic of Korea", corresponding: true },
-    ],
-    abstract:
-      "Exploiting the phased introduction of Basel III in Korea between 2013 and 2019, we estimate the heterogeneous effect of bank capital requirements on SME credit supply. Our difference-in-differences design shows that a one percentage point increase in required capital ratios reduces SME lending growth by 2.8 percentage points during downturns but has no statistically significant effect during expansions. The procyclical effect is more pronounced for small and unaffiliated banks, suggesting that capital regulation may amplify rather than dampen credit cycles in the SME segment.",
-    keywords: ["Bank capital", "Basel III", "SME lending", "Procyclicality", "Korea"],
-    jelCodes: ["G21", "G28", "E32", "E51"],
-    pages: "175–200",
-    volume: 30,
-    issue: 2,
-    year: 2025,
-    received: "2024-07-22",
-    accepted: "2025-01-15",
-    published: "2025-04-10",
-    citations: 5,
-    downloads: 940,
-    pdfSize: "1.38 MB",
-    type: "Research Article",
-  },
-  {
     id: "2025-v30-i1-01",
     doi: "10.17256/JER.2025.30.1.001",
     title:
@@ -413,56 +235,6 @@ export const ARTICLES: Article[] = [
     citations: 18,
     downloads: 2387,
     pdfSize: "2.11 MB",
-    type: "Research Article",
-  },
-  {
-    id: "2025-v30-i1-02",
-    doi: "10.17256/JER.2025.30.1.002",
-    title:
-      "Long-Run Effects of Place-Based Industrial Policy: Evidence from Korea's Industrial Complex Programme",
-    authors: [
-      { name: "Hyun-Ju Yang", affiliation: "Korea Development Institute, Sejong, Republic of Korea" },
-      { name: "Jae-Hoon Hwang", affiliation: "Hanyang University, Seoul, Republic of Korea", corresponding: true },
-    ],
-    abstract:
-      "We evaluate the long-run effects of Korea's national industrial complex programme, which allocated large-scale tax incentives and infrastructure investment to designated regions starting in the 1970s. Using a shift-share research design and combining four decades of firm micro-data, we find that treated regions experienced a 22 percent increase in manufacturing employment, an 8.4 percent increase in TFP, and a 6.1 percent wage premium that persist into the 2010s. Effects are concentrated in regions that received complementary investment in vocational education, underscoring the role of human-capital complementarities in industrial policy design.",
-    keywords: ["Place-based policy", "Industrial policy", "Korea", "Shift-share", "Productivity"],
-    jelCodes: ["R11", "R58", "O25", "O53"],
-    pages: "33–62",
-    volume: 30,
-    issue: 1,
-    year: 2025,
-    received: "2024-03-04",
-    accepted: "2024-08-19",
-    published: "2025-01-20",
-    citations: 23,
-    downloads: 2901,
-    pdfSize: "1.92 MB",
-    type: "Research Article",
-  },
-  {
-    id: "2025-v30-i1-03",
-    doi: "10.17256/JER.2025.30.1.003",
-    title:
-      "Behavioural Spillovers from Nudge-Based Tax Compliance Interventions: A Field Experiment",
-    authors: [
-      { name: "Lakshmi Iyer", affiliation: "University of Notre Dame, Indiana, USA", corresponding: true },
-      { name: "Soo-Hyun Park", affiliation: "Hanyang University, Seoul, Republic of Korea" },
-    ],
-    abstract:
-      "We conduct a large-scale randomised field experiment with the Korean National Tax Service, sending behaviourally informed letters to 78,000 self-employed taxpayers. The intervention raises reported income by 4.1 percent in the treated group relative to control. We then test for behavioural spillovers onto adjacent tax obligations, finding no spillover onto business-expense reporting but a 1.8 percent increase in voluntary pension contributions, consistent with attention and salience mechanisms operating across financial domains. We discuss the design implications for tax administration in middle-income countries.",
-    keywords: ["Tax compliance", "Nudge", "Field experiment", "Spillovers", "Korea"],
-    jelCodes: ["H26", "H24", "C93", "D91"],
-    pages: "63–88",
-    volume: 30,
-    issue: 1,
-    year: 2025,
-    received: "2024-02-20",
-    accepted: "2024-07-30",
-    published: "2025-01-20",
-    citations: 12,
-    downloads: 1622,
-    pdfSize: "1.47 MB",
     type: "Research Article",
   },
   {
@@ -566,55 +338,6 @@ export const ARTICLES: Article[] = [
     type: "Review Article",
   },
   // ===== Vol. 30, Issue 3 — additional papers =====
-  {
-    id: "2025-v30-i3-08",
-    doi: "10.17256/JER.2025.30.3.008",
-    title:
-      "Foreign Direct Investment and Technology Spillovers: Firm-Level Evidence from Vietnamese Manufacturing",
-    authors: [
-      { name: "Thi-Thu Nguyen", affiliation: "Foreign Trade University, Hanoi, Vietnam", corresponding: true },
-      { name: "Hyun-Sung Lim", affiliation: "Hanyang University, Seoul, Republic of Korea" },
-    ],
-    abstract:
-      "Using firm-level panel data for Vietnamese manufacturing over 2010–2022, this paper estimates horizontal and vertical technology spillovers from foreign direct investment (FDI). We find robust positive backward spillovers — a one-standard-deviation increase in downstream foreign presence raises domestic firm productivity by 4.2 percent — but smaller and statistically insignificant horizontal spillovers. The effect is concentrated among domestic firms with above-median absorptive capacity, proxied by skill intensity and prior R&D expenditure. Our results suggest that industrial policy aiming to maximise FDI spillovers should prioritise supplier-linkage development and complementary investments in workforce skills rather than aggregate FDI attraction.",
-    keywords: ["Foreign direct investment", "Technology spillovers", "Vietnam", "Manufacturing", "Productivity"],
-    jelCodes: ["F23", "O33", "O53", "L60"],
-    pages: "417–442",
-    volume: 30,
-    issue: 3,
-    year: 2025,
-    received: "2025-02-28",
-    accepted: "2025-06-30",
-    published: "2025-07-15",
-    citations: 1,
-    downloads: 412,
-    pdfSize: "1.49 MB",
-    type: "Research Article",
-  },
-  {
-    id: "2025-v30-i3-09",
-    doi: "10.17256/JER.2025.30.3.009",
-    title:
-      "A Note on the Identification of Monetary Policy Shocks in Small Open Economies",
-    authors: [
-      { name: "Tae-Hee Kim", affiliation: "Hanyang University, Seoul, Republic of Korea", corresponding: true },
-    ],
-    abstract:
-      "This paper revisits the identification of monetary policy shocks in small open economies using high-frequency data. We show that the standard approach of deriving surprises from intra-day asset price movements around policy announcements can be biased by simultaneous central bank communication about exchange-rate management. We propose a simple two-step adjustment that nets out the exchange-rate component and demonstrate, in a Monte Carlo exercise and on Korean data, that the corrected shock series implies a stronger and more persistent transmission to output and inflation than previously documented.",
-    keywords: ["Monetary policy shocks", "High-frequency identification", "Small open economy", "Korea"],
-    jelCodes: ["E52", "E58", "C32"],
-    pages: "443–452",
-    volume: 30,
-    issue: 3,
-    year: 2025,
-    received: "2025-04-02",
-    accepted: "2025-06-15",
-    published: "2025-07-15",
-    citations: 0,
-    downloads: 218,
-    pdfSize: "0.74 MB",
-    type: "Research Article",
-  },
   // ===== Vol. 30, Issue 2 — additional papers =====
   {
     id: "2025-v30-i2-04",
@@ -639,56 +362,6 @@ export const ARTICLES: Article[] = [
     citations: 4,
     downloads: 815,
     pdfSize: "1.36 MB",
-    type: "Research Article",
-  },
-  {
-    id: "2025-v30-i2-05",
-    doi: "10.17256/JER.2025.30.2.005",
-    title:
-      "Green Innovation and Firm Performance: The Moderating Role of Environmental Regulation",
-    authors: [
-      { name: "Wei Zhang", affiliation: "Fudan University, Shanghai, China", corresponding: true },
-      { name: "Min-Su Park", affiliation: "Hanyang University, Seoul, Republic of Korea" },
-    ],
-    abstract:
-      "We examine the relationship between green innovation and firm financial performance for 2,800 listed manufacturing firms across eight Asian economies over 2014–2023. Using green-patent counts as a measure of innovation, we find that green innovation is associated with a 3.1 percentage point increase in return on assets over a three-year horizon, but only in firms subject to stringent environmental regulation. In regulatory environments characterised by weak enforcement, green innovation is unrelated to financial performance. These findings are consistent with the Porter hypothesis and underline the complementary role of credible environmental regulation in aligning private and social returns to green innovation.",
-    keywords: ["Green innovation", "Environmental regulation", "Porter hypothesis", "Asia", "Firm performance"],
-    jelCodes: ["Q55", "Q58", "O31", "L25"],
-    pages: "227–252",
-    volume: 30,
-    issue: 2,
-    year: 2025,
-    received: "2024-09-04",
-    accepted: "2025-02-12",
-    published: "2025-04-10",
-    citations: 6,
-    downloads: 1024,
-    pdfSize: "1.55 MB",
-    type: "Research Article",
-  },
-  {
-    id: "2025-v30-i2-06",
-    doi: "10.17256/JER.2025.30.2.006",
-    title:
-      "A New Composite Index of Financial Inclusion for Developing Asia",
-    authors: [
-      { name: "Samuel Adeyemi", affiliation: "University of Ibadan, Ibadan, Nigeria", corresponding: true },
-      { name: "Da-Eun Han", affiliation: "Hanyang University, Seoul, Republic of Korea" },
-    ],
-    abstract:
-      "We construct a composite financial-inclusion index for 32 developing Asian economies over 2011–2023, combining dimensions of access, usage, and quality of financial services. The index reveals substantial cross-country heterogeneity and a clear positive association between financial inclusion and reductions in income inequality at the country level. We document that the index has improved by 18 percent on average across the region over the period, with mobile-money adoption accounting for the bulk of the gains in low-income economies.",
-    keywords: ["Financial inclusion", "Composite index", "Asia", "Mobile money", "Inequality"],
-    jelCodes: ["G50", "O16", "O53"],
-    pages: "253–268",
-    volume: 30,
-    issue: 2,
-    year: 2025,
-    received: "2024-10-21",
-    accepted: "2025-02-25",
-    published: "2025-04-10",
-    citations: 2,
-    downloads: 489,
-    pdfSize: "0.86 MB",
     type: "Research Article",
   },
   // ===== Vol. 30, Issue 1 — additional papers =====
@@ -717,82 +390,7 @@ export const ARTICLES: Article[] = [
     pdfSize: "1.62 MB",
     type: "Research Article",
   },
-  {
-    id: "2025-v30-i1-05",
-    doi: "10.17256/JER.2025.30.1.005",
-    title:
-      "Currency Mismatch and Corporate Investment: Evidence from Emerging Asian Firms under Exchange-Rate Volatility",
-    authors: [
-      { name: "Yuki Tanaka", affiliation: "Keio University, Tokyo, Japan", corresponding: true },
-      { name: "Tae-Woo Lee", affiliation: "Hanyang University, Seoul, Republic of Korea" },
-    ],
-    abstract:
-      "We investigate how currency mismatch on firm balance sheets affects corporate investment in the face of exchange-rate volatility. Using firm-level data for 3,400 listed firms across six emerging Asian economies over 2007–2023, we find that firms with larger net foreign-currency liabilities reduce investment by 1.8 percentage points more following a 10 percent depreciation episode. The effect is asymmetric — appreciations do not produce symmetric investment gains — and is concentrated in firms with limited hedging instrument use. Our results underscore the importance of foreign-exchange market deepening as a complement to macroprudential regulation of corporate foreign-currency borrowing.",
-    keywords: ["Currency mismatch", "Corporate investment", "Exchange-rate volatility", "Asia", "Macroprudential"],
-    jelCodes: ["F31", "G31", "G32", "E22"],
-    pages: "117–146",
-    volume: 30,
-    issue: 1,
-    year: 2025,
-    received: "2024-05-22",
-    accepted: "2024-10-04",
-    published: "2025-01-20",
-    citations: 7,
-    downloads: 968,
-    pdfSize: "1.45 MB",
-    type: "Research Article",
-  },
-  {
-    id: "2025-v30-i1-06",
-    doi: "10.17256/JER.2025.30.1.006",
-    title:
-      "Measuring Subjective Economic Expectations in Real Time Using Internet Search Data",
-    authors: [
-      { name: "Min-Jae Choi", affiliation: "Hanyang University, Seoul, Republic of Korea", corresponding: true },
-      { name: "Hyun-Ju Yang", affiliation: "Korea Development Institute, Sejong, Republic of Korea" },
-    ],
-    abstract:
-      "We construct a real-time index of household subjective economic expectations for Korea using a basket of internet search terms, calibrated against the Bank of Korea consumer sentiment survey. The search-based index moves closely with the survey measure (correlation 0.84) but is available daily and reacts more quickly to macroeconomic news. We show that incorporating the index into standard nowcasting models for private consumption reduces the mean squared prediction error by approximately 12 percent relative to benchmark specifications using only hard data.",
-    keywords: ["Subjective expectations", "Internet search data", "Nowcasting", "Korea", "Consumer sentiment"],
-    jelCodes: ["E71", "C53", "E27"],
-    pages: "147–158",
-    volume: 30,
-    issue: 1,
-    year: 2025,
-    received: "2024-06-15",
-    accepted: "2024-10-22",
-    published: "2025-01-20",
-    citations: 3,
-    downloads: 542,
-    pdfSize: "0.81 MB",
-    type: "Research Article",
-  },
   // ===== Vol. 29, Issue 4 — additional papers =====
-  {
-    id: "2024-v29-i4-03",
-    doi: "10.17256/JER.2024.29.4.003",
-    title:
-      "Housing Market Spillovers and Consumption: Evidence from Korean Regional Panels",
-    authors: [
-      { name: "Eun-Jung Kim", affiliation: "Hanyang University, Seoul, Republic of Korea", corresponding: true },
-      { name: "Roberto Rossi", affiliation: "Bocconi University, Milan, Italy" },
-    ],
-    abstract:
-      "We estimate the housing-wealth effect on household consumption using a regional panel of 16 Korean provinces over 2006–2023. Identification exploits regional variation in housing supply elasticity, instrumented by geographic constraints. We find that a 10 percent increase in housing wealth raises non-durable consumption by 1.1 percent, with the effect three times larger for homeowner than renter households and concentrated in regions with higher homeowner shares. The magnitude of the housing-wealth effect has approximately halved since the 2008 global financial crisis, in line with documented declines in housing-wealth effects in advanced economies.",
-    keywords: ["Housing wealth", "Consumption", "Korea", "Regional panel", "Supply elasticity"],
-    jelCodes: ["E21", "R21", "G51"],
-    pages: "539–566",
-    volume: 29,
-    issue: 4,
-    year: 2024,
-    received: "2023-12-14",
-    accepted: "2024-05-30",
-    published: "2024-10-15",
-    citations: 8,
-    downloads: 1284,
-    pdfSize: "1.47 MB",
-    type: "Research Article",
-  },
   {
     id: "2024-v29-i4-04",
     doi: "10.17256/JER.2024.29.4.004",
@@ -816,31 +414,6 @@ export const ARTICLES: Article[] = [
     citations: 6,
     downloads: 1058,
     pdfSize: "1.51 MB",
-    type: "Research Article",
-  },
-  {
-    id: "2024-v29-i4-05",
-    doi: "10.17256/JER.2024.29.4.005",
-    title:
-      "Capital Flow Management Measures and Financial Stability: A Comparative Analysis of Korea, Brazil, and Indonesia",
-    authors: [
-      { name: "Anna Petrova", affiliation: "Charles University, Prague, Czech Republic" },
-      { name: "Hyun-Jin Kim", affiliation: "Hanyang University, Seoul, Republic of Korea", corresponding: true },
-    ],
-    abstract:
-      "We compare the effectiveness of capital flow management measures (CFMs) in Korea, Brazil, and Indonesia over 2010–2023 using a synthetic-control approach. Korea's macroprudential levy on bank foreign-exchange liabilities reduced the sensitivity of capital inflows to global financial conditions by approximately 28 percent relative to a synthetic counterfactual. Brazil's tax on short-term foreign loans was similarly effective in reducing the share of short-term inflows, while Indonesia's CFMs had smaller and less persistent effects. We discuss how differences in financial-market structure, exchange-rate flexibility, and the credibility of the underlying monetary framework jointly shape CFM effectiveness.",
-    keywords: ["Capital flow management", "Macroprudential policy", "Korea", "Brazil", "Indonesia"],
-    jelCodes: ["F32", "G28", "E58"],
-    pages: "595–620",
-    volume: 29,
-    issue: 4,
-    year: 2024,
-    received: "2024-02-20",
-    accepted: "2024-07-04",
-    published: "2024-10-15",
-    citations: 11,
-    downloads: 1498,
-    pdfSize: "1.66 MB",
     type: "Research Article",
   },
   // ===== Vol. 29, Issue 3 — additional papers =====
@@ -1707,192 +1280,6 @@ export const ARTICLES: Article[] = [
   },
   // ===== NEW PAPER — strict AOM-style format with full references =====
   // (Vol. 30, Issue 3, October 2025 — Research Article)
-  {
-    id: "2025-v30-i3-10",
-    doi: "10.17256/JER.2025.30.3.010",
-    title:
-      "Artificial Intelligence Adoption, Productivity, and Wage Inequality: Evidence from Korean Manufacturing Firms",
-    authors: [
-      { name: "Min-Jae Choi", affiliation: "Hanyang University, Seoul, Republic of Korea", corresponding: true },
-      { name: "Hyun-Ju Yang", affiliation: "Korea Development Institute, Sejong, Republic of Korea" },
-      { name: "Caroline Dubois", affiliation: "Paris School of Economics, Paris, France" },
-    ],
-    structuredAuthors: [
-      {
-        name: "Min-Jae Choi",
-        affiliationIds: ["a"],
-        corresponding: true,
-        orcid: "0000-0002-1843-6622",
-      },
-      {
-        name: "Hyun-Ju Yang",
-        affiliationIds: ["b"],
-        orcid: "0000-0001-8726-4419",
-      },
-      {
-        name: "Caroline Dubois",
-        affiliationIds: ["c"],
-        orcid: "0000-0003-0417-5233",
-      },
-    ],
-    affiliations: [
-      {
-        id: "a",
-        department: "Department of Economics, College of Economics and Finance",
-        institution: "Hanyang University",
-        city: "Seoul",
-        country: "Republic of Korea",
-        email: "mjchoi@hanyang.ac.kr",
-      },
-      {
-        id: "b",
-        department: "Macro-financial Analysis Department",
-        institution: "Korea Development Institute",
-        city: "Sejong",
-        country: "Republic of Korea",
-      },
-      {
-        id: "c",
-        department: "Paris School of Economics",
-        institution: "CNRS and EHESS",
-        city: "Paris",
-        country: "France",
-      },
-    ],
-    abstract:
-      "We estimate the causal effect of artificial intelligence (AI) adoption on firm productivity and within-firm wage inequality using a novel dataset that combines firm-level AI adoption surveys for 1,460 Korean manufacturing firms over 2018–2023 with administrative employment and balance-sheet records. Identification exploits plausibly exogenous variation in firms' pre-existing exposure to tasks that are substitutable by AI, instrumented by historical occupational composition at the local labour-market level. AI adoption raises firm-level total factor productivity by an average of 5.7 percent within two years, with effects concentrated among firms with complementary investments in worker training and digital infrastructure. We document a parallel increase in the 90/10 within-firm wage gap of 4.2 percent, driven by relative wage gains for high-skilled workers in AI-complementary occupations and modest wage stagnation for workers in AI-substitutable routine tasks. The productivity–equity trade-off is not inevitable: firms that combine AI adoption with explicit worker retraining programmes capture approximately 80 percent of the productivity gains while limiting the wage-inequality increase to one quarter of the sample average. Our findings inform the design of policies that seek to align the private returns to AI adoption with broader productivity and distributional objectives.",
-    keywords: [
-      "Artificial intelligence",
-      "Productivity",
-      "Wage inequality",
-      "Korea",
-      "Manufacturing",
-      "Technology adoption",
-    ],
-    jelCodes: ["O33", "J31", "D22", "L60", "O53"],
-    pages: "453–486",
-    volume: 30,
-    issue: 3,
-    year: 2025,
-    received: "2024-12-08",
-    accepted: "2025-04-30",
-    published: "2025-07-15",
-    publishedOnline: "2025-06-10",
-    citations: 2,
-    downloads: 1432,
-    pdfSize: "1.92 MB",
-    type: "Research Article",
-    featured: true,
-    funding:
-      "This work was supported by the Hanyang University Research Fund (HY-202400000002891) and by the National Research Foundation of Korea (NRF-2022S1A5A8050163). Caroline Dubois acknowledges funding from the French National Research Agency under grant ANR-21-CE26-0018-01.",
-    acknowledgments:
-      "We are grateful to the editor, Jae-Hoon Hwang, and two anonymous referees for constructive comments that substantially improved the paper. We thank participants at the 2025 Asia-Pacific Economic Seminars in Seoul and Tokyo, the 2025 European Economic Association Congress in Rotterdam, and seminars at Hanyang University, the Bank of Korea, and the Paris School of Economics for valuable feedback. We also thank the Korea Development Institute for providing access to the firm-level AI adoption survey data, and the Korea Statistics Office for access to the Survey of Business Activities. All errors are our own.",
-    dataAvailability:
-      "Replication data and Stata and Python code that reproduce all tables and figures in this article have been deposited at the Harvard Dataverse (https://doi.org/10.7910/DVN/JER30I3REP). The firm-level AI adoption survey data are available from the Korea Development Institute subject to a data-use agreement. The Survey of Business Activities micro-data are available from Statistics Korea through the MicroData Integrated Service (MDIS) portal.",
-    references: [
-      {
-        number: 1,
-        text: "Acemoglu, D. and P. Restrepo (2020), “Robots and jobs: Evidence from US labor markets”, Journal of Political Economy, 128(6), pp. 2188–2244.",
-        doi: "10.1086/704975",
-      },
-      {
-        number: 2,
-        text: "Acemoglu, D. and P. Restrepo (2022), “Tasks, automation, and the rise in U.S. wage inequality”, Econometrica, 90(5), pp. 1973–2016.",
-        doi: "10.3982/ECTA19831",
-      },
-      {
-        number: 3,
-        text: "Agrawal, A., J. Gans and A. Goldfarb (2018), Prediction Machines: The Simple Economics of Artificial Intelligence, Harvard Business Review Press, Boston, MA.",
-      },
-      {
-        number: 4,
-        text: "Aghion, P., B. Jones and C. Jones (2024), “Artificial intelligence and economic growth”, in A. Agrawal, J. Gans and A. Goldfarb (eds.), The Economics of Artificial Intelligence: An Agenda, University of Chicago Press, Chicago, pp. 23–58.",
-      },
-      {
-        number: 5,
-        text: "Babina, T., A. Fedyk, A. He and J. Hodson (2024), “Artificial intelligence, firm growth, and product innovation”, Journal of Financial Economics, 159, 103845.",
-        doi: "10.1016/j.jfineco.2024.103845",
-      },
-      {
-        number: 6,
-        text: "Brynjolfsson, E., D. Li and L. Raymond (2023), “Generative AI at work”, NBER Working Paper No. 31161, National Bureau of Economic Research, Cambridge, MA.",
-        doi: "10.3386/w31161",
-      },
-      {
-        number: 7,
-        text: "Brynjolfsson, E. and A. McAfee (2014), The Second Machine Age: Work, Progress, and Prosperity in a Time of Brilliant Technologies, W. W. Norton & Company, New York.",
-      },
-      {
-        number: 8,
-        text: "Card, D., J. Heining and P. Kline (2013), “Workplace heterogeneity and the rise of West German wage inequality”, Quarterly Journal of Economics, 128(3), pp. 967–1015.",
-        doi: "10.1093/qje/qjt006",
-      },
-      {
-        number: 9,
-        text: "Cyert, R. and J. March (1963), A Behavioral Theory of the Firm, Prentice-Hall, Englewood Cliffs, NJ.",
-      },
-      {
-        number: 10,
-        text: "Dauth, W., S. Findeisen, J. Suedekum and N. Woessner (2021), “The adjustment of labor markets to robots”, Journal of the European Economic Association, 19(6), pp. 3104–3153.",
-        doi: "10.1093/jeea/jvab012",
-      },
-      {
-        number: 11,
-        text: "Goldfarb, A., A. Taska and F. Teodoridis (2023), “Could machine learning be a general purpose technology? A comparison of emerging technologies using patent office data”, Research Policy, 52(1), 104653.",
-        doi: "10.1016/j.respol.2022.104653",
-      },
-      {
-        number: 12,
-        text: "Hwang, J.-H. and S. Park (2023), “Long-run effects of place-based industrial policy: Evidence from Korea's industrial complex programme”, Journal of Economic Research, 30(1), pp. 33–62.",
-        doi: "10.17256/JER.2025.30.1.002",
-      },
-      {
-        number: 13,
-        text: "Korinek, A. and J. Stiglitz (2024), “Artificial intelligence, globalisation, and strategies for economic development”, NBER Working Paper No. 28453, National Bureau of Economic Research, Cambridge, MA.",
-        doi: "10.3386/w28453",
-      },
-      {
-        number: 14,
-        text: "Lee, J.-W. and H. Lee (2024), “Digitalisation, productivity, and economic growth in Korea”, Asian Economic Papers, 23(2), pp. 41–62.",
-      },
-      {
-        number: 15,
-        text: "Levy, F. and R. Murnane (2012), The New Division of Labor: How Computers Are Creating the Next Job Market, Princeton University Press, Princeton, NJ.",
-      },
-      {
-        number: 16,
-        text: "OECD (2024), OECD Economic Surveys: Korea 2024, OECD Publishing, Paris.",
-        doi: "10.1787/4e6e7c0c-en",
-      },
-      {
-        number: 17,
-        text: "Song, J. (2018), Demographic Changes and the Labor Market in Korea: Past, Present and Future, Korea Labor Institute, Seoul.",
-      },
-      {
-        number: 18,
-        text: "Statistics Korea (2024), Survey of Business Activities 2023, Statistics Korea, Daejeon.",
-      },
-      {
-        number: 19,
-        text: "Trefler, D. (2004), “The long and short of the Canada–U.S. free trade agreement”, American Economic Review, 94(4), pp. 870–895.",
-        doi: "10.1257/0002828042002501",
-      },
-      {
-        number: 20,
-        text: "Webb, M. (2020), “The impact of artificial intelligence on the labor market”, Stanford University Working Paper, available at SSRN: https://ssrn.com/abstract=3512625.",
-      },
-      {
-        number: 21,
-        text: "Yang, H.-J. and J.-H. Hwang (2023), “Industrial policy and export upgrading: Evidence from Korea's heavy and chemical industry drive”, Journal of Economic Research, 27(4), pp. 439–468.",
-        doi: "10.17256/JER.2022.27.4.003",
-      },
-      {
-        number: 22,
-        text: "Zhang, W. and M.-S. Park (2025), “Green innovation and firm performance: The moderating role of environmental regulation”, Journal of Economic Research, 30(2), pp. 227–252.",
-        doi: "10.17256/JER.2025.30.2.005",
-      },
-    ],
-  },
 ];
 
 export type Editor = {
@@ -2119,7 +1506,7 @@ export const NEWS_ITEMS: NewsItem[] = [
     date: "2026-08-15",
     title: "Volume 31, Issue 2 (August 2026) is now published",
     summary:
-      "The August 2026 issue contains thirteen articles, four in full text and nine as abstracts with references, on generative AI and worker productivity, the Phillips curve in Korea and Japan, extreme heat and factory output, risk-sharing after the Lombok earthquakes and participatory budgeting in Korean municipalities. Full papers can be requested from the authors with the lock symbol beside each article.",
+      "The August 2026 issue contains two research articles in full text, on the Phillips curve and inflation persistence in Korea and Japan and on informal risk-sharing after the 2018 Lombok earthquakes.",
     category: "Issue",
   },
   {
