@@ -1,12 +1,16 @@
-// Journal of Economic Research — portal database (SQLite)
+// Journal of Economic Research — portal database (Supabase Postgres).
+// Accounts, sessions, saved articles and a copy of each form entry. Papers and form entries also live in Sanity.
+//   DATABASE_URL: Supabase "Transaction pooler" connection string (port 6543) + ?pgbouncer=true&connection_limit=1
+//   DIRECT_URL:   Supabase "Session pooler" / direct connection string (port 5432), used by `prisma db push`
 
 generator client {
   provider = "prisma-client-js"
 }
 
 datasource db {
-  provider = "sqlite"
-  url      = env("DATABASE_URL")
+  provider  = "postgresql"
+  url       = env("DATABASE_URL")
+  directUrl = env("DIRECT_URL")
 }
 
 model User {

@@ -10,11 +10,19 @@ Requires Node.js 20+.
 
 ```bash
 npm install
-cp .env.example .env        # DATABASE_URL=file:../db/custom.db
-mkdir -p db
-npx prisma db push          # creates the local SQLite database
+cp .env.example .env        # fill in the Supabase and Sanity values
 npm run dev                 # http://localhost:3000
 ```
+
+### Database (Supabase)
+
+Accounts, sessions and saved articles are stored in Supabase Postgres (form entries are also copied there).
+
+1. Create a project at supabase.com (keep the database password safe).
+2. In Supabase → SQL Editor, run `prisma/supabase-init.sql` once (creates the tables and locks them against the
+   public Data API with row-level security), or run `npx prisma db push` with `DIRECT_URL` set.
+3. Copy the two connection strings from Project Settings → Database (see `.env.example`) into `.env` and into
+   Vercel → Settings → Environment Variables as `DATABASE_URL` and `DIRECT_URL`.
 
 ## Where things are
 
@@ -55,6 +63,8 @@ Setup:
 
 ## Deploying
 
-The site runs on Vercel, but sign-in, saved articles, alerts, submissions and the contact form use SQLite, which does not persist there. For a live site, switch `prisma/schema.prisma` to a hosted Postgres database and set `DATABASE_URL`.
+Vercel builds with `vercel.json` (pulls the 2026 papers from Sanity, then `next build`). Set these environment
+variables in Vercel: `DATABASE_URL`, `DIRECT_URL` (Supabase), `SANITY_PROJECT_ID`, `SANITY_DATASET`,
+`SANITY_API_WRITE_TOKEN` (Sanity).
 
 All papers, authors and results are realistic **sample content**; DOIs are not registered with Crossref.
