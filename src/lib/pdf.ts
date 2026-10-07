@@ -515,7 +515,14 @@ function writeArticle(doc: PdfDoc, a: Article) {
     }
     doc.space(4);
     doc.text(
-      `Received ${fmtDate(a.received)}  ·  Accepted ${fmtDate(a.accepted)}  ·  ${a.publishedOnline ? `Published online ${fmtDate(a.publishedOnline)}  ·  ` : ""}Issue published ${fmtDate(a.published)}`,
+      [
+        a.received && `Received ${fmtDate(a.received)}`,
+        a.accepted && `Accepted ${fmtDate(a.accepted)}`,
+        a.publishedOnline && `Published online ${fmtDate(a.publishedOnline)}`,
+        `Issue published ${fmtDate(a.published)}`,
+      ]
+        .filter(Boolean)
+        .join("  ·  "),
       { font: "F4", size: 8, color: GREY }
     );
     doc.heading("Abstract");

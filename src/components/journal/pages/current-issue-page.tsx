@@ -1,7 +1,7 @@
 "use client";
 
 import { useMemo, useState } from "react";
-import { ARTICLES, CURRENT_ISSUE, pageStart, type Article } from "@/data/journal";
+import { ARTICLES, CURRENT_ISSUE, listIssues, pageStart, type Article } from "@/data/journal";
 import { ChevronDown, ChevronLeft, ChevronRight, FileText, BookOpen, Download, Lock } from "lucide-react";
 import { useNav } from "../nav-context";
 import { useArticleActions } from "../article-actions";
@@ -25,11 +25,8 @@ const longDate = (iso: string) => new Date(iso).toLocaleDateString("en-GB", { da
 const monthYear = (iso: string) => new Date(iso).toLocaleDateString("en-GB", { month: "long", year: "numeric" });
 
 // All issues, newest first
-const ISSUES = Array.from(new Set(ARTICLES.map((a) => `${a.volume}-${a.issue}`)))
-  .map((k) => k.split("-").map(Number) as [number, number])
-  .sort((a, b) => b[0] - a[0] || b[1] - a[1]);
-
 export function CurrentIssuePage() {
+  const ISSUES = listIssues();
   const { navigate, params } = useNav();
 
   const volume = Number(params.volume) || CURRENT_ISSUE.volume;

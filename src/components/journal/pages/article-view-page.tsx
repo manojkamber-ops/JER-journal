@@ -188,18 +188,22 @@ export function ArticleViewPage({ articleId }: { articleId: string | null }) {
 
               {/* Article history block — AOM style */}
               <div className="bg-gray-50 border border-gray-200 rounded-sm p-4 my-5 font-sans text-xs text-gray-700 grid sm:grid-cols-2 lg:grid-cols-4 gap-3">
-                <div>
-                  <p className="text-gray-500 uppercase tracking-wide mb-0.5">Received</p>
-                  <p className="font-medium text-primary">
-                    {new Date(article.received).toLocaleDateString("en-GB", { day: "numeric", month: "short", year: "numeric" })}
-                  </p>
-                </div>
-                <div>
-                  <p className="text-gray-500 uppercase tracking-wide mb-0.5">Accepted</p>
-                  <p className="font-medium text-primary">
-                    {new Date(article.accepted).toLocaleDateString("en-GB", { day: "numeric", month: "short", year: "numeric" })}
-                  </p>
-                </div>
+                {article.received && (
+                  <div>
+                    <p className="text-gray-500 uppercase tracking-wide mb-0.5">Received</p>
+                    <p className="font-medium text-primary">
+                      {new Date(article.received).toLocaleDateString("en-GB", { day: "numeric", month: "short", year: "numeric" })}
+                    </p>
+                  </div>
+                )}
+                {article.accepted && (
+                  <div>
+                    <p className="text-gray-500 uppercase tracking-wide mb-0.5">Accepted</p>
+                    <p className="font-medium text-primary">
+                      {new Date(article.accepted).toLocaleDateString("en-GB", { day: "numeric", month: "short", year: "numeric" })}
+                    </p>
+                  </div>
+                )}
                 {article.publishedOnline && (
                   <div>
                     <p className="text-gray-500 uppercase tracking-wide mb-0.5">Published online</p>

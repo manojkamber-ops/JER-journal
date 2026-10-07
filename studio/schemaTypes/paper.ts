@@ -1,9 +1,9 @@
 import { defineArrayMember, defineField, defineType } from "sanity";
-import { ARTICLE_ID_PATTERN, CURRENT_ISSUE } from "../current-issue";
+import { ARTICLE_ID_PATTERN, CURRENT_ISSUE, MANAGED_ISSUES } from "../current-issue";
 
 /**
- * A paper in the current issue. The website reads published papers live (within about a minute) and shows them in
- * the current issue, replacing the copies in the repository. Leave "Full text" empty for an abstract-only paper:
+ * A paper in one of the issues managed in Sanity (studio/current-issue.ts). The website reads published papers live
+ * (within about a minute) and shows each managed issue from Sanity, replacing the copies in the repository. Leave "Full text" empty for an abstract-only paper:
  * the site then shows the abstract and references, with a lock and a "request the full paper" form.
  */
 
@@ -106,7 +106,7 @@ const section = defineArrayMember({
 
 export const paper = defineType({
   name: "paper",
-  title: "Paper (current issue)",
+  title: "Paper",
   type: "document",
   groups: [
     { name: "meta", title: "Article", default: true },
@@ -120,10 +120,10 @@ export const paper = defineType({
       title: "Article id",
       type: "string",
       group: "meta",
-      description: `Format ${CURRENT_ISSUE.year}-v${CURRENT_ISSUE.volume}-i${CURRENT_ISSUE.issue}-<NN>, e.g. "${CURRENT_ISSUE.year}-v${CURRENT_ISSUE.volume}-i${CURRENT_ISSUE.issue}-14". The DOI is derived from it.`,
+      description: `Format ${CURRENT_ISSUE.year}-v${CURRENT_ISSUE.volume}-i<issue>-<NN>, e.g. "${CURRENT_ISSUE.year}-v${CURRENT_ISSUE.volume}-i${CURRENT_ISSUE.issue}-15". The issue number in the id must match the Issue field. The DOI is derived from it.`,
       validation: (r) =>
         r.required().custom((v) =>
-          typeof v === "string" && ARTICLE_ID_PATTERN.test(v) ? true : `Use the format ${CURRENT_ISSUE.year}-v${CURRENT_ISSUE.volume}-i${CURRENT_ISSUE.issue}-<NN>`,
+          typeof v === "string" && ARTICLE_ID_PATTERN.test(v) ? true : `Use the format ${CURRENT_ISSUE.year}-v${CURRENT_ISSUE.volume}-i<issue>-<NN>`,
         ),
     }),
     defineField({ name: "title", type: "string", group: "meta", validation: (r) => r.required() }),
@@ -149,7 +149,14 @@ export const paper = defineType({
     }),
     defineField({ name: "year", type: "number", group: "meta", initialValue: CURRENT_ISSUE.year, readOnly: true }),
     defineField({ name: "volume", type: "number", group: "meta", initialValue: CURRENT_ISSUE.volume, readOnly: true }),
-    defineField({ name: "issue", type: "number", group: "meta", initialValue: CURRENT_ISSUE.issue, readOnly: true }),
+    defineField({
+      name: "issue",
+      type: "number",
+      group: "meta",
+      initialValue: CURRENT_ISSUE.issue,
+      options: { list: MANAGED_ISSUES.map((i) => ({ title: i.label, value: i.issue })), layout: "radio" },
+      validation: (r) => r.required(),
+    }),
     defineField({ name: "pages", type: "string", group: "meta", description: 'Length only matters, e.g. "1–28" (the site renumbers pages per volume)', initialValue: "1–24" }),
 
     defineField({ name: "received", type: "date", group: "dates", validation: (r) => r.required() }),

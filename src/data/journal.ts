@@ -35,10 +35,10 @@ export const JOURNAL_INFO = {
 // The issue shown as "Current Issue" across the site.
 export const CURRENT_ISSUE = {
   volume: 31,
-  issue: 2,
+  issue: 1,
   year: 2026,
-  published: "2026-08-15",
-  label: "August 2026",
+  published: "2026-10-08",
+  label: "October 2026",
 };
 
 export type AuthorAffiliation = {
@@ -2107,19 +2107,19 @@ export type NewsItem = {
 
 export const NEWS_ITEMS: NewsItem[] = [
   {
+    id: "n01",
+    date: "2026-10-08",
+    title: "Volume 31, Issue 1 (October 2026) is now published",
+    summary:
+      "The October 2026 issue includes \u201cFinancial Risk Exposure and Management Strategies of MSMEs in Maharashtra: A Study of Nashik District\u201d by Laxman Arjun Patil and Amardeep Bajpai (School of Commerce and Management Studies, Sandip University, Nashik), a survey of 384 MSMEs across four talukas of Nashik District.",
+    category: "Issue",
+  },
+  {
     id: "n00",
     date: "2026-08-15",
     title: "Volume 31, Issue 2 (August 2026) is now published",
     summary:
       "The August 2026 issue contains thirteen articles, four in full text and nine as abstracts with references, on generative AI and worker productivity, the Phillips curve in Korea and Japan, extreme heat and factory output, risk-sharing after the Lombok earthquakes and participatory budgeting in Korean municipalities. Full papers can be requested from the authors with the lock symbol beside each article.",
-    category: "Issue",
-  },
-  {
-    id: "n01",
-    date: "2026-02-15",
-    title: "Volume 31, Issue 1 (February 2026) is now published",
-    summary:
-      "The first issue of Volume 31 contains thirteen articles, four in full text, on generative AI and entry-level hiring in India, school closures and housing values in Korea, the EU carbon border adjustment mechanism, wartime displacement and long-run development, and more.",
     category: "Issue",
   },
   {
@@ -2525,20 +2525,32 @@ export function buildReferences(refs: RefSpec[]): ArticleReference[] {
 }
 for (const [id, refs] of PENDING_REFS) ARTICLES.find((a) => a.id === id)!.references = buildReferences(refs);
 
-// The newest issue that has articles is the current issue (so a new 2026 issue published in Sanity goes live
-// without a code change).
-{
-  const latest = ARTICLES.reduce((best, a) => (a.volume > best.volume || (a.volume === best.volume && a.issue > best.issue) ? a : best), ARTICLES[0]);
-  if (latest.volume > CURRENT_ISSUE.volume || (latest.volume === CURRENT_ISSUE.volume && latest.issue > CURRENT_ISSUE.issue)) {
-    const published = ARTICLES.filter((a) => a.volume === latest.volume && a.issue === latest.issue).map((a) => a.published).sort().pop()!;
-    Object.assign(CURRENT_ISSUE, {
-      volume: latest.volume,
-      issue: latest.issue,
-      year: latest.year,
-      published,
-      label: new Date(published).toLocaleDateString("en-GB", { month: "long", year: "numeric" }),
-    });
+// The current issue is the most recently published issue (by its articles' issue date), so an issue published or
+// re-dated in Sanity goes live without a code change.
+export function refreshCurrentIssue() {
+  const latest = new Map<string, { volume: number; issue: number; year: number; published: string }>();
+  for (const a of ARTICLES) {
+    const key = `${a.volume}-${a.issue}`;
+    const cur = latest.get(key);
+    if (!cur || a.published > cur.published) latest.set(key, { volume: a.volume, issue: a.issue, year: a.year, published: a.published });
   }
+  const best = [...latest.values()].sort((x, y) => y.published.localeCompare(x.published) || y.volume - x.volume || y.issue - x.issue)[0];
+  if (!best) return;
+  Object.assign(CURRENT_ISSUE, {
+    volume: best.volume,
+    issue: best.issue,
+    year: best.year,
+    published: best.published,
+    label: new Date(best.published).toLocaleDateString("en-GB", { month: "long", year: "numeric", timeZone: "UTC" }),
+  });
+}
+refreshCurrentIssue();
+
+/** All issues, newest volume/issue first. Computed on demand so issues added from Sanity are included. */
+export function listIssues(): [number, number][] {
+  return Array.from(new Set(ARTICLES.map((a) => `${a.volume}-${a.issue}`)))
+    .map((k) => k.split("-").map(Number) as [number, number])
+    .sort((a, b) => b[0] - a[0] || b[1] - a[1]);
 }
 
 /** First page number of an article; roman-numbered front matter (editorials) sorts first as 0. */

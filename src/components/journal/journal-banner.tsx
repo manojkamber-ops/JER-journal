@@ -1,6 +1,6 @@
 "use client";
 
-import { ARTICLES, CURRENT_ISSUE, EDITORIAL_BOARD, JOURNAL_INFO } from "@/data/journal";
+import { ARTICLES, CURRENT_ISSUE, EDITORIAL_BOARD, JOURNAL_INFO, listIssues } from "@/data/journal";
 import { ChevronDown, Info, Star } from "lucide-react";
 import {
   DropdownMenu,
@@ -13,14 +13,11 @@ import { useSession } from "./session";
 
 export type BannerTab = "online-first" | "current" | "archive" | null;
 
-const ISSUES = Array.from(new Set(ARTICLES.map((a) => `${a.volume}-${a.issue}`)))
-  .map((k) => k.split("-").map(Number) as [number, number])
-  .sort((a, b) => b[0] - a[0] || b[1] - a[1]);
-
 const editor = EDITORIAL_BOARD.find((e) => e.role === "Editor-in-Chief");
 
 /** AOM-style journal banner: cover, journal metadata, action buttons and the issue sub-navigation. */
 export function JournalBanner({ active = null }: { active?: BannerTab }) {
+  const ISSUES = listIssues();
   const { navigate } = useNav();
   const { user, openAuth, openAlerts } = useSession();
 

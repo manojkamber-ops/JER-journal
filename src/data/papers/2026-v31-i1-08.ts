@@ -1,4 +1,4 @@
-// Vol. 31, No. 1 (February 2026) — abstract and references only (full paper on request from the authors).
+// Vol. 31, No. 1 (October 2026) — abstract and references only (full paper on request from the authors).
 import type { PaperSpec } from "../paper-spec";
 
 export const paper: PaperSpec = {
@@ -18,7 +18,7 @@ export const paper: PaperSpec = {
   year: 2026,
   received: "2025-02-24",
   accepted: "2025-10-09",
-  published: "2026-02-15",
+  published: "2026-10-08",
   publishedOnline: "2026-01-27",
   citations: 1,
   downloads: 410,

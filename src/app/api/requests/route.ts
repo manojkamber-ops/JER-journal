@@ -2,9 +2,9 @@ import { NextResponse } from "next/server";
 import { db } from "@/lib/db";
 import { jsonError, EMAIL_RE } from "@/lib/auth";
 import { saveEntry } from "@/lib/sanity";
-import { ARTICLES, CURRENT_ISSUE } from "@/data/journal";
+import { ARTICLES } from "@/data/journal";
 import { applyLivePapers } from "@/data/live-papers";
-import { fetchIssuePapers } from "@/lib/sanity-papers";
+import { fetchSanityPapers } from "@/lib/sanity-papers";
 
 /** "Request the full paper" form on abstract-only articles. */
 export async function POST(req: Request) {
@@ -16,7 +16,7 @@ export async function POST(req: Request) {
   const message = String(body.message ?? "").trim() || null;
   const articleId = String(body.articleId ?? "");
   // Papers added in Sanity are only known once the current issue has been read from Sanity
-  if (!ARTICLES.some((a) => a.id === articleId)) applyLivePapers(await fetchIssuePapers(CURRENT_ISSUE.volume, CURRENT_ISSUE.issue));
+  if (!ARTICLES.some((a) => a.id === articleId)) applyLivePapers(await fetchSanityPapers());
   const article = ARTICLES.find((a) => a.id === articleId);
   if (!article) return jsonError("Unknown article.");
   if (!name) return jsonError("Please enter your name.");

@@ -49,14 +49,14 @@ export const EDITORIALS: EditorialSpec[] = [
     ],
   },
   /* ================================================================ */
-  /* Volume 31, Issue 1 — February 2026                 */
+  /* Volume 31, Issue 1 — October 2026                  */
   /* ================================================================ */
   {
     id: "2026-v31-i1-ed",
     volume: 31,
     issue: 1,
     year: 2026,
-    published: "2026-02-15",
+    published: "2026-10-08",
     pages: "i–iii",
     title: "Editorial: Work, Demography and Climate — Policy in Times of Technological Change",
     abstract:

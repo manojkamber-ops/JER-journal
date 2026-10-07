@@ -12,7 +12,7 @@ const projectId = process.env.SANITY_STUDIO_PROJECT_ID || "imuzzo9u";
 export default defineConfig([
   {
     name: "papers",
-    title: "JER — Current issue papers",
+    title: "JER — Papers",
     basePath: "/papers",
     projectId,
     dataset: "production",

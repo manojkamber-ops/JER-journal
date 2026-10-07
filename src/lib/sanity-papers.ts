@@ -56,8 +56,9 @@ export function fromSanityPaper(doc: SanityDoc): PaperSpec | null {
     volume: doc.volume,
     issue: doc.issue,
     year: doc.year ?? Number(String(doc.published).slice(0, 4)),
-    received: doc.received ?? doc.published,
-    accepted: doc.accepted ?? doc.published,
+    // History dates are shown only when provided in Sanity (never filled in automatically)
+    received: doc.received ?? "",
+    accepted: doc.accepted ?? "",
     published: doc.published,
     publishedOnline: doc.publishedOnline,
     citations: doc.citations ?? 0,
@@ -76,12 +77,12 @@ export function fromSanityPaper(doc: SanityDoc): PaperSpec | null {
 }
 
 /**
- * Published papers of one issue from Sanity, or null if Sanity cannot be reached (the site then keeps the papers
- * in the repository). Results are cached by Next.js for SANITY_REFRESH_SECONDS.
+ * All published papers in Sanity, or null if Sanity cannot be reached (the site then keeps the papers in the
+ * repository). Results are cached by Next.js for SANITY_REFRESH_SECONDS.
  */
-export async function fetchIssuePapers(volume: number, issue: number): Promise<PaperSpec[] | null> {
-  const query = encodeURIComponent('*[_type == "paper" && volume == $v && issue == $i && !(_id in path("drafts.**"))] | order(articleId asc)');
-  const url = `https://${SANITY_PROJECT_ID}.apicdn.sanity.io/v${API_VERSION}/data/query/${SANITY_PAPERS_DATASET}?query=${query}&$v=${volume}&$i=${issue}`;
+export async function fetchSanityPapers(): Promise<PaperSpec[] | null> {
+  const query = encodeURIComponent('*[_type == "paper" && !(_id in path("drafts.**"))] | order(articleId asc)');
+  const url = `https://${SANITY_PROJECT_ID}.apicdn.sanity.io/v${API_VERSION}/data/query/${SANITY_PAPERS_DATASET}?query=${query}`;
   try {
     const res = await fetch(url, { next: { revalidate: SANITY_REFRESH_SECONDS, tags: ["sanity-papers"] } });
     if (!res.ok) return null;

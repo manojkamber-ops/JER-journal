@@ -1,4 +1,4 @@
-// Vol. 31, No. 1 (February 2026) — full research paper (sample content).
+// Vol. 31, No. 1 (October 2026) — full research paper (sample content).
 import type { PaperSpec } from "../paper-spec";
 
 export const paper: PaperSpec = {
@@ -18,7 +18,7 @@ export const paper: PaperSpec = {
   year: 2026,
   received: "2024-11-04",
   accepted: "2025-09-12",
-  published: "2026-02-15",
+  published: "2026-10-08",
   publishedOnline: "2026-01-26",
   citations: 3,
   downloads: 1180,
