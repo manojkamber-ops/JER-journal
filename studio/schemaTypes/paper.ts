@@ -1,9 +1,10 @@
 import { defineArrayMember, defineField, defineType } from "sanity";
+import { ARTICLE_ID_PATTERN, CURRENT_ISSUE } from "../current-issue";
 
 /**
- * A 2026 research paper. The website pulls these at build time (scripts/sanity-pull-2026.mjs) and turns each one
- * into the same PaperSpec format as the papers in src/data/papers/. Leave "Full text" empty for an abstract-only
- * paper: the site then shows the abstract and references, with a lock and a "request the full paper" form.
+ * A paper in the current issue. The website reads published papers live (within about a minute) and shows them in
+ * the current issue, replacing the copies in the repository. Leave "Full text" empty for an abstract-only paper:
+ * the site then shows the abstract and references, with a lock and a "request the full paper" form.
  */
 
 const author = defineArrayMember({
@@ -105,7 +106,7 @@ const section = defineArrayMember({
 
 export const paper = defineType({
   name: "paper",
-  title: "2026 paper",
+  title: "Paper (current issue)",
   type: "document",
   groups: [
     { name: "meta", title: "Article", default: true },
@@ -119,9 +120,11 @@ export const paper = defineType({
       title: "Article id",
       type: "string",
       group: "meta",
-      description: 'Format 2026-v31-i<issue>-<NN>, e.g. "2026-v31-i2-14". The DOI is derived from it.',
+      description: `Format ${CURRENT_ISSUE.year}-v${CURRENT_ISSUE.volume}-i${CURRENT_ISSUE.issue}-<NN>, e.g. "${CURRENT_ISSUE.year}-v${CURRENT_ISSUE.volume}-i${CURRENT_ISSUE.issue}-14". The DOI is derived from it.`,
       validation: (r) =>
-        r.required().custom((v) => (typeof v === "string" && /^2026-v31-i[1-4]-\d{2}$/.test(v) ? true : "Use the format 2026-v31-i<1-4>-<NN>")),
+        r.required().custom((v) =>
+          typeof v === "string" && ARTICLE_ID_PATTERN.test(v) ? true : `Use the format ${CURRENT_ISSUE.year}-v${CURRENT_ISSUE.volume}-i${CURRENT_ISSUE.issue}-<NN>`,
+        ),
     }),
     defineField({ name: "title", type: "string", group: "meta", validation: (r) => r.required() }),
     defineField({ name: "authors", type: "array", of: [author], group: "meta", validation: (r) => r.required().min(1) }),
@@ -136,15 +139,15 @@ export const paper = defineType({
       options: { list: ["Research Article", "Review Article", "Short Communication"] },
       initialValue: "Research Article",
     }),
-    defineField({ name: "year", type: "number", group: "meta", initialValue: 2026, readOnly: true, validation: (r) => r.required().min(2026).max(2026) }),
-    defineField({ name: "volume", type: "number", group: "meta", initialValue: 31, readOnly: true, validation: (r) => r.required().min(31).max(31) }),
-    defineField({ name: "issue", type: "number", group: "meta", validation: (r) => r.required().integer().min(1).max(4) }),
+    defineField({ name: "year", type: "number", group: "meta", initialValue: CURRENT_ISSUE.year, readOnly: true }),
+    defineField({ name: "volume", type: "number", group: "meta", initialValue: CURRENT_ISSUE.volume, readOnly: true }),
+    defineField({ name: "issue", type: "number", group: "meta", initialValue: CURRENT_ISSUE.issue, readOnly: true }),
     defineField({ name: "pages", type: "string", group: "meta", description: 'Length only matters, e.g. "1–28" (the site renumbers pages per volume)', initialValue: "1–24" }),
 
     defineField({ name: "received", type: "date", group: "dates", validation: (r) => r.required() }),
     defineField({ name: "accepted", type: "date", group: "dates", validation: (r) => r.required() }),
     defineField({ name: "publishedOnline", title: "Published online", type: "date", group: "dates" }),
-    defineField({ name: "published", title: "Issue published", type: "date", group: "dates", validation: (r) => r.required() }),
+    defineField({ name: "published", title: "Issue published", type: "date", group: "dates", initialValue: CURRENT_ISSUE.published, validation: (r) => r.required() }),
     defineField({ name: "citations", type: "number", group: "dates", initialValue: 0 }),
     defineField({ name: "downloads", type: "number", group: "dates", initialValue: 0 }),
     defineField({ name: "pdfSize", title: "PDF size label", type: "string", group: "dates", initialValue: "1.50 MB" }),

@@ -1,9 +1,9 @@
 // Server-side Sanity access for the website's forms, using Sanity's HTTP API directly (no extra package).
-// Only imported by API routes, so the write token stays on the server. When SANITY_API_WRITE_TOKEN is not set,
-// the forms keep using the local Prisma database only.
+// Form entries go to the private "forms" dataset (papers live in the public "production" dataset). Only imported by
+// API routes, so the write token stays on the server. Without SANITY_API_WRITE_TOKEN the forms use the database only.
 
-const projectId = process.env.SANITY_PROJECT_ID ?? process.env.NEXT_PUBLIC_SANITY_PROJECT_ID ?? "oy0g1kj5";
-const dataset = process.env.SANITY_DATASET ?? process.env.NEXT_PUBLIC_SANITY_DATASET ?? "production";
+const projectId = process.env.SANITY_PROJECT_ID ?? process.env.NEXT_PUBLIC_SANITY_PROJECT_ID ?? "imuzzo9u";
+const dataset = process.env.SANITY_FORMS_DATASET ?? "forms";
 const token = process.env.SANITY_API_WRITE_TOKEN;
 
 export const SANITY_API_VERSION = "2025-01-01";

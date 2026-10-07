@@ -38,33 +38,31 @@ Accounts, sessions and saved articles are stored in Supabase Postgres (form entr
 
 After adding or removing a file in `src/data/papers/`, run `node scripts/gen-paper-index.mjs`.
 
-## Sanity (2026 papers and form submissions)
+## Sanity (current-issue papers and form submissions)
 
-Sanity project **Journal of Economics** (`oy0g1kj5`, dataset `production`, private).
+Sanity project **Journal of Economic Research** (`imuzzo9u`, organization "Manoj Kamber").
 
-- **2026 papers** live in Sanity (document type `paper`). Before every Vercel build, `scripts/sanity-pull-2026.mjs`
-  downloads the published 2026 papers into `src/data/papers/` and regenerates the paper index, so publishing a paper
-  in Sanity and redeploying puts it on the site. A paper with no full text is shown as abstract + references with
-  a lock and a "request the full paper" form. Earlier volumes stay in the repository.
-- **Forms** write to Sanity from the server: contact messages, manuscript submissions (with the uploaded file),
-  full-paper requests, email-alert subscriptions and new reader accounts (name, email, affiliation; never passwords).
-  Locally they are also kept in the SQLite database.
+- **Current issue papers** (Vol. 31, No. 2) live in the public dataset `production`. The home page reads them from
+  Sanity every 60 seconds (`src/lib/sanity-papers.ts`, `src/data/live-papers.ts`), so a paper added, edited or
+  removed in Sanity appears on the website within about a minute, without a redeploy. A paper with no full text is
+  shown as abstract + references with a lock and a "request the full paper" form. Earlier issues stay in the
+  repository; if Sanity is unreachable, the repository copy of the current issue is shown.
+- **Forms** write to the private dataset `forms` from the server: contact messages, manuscript submissions (with the
+  uploaded file), full-paper requests, email-alert subscriptions and new reader accounts (never passwords).
+  They are also stored in the database.
+- **Next issue:** change `studio/current-issue.ts`; the website follows `CURRENT_ISSUE` in `src/data/journal.ts`.
 
 Setup:
 
-1. In sanity.io/manage → Journal of Economics → API → Tokens, add a token with **Editor** permissions.
-2. Put it in `.env` as `SANITY_API_WRITE_TOKEN=…` (see `.env.example`), and in Vercel → Settings → Environment
-   Variables (with `SANITY_PROJECT_ID=oy0g1kj5` and `SANITY_DATASET=production`).
-3. Import the current 2026 papers once: `npm run sanity:push`.
-4. Studio (the editing interface): `cd studio && npm install && npm run dev` (http://localhost:3333), or
-   `npm run deploy` to host it at `https://<name>.sanity.studio`.
-5. Optional: in Sanity → API → Webhooks, call a Vercel Deploy Hook on create/update/delete of `paper` documents so
-   the site rebuilds automatically when a paper is published.
+1. sanity.io/manage → Journal of Economic Research → API → Tokens → add a token with **Editor** permissions.
+2. Put it in `.env` as `SANITY_API_WRITE_TOKEN=…` and in Vercel → Settings → Environment Variables.
+3. Import the current issue's papers once: `npm run sanity:push`.
+4. Studio: `cd studio && npm install && npm run dev` (http://localhost:3333), or `npm run deploy` to host it at
+   `https://<name>.sanity.studio`. It has two workspaces: "Current issue papers" and "Form submissions".
 
 ## Deploying
 
-Vercel builds with `vercel.json` (pulls the 2026 papers from Sanity, then `next build`). Set these environment
-variables in Vercel: `DATABASE_URL`, `DIRECT_URL` (Supabase), `SANITY_PROJECT_ID`, `SANITY_DATASET`,
-`SANITY_API_WRITE_TOKEN` (Sanity).
+Vercel builds with `next build` (`vercel.json`). Set these environment
+variables in Vercel: `DATABASE_URL`, `DIRECT_URL` (Supabase), `SANITY_API_WRITE_TOKEN` (Sanity; the project id and datasets have defaults).
 
 All papers, authors and results are realistic **sample content**; DOIs are not registered with Crossref.

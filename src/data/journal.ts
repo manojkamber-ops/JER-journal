@@ -2385,13 +2385,14 @@ import { ALL_FULLTEXTS, ALL_PAPERS } from "./papers";
 export const RESEARCH_PAPERS: PaperSpec[] = ALL_PAPERS;
 
 /** Articles that have a full text (complete papers and full texts attached to existing articles). */
-const FULL_TEXT_IDS = new Set<string>([...ALL_PAPERS.filter((p) => p.body).map((p) => p.id), ...ALL_FULLTEXTS.filter((p) => p.body).map((p) => p.id)]);
+export const FULL_TEXT_IDS = new Set<string>([...ALL_PAPERS.filter((p) => p.body).map((p) => p.id), ...ALL_FULLTEXTS.filter((p) => p.body).map((p) => p.id)]);
 
 /** Reference specs of each article whose reference list is generated below. */
 const PENDING_REFS = new Map<string, RefSpec[]>();
 
-for (const paper of RESEARCH_PAPERS) {
-  const { refs, body: _body, authors, editorialNote: _note, ...meta } = paper;
+/** Builds the Article for a PaperSpec (affiliations a, b, c…, structured authors, DOI); references are added later. */
+export function paperToArticle(paper: PaperSpec): Article {
+  const { refs: _refs, body: _body, authors, editorialNote: _note, ...meta } = paper;
   const affiliationOf = (au: (typeof authors)[number]) => {
     const aff = au.affiliation ?? AUTHOR_AFFILIATIONS[au.name];
     if (!aff) throw new Error(`No affiliation for author ${au.name} (${paper.id})`);
@@ -2408,9 +2409,8 @@ for (const paper of RESEARCH_PAPERS) {
     }
     return { name: au.name, affiliationIds: [entry.id], corresponding: au.corresponding };
   });
-  if (ARTICLES.some((a) => a.id === paper.id)) throw new Error(`Duplicate article id ${paper.id}`);
   const seq = paper.id.split("-").pop()!;
-  ARTICLES.push({
+  return {
     ...meta,
     doi: `${JOURNAL_INFO.doiPrefix}/JER.${paper.year}.${paper.volume}.${paper.issue}.${seq.padStart(3, "0")}`,
     authors: authors.map((au) => {
@@ -2420,8 +2420,13 @@ for (const paper of RESEARCH_PAPERS) {
     structuredAuthors,
     affiliations,
     references: [],
-  });
-  PENDING_REFS.set(paper.id, refs);
+  };
+}
+
+for (const paper of RESEARCH_PAPERS) {
+  if (ARTICLES.some((a) => a.id === paper.id)) throw new Error(`Duplicate article id ${paper.id}`);
+  ARTICLES.push(paperToArticle(paper));
+  PENDING_REFS.set(paper.id, paper.refs);
 }
 
 for (const ft of ALL_FULLTEXTS) {
@@ -2484,7 +2489,7 @@ for (const ed of EDITORIALS) {
 
 // Continuous pagination within each volume: issues in order, articles in their table-of-contents order
 // (existing first page, then id), each keeping its length. Roman-numbered front matter is left as is.
-{
+export function repaginate() {
   const span = (pages: string) => {
     const [from, to] = pages.split(/[–-]/).map((x) => parseInt(x, 10));
     return Number.isFinite(from) && Number.isFinite(to) && to >= from ? to - from + 1 : 28;
@@ -2502,11 +2507,11 @@ for (const ed of EDITORIALS) {
     }
   }
 }
+repaginate();
 
 // Reference lists: numbered in citation order, listed alphabetically as in APA
-for (const [id, refs] of PENDING_REFS) {
-  const article = ARTICLES.find((a) => a.id === id)!;
-  article.references = refs
+export function buildReferences(refs: RefSpec[]): ArticleReference[] {
+  return refs
     .map((r, i): ArticleReference => {
       if (typeof r === "string") return { number: i + 1, text: r };
       const cited = ARTICLES.find((a) => a.id === r.jer);
@@ -2516,6 +2521,7 @@ for (const [id, refs] of PENDING_REFS) {
     })
     .sort((x, y) => x.text.localeCompare(y.text));
 }
+for (const [id, refs] of PENDING_REFS) ARTICLES.find((a) => a.id === id)!.references = buildReferences(refs);
 
 // The newest issue that has articles is the current issue (so a new 2026 issue published in Sanity goes live
 // without a code change).

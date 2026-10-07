@@ -1,4 +1,4 @@
-// One-time (or repeatable) import of the site's 2026 papers into Sanity.
+// Imports the current issue's papers (Vol. 31, No. 2) from src/data/papers/ into Sanity (repeatable).
 // Run: npm run sanity:push   (needs SANITY_API_WRITE_TOKEN in .env.local or .env; never commit the token)
 import { readdirSync } from "node:fs";
 import { join } from "node:path";
@@ -12,7 +12,7 @@ if (!writeToken) {
 }
 
 const dir = join(process.cwd(), "src", "data", "papers");
-const files = readdirSync(dir).filter((f) => /^2026-v31-i\d-\d{2}\.ts$/.test(f)).sort();
+const files = readdirSync(dir).filter((f) => /^2026-v31-i2-\d{2}\.ts$/.test(f)).sort();
 const docs = [];
 for (const f of files) {
   const { paper } = await import(pathToFileURL(join(dir, f)).href);

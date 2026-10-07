@@ -19,6 +19,8 @@ import { LegalPage } from "./pages/legal-page";
 import { SessionProvider } from "./session";
 import { ReaderPage } from "./pages/reader-page";
 import { articleByDoi } from "@/lib/doi";
+import { applyLivePapers } from "@/data/live-papers";
+import type { PaperSpec } from "@/data/paper-spec";
 
 function PageRouter() {
   const { page, articleId, params } = useNav();
@@ -77,7 +79,9 @@ function Shell() {
   );
 }
 
-export function JournalLayout() {
+export function JournalLayout({ livePapers }: { livePapers?: PaperSpec[] | null }) {
+  // Current-issue papers published in Sanity replace the repository copies before anything renders
+  applyLivePapers(livePapers);
   return (
     <NavProvider>
       <SessionProvider>

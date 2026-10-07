@@ -1,5 +1,5 @@
 // Converts between the site's PaperSpec format (src/data/paper-spec.ts) and Sanity "paper" documents
-// (studio/schemaTypes/paper.ts). Used by sanity-push-2026.mjs and sanity-pull-2026.mjs.
+// (studio/schemaTypes/paper.ts). Used by sanity-push-2026.mjs.
 
 export const SANITY_API_VERSION = "2025-01-01";
 
@@ -13,7 +13,7 @@ export function sanityEnv() {
     }
   }
   return {
-    projectId: process.env.SANITY_PROJECT_ID ?? process.env.NEXT_PUBLIC_SANITY_PROJECT_ID ?? "oy0g1kj5",
+    projectId: process.env.SANITY_PROJECT_ID ?? process.env.NEXT_PUBLIC_SANITY_PROJECT_ID ?? "imuzzo9u",
     dataset: process.env.SANITY_DATASET ?? process.env.NEXT_PUBLIC_SANITY_DATASET ?? "production",
     writeToken: process.env.SANITY_API_WRITE_TOKEN,
     readToken: process.env.SANITY_API_READ_TOKEN ?? process.env.SANITY_API_WRITE_TOKEN,
