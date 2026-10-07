@@ -2510,10 +2510,27 @@ for (const [id, refs] of PENDING_REFS) {
     .map((r, i): ArticleReference => {
       if (typeof r === "string") return { number: i + 1, text: r };
       const cited = ARTICLES.find((a) => a.id === r.jer);
-      if (!cited) throw new Error(`${id} cites unknown JER article ${r.jer}`);
+      // A cited 2026 paper may have been removed in Sanity: keep the numbering, mark the reference as withdrawn
+      if (!cited) return { number: i + 1, text: `Journal of Economic Research article ${r.jer} (withdrawn).` };
       return journalReference(cited, i + 1);
     })
     .sort((x, y) => x.text.localeCompare(y.text));
+}
+
+// The newest issue that has articles is the current issue (so a new 2026 issue published in Sanity goes live
+// without a code change).
+{
+  const latest = ARTICLES.reduce((best, a) => (a.volume > best.volume || (a.volume === best.volume && a.issue > best.issue) ? a : best), ARTICLES[0]);
+  if (latest.volume > CURRENT_ISSUE.volume || (latest.volume === CURRENT_ISSUE.volume && latest.issue > CURRENT_ISSUE.issue)) {
+    const published = ARTICLES.filter((a) => a.volume === latest.volume && a.issue === latest.issue).map((a) => a.published).sort().pop()!;
+    Object.assign(CURRENT_ISSUE, {
+      volume: latest.volume,
+      issue: latest.issue,
+      year: latest.year,
+      published,
+      label: new Date(published).toLocaleDateString("en-GB", { month: "long", year: "numeric" }),
+    });
+  }
 }
 
 /** First page number of an article; roman-numbered front matter (editorials) sorts first as 0. */

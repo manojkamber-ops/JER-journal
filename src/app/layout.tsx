@@ -18,6 +18,8 @@ const geistMono = Geist_Mono({
 });
 
 export const metadata: Metadata = {
+  // Demo deployment: keep search engines away from the sample content
+  robots: { index: false, follow: false },
   title: "Journal of Economic Research | Hanyang University, Seoul",
   description:
     "The Journal of Economic Research is a peer-reviewed, open-access economics journal published by the Department of Economics at Hanyang University, Seoul. ISSN 1226-4261, eISSN 2713-6418. ABDC rating B (Applied Economics); KCI-listed.",
@@ -65,6 +67,9 @@ export default function RootLayout({
       <body
         className={`${sourceSans.variable} ${geistMono.variable} antialiased bg-background text-foreground`}
       >
+        <div role="note" className="bg-amber-100 text-amber-950 text-center text-[12.5px] sm:text-[13px] font-sans font-semibold px-3 py-1.5 border-b border-amber-300">
+          Demo website with sample content — not an official journal site. Please do not submit manuscripts or payments.
+        </div>
         {children}
         <Toaster />
       </body>

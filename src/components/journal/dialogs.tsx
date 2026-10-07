@@ -439,21 +439,9 @@ function RequestForm({
     setError(null);
     setBusy(true);
     try {
-      await api("/api/contact", {
+      await api("/api/requests", {
         method: "POST",
-        body: JSON.stringify({
-          name,
-          email,
-          organisation,
-          subject: `Full-text request: ${article.title}`,
-          message: [
-            `Request for the full text of: ${article.title}`,
-            `Authors: ${article.authors.map((a) => a.name).join(", ")} (corresponding author: ${corresponding.name})`,
-            `JER Vol. ${article.volume}, No. ${article.issue} (${article.year}); DOI ${article.doi}`,
-            `Purpose: ${purpose}`,
-            note ? `\nMessage from the requester:\n${note}` : "",
-          ].join("\n"),
-        }),
+        body: JSON.stringify({ articleId: article.id, name, email, organisation, purpose, message: note }),
       });
       setSent(true);
     } catch (err) {

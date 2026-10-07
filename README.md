@@ -30,6 +30,29 @@ npm run dev                 # http://localhost:3000
 
 After adding or removing a file in `src/data/papers/`, run `node scripts/gen-paper-index.mjs`.
 
+## Sanity (2026 papers and form submissions)
+
+Sanity project **Journal of Economics** (`oy0g1kj5`, dataset `production`, private).
+
+- **2026 papers** live in Sanity (document type `paper`). Before every Vercel build, `scripts/sanity-pull-2026.mjs`
+  downloads the published 2026 papers into `src/data/papers/` and regenerates the paper index, so publishing a paper
+  in Sanity and redeploying puts it on the site. A paper with no full text is shown as abstract + references with
+  a lock and a "request the full paper" form. Earlier volumes stay in the repository.
+- **Forms** write to Sanity from the server: contact messages, manuscript submissions (with the uploaded file),
+  full-paper requests, email-alert subscriptions and new reader accounts (name, email, affiliation; never passwords).
+  Locally they are also kept in the SQLite database.
+
+Setup:
+
+1. In sanity.io/manage → Journal of Economics → API → Tokens, add a token with **Editor** permissions.
+2. Put it in `.env` as `SANITY_API_WRITE_TOKEN=…` (see `.env.example`), and in Vercel → Settings → Environment
+   Variables (with `SANITY_PROJECT_ID=oy0g1kj5` and `SANITY_DATASET=production`).
+3. Import the current 2026 papers once: `npm run sanity:push`.
+4. Studio (the editing interface): `cd studio && npm install && npm run dev` (http://localhost:3333), or
+   `npm run deploy` to host it at `https://<name>.sanity.studio`.
+5. Optional: in Sanity → API → Webhooks, call a Vercel Deploy Hook on create/update/delete of `paper` documents so
+   the site rebuilds automatically when a paper is published.
+
 ## Deploying
 
 The site runs on Vercel, but sign-in, saved articles, alerts, submissions and the contact form use SQLite, which does not persist there. For a live site, switch `prisma/schema.prisma` to a hosted Postgres database and set `DATABASE_URL`.

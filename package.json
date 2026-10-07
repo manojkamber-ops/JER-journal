@@ -8,6 +8,8 @@
     "start": "NODE_ENV=production bun .next/standalone/server.js 2>&1 | tee server.log",
     "lint": "eslint .",
     "postinstall": "prisma generate",
+    "sanity:push": "node --experimental-strip-types scripts/sanity-push-2026.mjs",
+    "sanity:pull": "node scripts/sanity-pull-2026.mjs",
     "db:push": "prisma db push --accept-data-loss",
     "db:generate": "prisma generate",
     "db:migrate": "prisma migrate dev",
