@@ -2359,6 +2359,9 @@ import { ALL_FULLTEXTS, ALL_PAPERS } from "./papers";
 
 export const RESEARCH_PAPERS: PaperSpec[] = ALL_PAPERS;
 
+/** Articles that have a full text (complete papers and full texts attached to existing articles). */
+const FULL_TEXT_IDS = new Set<string>([...ALL_PAPERS.map((p) => p.id), ...ALL_FULLTEXTS.map((p) => p.id)]);
+
 /** Reference specs of each article whose reference list is generated below. */
 const PENDING_REFS = new Map<string, RefSpec[]>();
 
@@ -2467,8 +2470,8 @@ for (const ed of EDITORIALS) {
     inVolume.sort((x, y) => x.issue - y.issue || parseInt(x.pages, 10) - parseInt(y.pages, 10) || x.id.localeCompare(y.id));
     let next = 1;
     for (const a of inVolume) {
-      // Full papers (12–15 PDF pages) occupy at least 24 printed journal pages
-      const n = a.type === "Editorial" ? span(a.pages) : Math.max(24, span(a.pages));
+      // Full papers (12–15 PDF pages) occupy at least 24 printed journal pages; abstract-only papers keep their length
+      const n = FULL_TEXT_IDS.has(a.id) ? Math.max(24, span(a.pages)) : span(a.pages);
       a.pages = `${next}–${next + n - 1}`;
       next += n;
     }
