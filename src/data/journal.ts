@@ -1498,7 +1498,7 @@ export const NEWS_ITEMS: NewsItem[] = [
     date: "2026-10-08",
     title: "Volume 31, Issue 1 (October 2026) is now published",
     summary:
-      "The October 2026 issue includes \u201cFinancial Risk Exposure and Management Strategies of MSMEs in Maharashtra: A Study of Nashik District\u201d by Laxman Arjun Patil and Amardeep Bajpai (School of Commerce and Management Studies, Sandip University, Nashik), a survey of 384 MSMEs across four talukas of Nashik District.",
+      "The October 2026 issue contains four research articles in full text, three of them from the School of Commerce and Management Studies, Sandip University, Nashik: the financial risk exposure of MSMEs in Nashik District (Laxman Arjun Patil and Amardeep Bajpai), data-driven approaches to self-regulated learning among working professionals (Pranav Prashant Godle and Amit Aggrawal), and the contribution of AI technologies to start-up growth and innovation in Maharashtra (Ritu Bothara and Amit Aggrawal).",
     category: "Issue",
   },
   {

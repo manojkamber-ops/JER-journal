@@ -45,14 +45,29 @@ function sectionToSanity(s, i, type) {
       figureId: f.id,
       caption: f.caption,
       kind: f.kind,
+      image: f.kind === "image" ? imageToSanity(f) : undefined,
       xLabels: f.xLabels,
       yLabel: f.yLabel,
-      series: f.series.map((se, k) => ({ _key: key("se", k), _type: "figureSeries", name: se.name, values: se.values, lower: se.lower, upper: se.upper })),
+      series: (f.series ?? []).map((se, k) => ({ _key: key("se", k), _type: "figureSeries", name: se.name, values: se.values, lower: se.lower, upper: se.upper })),
       marker: f.marker,
       note: f.note,
     })),
     ...(type === "bodySection" ? { subsections: (s.subsections ?? []).map((x, k) => sectionToSanity(x, k, "bodySubsection")) } : {}),
   };
+}
+
+// Image figures: a local file (f.localFile) is uploaded by `sanity dataset import`; a cdn.sanity.io URL is turned
+// back into a reference to its existing asset.
+function imageToSanity(f) {
+  if (f.localFile) return { _type: "image", _sanityAsset: `image@file://${f.localFile}` };
+  const m = /cdn\.sanity\.io\/images\/[^/]+\/[^/]+\/([0-9a-f]+-\d+x\d+)\.(\w+)/.exec(f.image?.url ?? "");
+  return m ? { _type: "image", asset: { _type: "reference", _ref: `image-${m[1]}-${m[2]}` } } : undefined;
+}
+
+/** Sanity image asset reference → CDN URL and size. */
+function imageFromSanity(img) {
+  const m = /^image-([0-9a-f]+)-(\d+)x(\d+)-(\w+)$/.exec(img?.asset?._ref ?? "");
+  return m ? { url: `https://cdn.sanity.io/images/${sanityEnv().projectId}/${sanityEnv().dataset}/${m[1]}-${m[2]}x${m[3]}.${m[4]}`, width: Number(m[2]), height: Number(m[3]) } : undefined;
 }
 
 /** PaperSpec → Sanity document. */
@@ -62,6 +77,8 @@ export function toSanityPaper(spec, affiliations = {}) {
     _type: "paper",
     articleId: spec.id,
     title: spec.title,
+    // Repository papers are samples unless marked genuine (sample: false)
+    sampleContent: spec.sample !== false,
     authors: spec.authors.map((a, i) => {
       const aff = a.affiliation ?? affiliations[a.name] ?? {};
       return { _key: key("a", i), _type: "author", name: a.name, corresponding: Boolean(a.corresponding), department: aff.department ?? "", institution: aff.institution ?? "", city: aff.city ?? "", country: aff.country ?? "" };
@@ -98,7 +115,8 @@ function sectionFromSanity(s) {
     clean({
       id: f.figureId,
       caption: f.caption,
-      kind: f.kind === "bar" ? "bar" : "line",
+      kind: f.kind === "image" ? "image" : f.kind === "bar" ? "bar" : "line",
+      image: f.kind === "image" ? imageFromSanity(f.image) : undefined,
       xLabels: f.xLabels ?? [],
       yLabel: f.yLabel ?? "",
       series: (f.series ?? []).map((se) => clean({ name: se.name, values: se.values ?? [], lower: se.lower?.length ? se.lower : undefined, upper: se.upper?.length ? se.upper : undefined })),

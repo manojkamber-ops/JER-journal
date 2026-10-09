@@ -4,7 +4,7 @@ import { Fragment, useEffect, useMemo, useRef, useState, type ReactNode } from "
 import { ARTICLES, JOURNAL_INFO, type Article } from "@/data/journal";
 import { ARTICLE_BODIES, exhibitTables, type BodyExhibits, type BodyFigure, type BodySection, type BodyTable } from "@/data/article-bodies";
 import { figureSvg } from "@/lib/figures";
-import { articlePdf } from "@/lib/pdf";
+import { articlePdf, preloadPdfImages } from "@/lib/pdf";
 import { articleEpub, formatBytes } from "@/lib/epub";
 import { institutionName, referenceLabel, referenceYear, splitCitations } from "@/lib/references";
 import { downloadBlob } from "@/lib/download";
@@ -124,7 +124,16 @@ export function ReaderPage({ articleId, defaultView = "epub" }: { articleId: str
   const theme = THEMES[settings.theme];
 
   // Generated files (used unless a real PDF is published at /papers/<id>.pdf)
-  const pdfBlob = useMemo(() => articlePdf(article), [article]);
+  // Figure images are embedded once loaded; the PDF is rebuilt when they arrive
+  const [pdfImages, setPdfImages] = useState(0);
+  useEffect(() => {
+    let live = true;
+    preloadPdfImages([article]).then(() => live && setPdfImages((n) => n + 1));
+    return () => {
+      live = false;
+    };
+  }, [article]);
+  const pdfBlob = useMemo(() => articlePdf(article), [article, pdfImages]); // eslint-disable-line react-hooks/exhaustive-deps
   const epubBlob = useMemo(() => articleEpub(article), [article]);
   const pdfUrl = useMemo(() => URL.createObjectURL(pdfBlob), [pdfBlob]);
   useEffect(() => () => URL.revokeObjectURL(pdfUrl), [pdfUrl]);

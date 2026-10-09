@@ -1,7 +1,7 @@
 "use client";
 
 import { JOURNAL_INFO, type Article } from "@/data/journal";
-import { articlePdf } from "@/lib/pdf";
+import { articlePdf, preloadPdfImages } from "@/lib/pdf";
 import { downloadBlob } from "@/lib/download";
 import { toast } from "@/hooks/use-toast";
 import { routeUrl } from "./nav-context";
@@ -17,7 +17,8 @@ export function useArticleActions(article: Article) {
     /** false when only the abstract and references are public; the full paper is then requested from the authors */
     fullText: hasFullText(article.id),
     requestFullText: () => session.openRequest(article),
-    downloadPdf() {
+    async downloadPdf() {
+      await preloadPdfImages([article]);
       downloadBlob(articlePdf(article), `JER-${article.doi.split("/").pop()}.pdf`);
       toast({ title: "PDF downloaded", description: article.title });
     },

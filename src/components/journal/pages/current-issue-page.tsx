@@ -7,7 +7,7 @@ import { useNav } from "../nav-context";
 import { useArticleActions } from "../article-actions";
 import { SampleTag } from "../article-components";
 import { JournalBanner } from "../journal-banner";
-import { issuePdf } from "@/lib/pdf";
+import { issuePdf, preloadPdfImages } from "@/lib/pdf";
 import { formatCitations } from "@/lib/citations";
 import { downloadBlob, downloadText } from "@/lib/download";
 import { toast } from "@/hooks/use-toast";
@@ -64,7 +64,8 @@ export function CurrentIssuePage() {
   const lastPage = Math.max(...numbered.map((a) => parseInt(a.pages.split("–")[1] ?? a.pages, 10)));
   const mostRead = [...ARTICLES].sort((a, b) => b.downloads - a.downloads).slice(0, 5);
 
-  const downloadIssue = () => {
+  const downloadIssue = async () => {
+    await preloadPdfImages(articles);
     downloadBlob(issuePdf(volume, issue), `JER-Vol${volume}-Issue${issue}.pdf`);
     toast({ title: "Full-issue PDF downloaded", description: `Volume ${volume}, Issue ${issue} · ${articles.length} articles` });
   };

@@ -50,6 +50,11 @@ const esc = (s: string) => s.replace(/&/g, "&amp;").replace(/</g, "&lt;").replac
 
 /** Standalone SVG markup for a figure. */
 export function figureSvg(fig: BodyFigure, opts: { text?: string; grid?: string; font?: string } = {}) {
+  if (fig.kind === "image") {
+    if (!fig.image) return "";
+    const src = esc(fig.image.url).replace(/"/g, "&quot;");
+    return `<img src="${src}" alt="${esc(fig.caption).replace(/"/g, "&quot;")}" width="${fig.image.width}" height="${fig.image.height}" loading="lazy" style="display:block;max-width:100%;height:auto;margin:0 auto;background:#fff" />`;
+  }
   const W = 640;
   const H = 300;
   const L = 62, R = 16, T = fig.series.length > 1 ? 34 : 16, B = 46;
@@ -73,7 +78,7 @@ export function figureSvg(fig: BodyFigure, opts: { text?: string; grid?: string;
   fig.xLabels.forEach((lab, i) => {
     parts.push(`<text x="${X(i)}" y="${T + ph + 16}" text-anchor="middle" font-size="11" fill="${text}">${esc(lab)}</text>`);
   });
-  parts.push(`<text x="14" y="${T + ph / 2}" transform="rotate(-90 14 ${T + ph / 2})" text-anchor="middle" font-size="11" fill="${text}">${esc(fig.yLabel)}</text>`);
+  parts.push(`<text x="14" y="${T + ph / 2}" transform="rotate(-90 14 ${T + ph / 2})" text-anchor="middle" font-size="11" fill="${text}">${esc(fig.yLabel ?? "")}</text>`);
 
   const ns = fig.series.length;
   fig.series.forEach((s, si) => {

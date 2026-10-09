@@ -20,6 +20,58 @@ const LINK: RGB = [0.0, 0.36, 0.6];
 
 type LinkRect = { x: number; y: number; w: number; h: number; url: string };
 
+// Figure images (kind "image") are embedded as JPEG, hex-encoded so the file stays ASCII. They are fetched by
+// preloadPdfImages() before a PDF is built; a figure whose image is not loaded gets a link to the online version.
+type PdfImage = { hex: string; w: number; h: number; comps: number };
+const PDF_IMAGES = new Map<string, PdfImage>();
+
+/** JPEG copy of an image: Sanity images come through /api/figure (same origin); other URLs must be JPEGs. */
+function jpegUrl(url: string) {
+  return url.startsWith("https://cdn.sanity.io/") ? `/api/figure?src=${encodeURIComponent(url)}` : url;
+}
+
+/** Pixel size and colour components from a JPEG's start-of-frame marker. */
+function jpegInfo(b: Uint8Array) {
+  if (b[0] !== 0xff || b[1] !== 0xd8) return null;
+  let i = 2;
+  while (i + 9 < b.length) {
+    if (b[i] !== 0xff) return null;
+    const m = b[i + 1];
+    if (m >= 0xc0 && m <= 0xcf && m !== 0xc4 && m !== 0xc8 && m !== 0xcc)
+      return { h: (b[i + 5] << 8) | b[i + 6], w: (b[i + 7] << 8) | b[i + 8], comps: b[i + 9] };
+    i += 2 + ((b[i + 2] << 8) | b[i + 3]);
+  }
+  return null;
+}
+
+const HEX = Array.from({ length: 256 }, (_, i) => i.toString(16).padStart(2, "0"));
+
+/** Loads the figure images of these articles for their PDFs (failures are ignored). */
+export async function preloadPdfImages(articles: Article[]) {
+  const urls = new Set(
+    articles
+      .flatMap((a) => (ARTICLE_BODIES[a.id] ?? []).flatMap((sec) => [sec, ...(sec.subsections ?? [])]))
+      .flatMap((x) => x.figures ?? [])
+      .flatMap((f) => (f.kind === "image" && f.image && !PDF_IMAGES.has(f.image.url) ? [f.image.url] : [])),
+  );
+  await Promise.all(
+    [...urls].map(async (url) => {
+      try {
+        const res = await fetch(jpegUrl(url));
+        if (!res.ok) return;
+        const b = new Uint8Array(await res.arrayBuffer());
+        const info = jpegInfo(b);
+        if (!info) return;
+        const parts: string[] = [];
+        for (let i = 0; i < b.length; i++) parts.push(HEX[b[i]]);
+        PDF_IMAGES.set(url, { hex: parts.join(""), ...info });
+      } catch {
+        // offline or blocked: the PDF links to the online figure instead
+      }
+    }),
+  );
+}
+
 /** Absolute base URL of the journal website, used for the clickable links inside PDFs. */
 function siteBase() {
   return typeof window !== "undefined" ? `${window.location.origin}${window.location.pathname}` : `${JOURNAL_INFO.website}/`;
@@ -109,6 +161,8 @@ function timesWidth(str: string, size: number) {
 class PdfDoc {
   private pages: string[][] = [];
   private links: LinkRect[][] = [];
+  /** Figure images used in this document; image n is the XObject /Im<n>. */
+  private imageUrls: string[] = [];
   private y = 0;
   private footerTitle: string;
   /** When true, the first page is a cover sheet without running footer or page number. */
@@ -297,8 +351,43 @@ class PdfDoc {
     this.space(6);
   }
 
+  /** The authors' figure as an embedded image, scaled to the text width. */
+  private imageFigure(f: BodyFigure) {
+    const img = f.image ? PDF_IMAGES.get(f.image.url) : undefined;
+    const maxW = PAGE_W - 2 * MARGIN;
+    if (!img || !f.image) {
+      this.ensure(60);
+      this.space(6);
+      this.text(f.caption, { font: "F2", size: 9.5 });
+      this.text("[Figure shown in the online version of this article]", { font: "F3", size: 8.5, color: GREY });
+      if (f.note) this.text(f.note, { font: "F3", size: 8, color: GREY });
+      this.space(6);
+      return;
+    }
+    let w = maxW;
+    let h = (w * img.h) / img.w;
+    const maxH = 400;
+    if (h > maxH) {
+      h = maxH;
+      w = (h * img.w) / img.h;
+    }
+    this.ensure(h + 50);
+    this.space(6);
+    this.text(f.caption, { font: "F2", size: 9.5 });
+    this.space(6);
+    let idx = this.imageUrls.indexOf(f.image.url);
+    if (idx < 0) idx = this.imageUrls.push(f.image.url) - 1;
+    const x = MARGIN + (maxW - w) / 2;
+    const y = this.y - h;
+    this.ops.push(`q ${w.toFixed(2)} 0 0 ${h.toFixed(2)} ${x.toFixed(2)} ${y.toFixed(2)} cm /Im${idx} Do Q`);
+    this.y = y - 12;
+    if (f.note) this.text(f.note, { font: "F3", size: 8, color: GREY });
+    this.space(6);
+  }
+
   /** Chart drawn with PDF operators (same layout rules as the on-screen SVG). */
   figureBlock(f: BodyFigure) {
+    if (f.kind === "image") return this.imageFigure(f);
     const plotH = 150;
     const legendH = f.series.length > 1 ? 14 : 0;
     this.ensure(plotH + legendH + 70);
@@ -335,8 +424,8 @@ class PdfDoc {
     }
     f.xLabels.forEach((lab, i) => this.put(lab, X(i), bottom - 11, "F4", 7, ink, "center"));
     // y-axis label, rotated
-    const ly = bottom + plotH / 2 - textWidth(f.yLabel, "F4", 7) / 2;
-    this.ops.push(`BT ${this.color(ink)} /F4 7 Tf 0 1 -1 0 ${(MARGIN + 8).toFixed(2)} ${ly.toFixed(2)} Tm (${encode(f.yLabel)}) Tj ET`);
+    const ly = bottom + plotH / 2 - textWidth(f.yLabel ?? "", "F4", 7) / 2;
+    this.ops.push(`BT ${this.color(ink)} /F4 7 Tf 0 1 -1 0 ${(MARGIN + 8).toFixed(2)} ${ly.toFixed(2)} Tm (${encode(f.yLabel ?? "")}) Tj ET`);
 
     const ns = f.series.length;
     f.series.forEach((ser, si) => {
@@ -402,6 +491,14 @@ class PdfDoc {
       add(`<< /Type /Font /Subtype /Type1 /BaseFont /${f} /Encoding /WinAnsiEncoding >>`)
     );
     const fontRes = `<< /F1 ${fonts[0]} 0 R /F2 ${fonts[1]} 0 R /F3 ${fonts[2]} 0 R /F4 ${fonts[3]} 0 R >>`;
+    const images = this.imageUrls.map((url) => {
+      const img = PDF_IMAGES.get(url)!;
+      const cs = img.comps === 1 ? "/DeviceGray" : img.comps === 4 ? "/DeviceCMYK" : "/DeviceRGB";
+      return add(
+        `<< /Type /XObject /Subtype /Image /Width ${img.w} /Height ${img.h} /ColorSpace ${cs} /BitsPerComponent 8 /Filter [/ASCIIHexDecode /DCTDecode] /Length ${img.hex.length + 1} >>\nstream\n${img.hex}>\nendstream`,
+      );
+    });
+    const xobjRes = images.length ? ` /XObject << ${images.map((id, i) => `/Im${i} ${id} 0 R`).join(" ")} >>` : "";
     const pageIds = this.pages.map((ops, i) => {
       const stream = ops.join("\n");
       const content = add(`<< /Length ${stream.length} >>\nstream\n${stream}\nendstream`);
@@ -412,7 +509,7 @@ class PdfDoc {
       );
       const annotRef = annots.length ? ` /Annots [${annots.map((id) => `${id} 0 R`).join(" ")}]` : "";
       return add(
-        `<< /Type /Page /Parent ${pagesObj} 0 R /MediaBox [0 0 ${PAGE_W} ${PAGE_H}] /Resources << /Font ${fontRes} >> /Contents ${content} 0 R${annotRef} >>`
+        `<< /Type /Page /Parent ${pagesObj} 0 R /MediaBox [0 0 ${PAGE_W} ${PAGE_H}] /Resources << /Font ${fontRes}${xobjRes} >> /Contents ${content} 0 R${annotRef} >>`
       );
     });
     objs[catalog - 1] = `<< /Type /Catalog /Pages ${pagesObj} 0 R >>`;

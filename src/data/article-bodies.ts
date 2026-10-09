@@ -13,13 +13,18 @@ export type BodyTable = {
   note?: string;
 };
 
-/** A chart drawn from data: event-study style line plots (with confidence intervals) or grouped bars. */
+/**
+ * A figure: a chart drawn from data (event-study style line plots with confidence intervals, or grouped bars), or
+ * the authors' own figure as an image (kind "image"; xLabels and series are then empty).
+ */
 export type BodyFigure = {
   id: string;
   caption: string;
-  kind: "line" | "bar";
+  kind: "line" | "bar" | "image";
+  /** For kind "image": the image (PNG or JPEG) and its pixel size. */
+  image?: { url: string; width: number; height: number };
   xLabels: string[];
-  yLabel: string;
+  yLabel?: string;
   series: { name: string; values: number[]; lower?: number[]; upper?: number[] }[];
   /** Index of the x position after which a dashed vertical line is drawn (e.g. the event date). */
   marker?: number;

@@ -23,7 +23,8 @@ function sectionFromSanity(s: SanityDoc): BodySection {
     clean({
       id: f.figureId,
       caption: f.caption,
-      kind: f.kind === "bar" ? "bar" : "line",
+      kind: f.kind === "image" ? "image" : f.kind === "bar" ? "bar" : "line",
+      image: f.kind === "image" && f.img?.url ? { url: f.img.url, width: f.img.w ?? 1200, height: f.img.h ?? 800 } : undefined,
       xLabels: f.xLabels ?? [],
       yLabel: f.yLabel ?? "",
       series: (f.series ?? []).map((se: SanityDoc) =>
@@ -81,7 +82,11 @@ export function fromSanityPaper(doc: SanityDoc): PaperSpec | null {
  * repository). Results are cached by Next.js for SANITY_REFRESH_SECONDS.
  */
 export async function fetchSanityPapers(): Promise<PaperSpec[] | null> {
-  const query = encodeURIComponent('*[_type == "paper" && !(_id in path("drafts.**"))] | order(articleId asc)');
+  // Image figures carry their asset's URL and pixel size
+  const fig = 'figures[]{..., "img": image.asset->{url, "w": metadata.dimensions.width, "h": metadata.dimensions.height}}';
+  const query = encodeURIComponent(
+    `*[_type == "paper" && !(_id in path("drafts.**"))] | order(articleId asc){..., body[]{..., ${fig}, subsections[]{..., ${fig}}}}`,
+  );
   const url = `https://${SANITY_PROJECT_ID}.apicdn.sanity.io/v${API_VERSION}/data/query/${SANITY_PAPERS_DATASET}?query=${query}`;
   try {
     const res = await fetch(url, { next: { revalidate: SANITY_REFRESH_SECONDS, tags: ["sanity-papers"] } });
