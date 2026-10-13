@@ -55,6 +55,7 @@ export async function POST(req: Request) {
   const sanity = sanityWriter();
   let storedFile: string | null = null;
   let sanityFile: { _type: "file"; asset: { _type: "reference"; _ref: string } } | null = null;
+  let fileData: Uint8Array<ArrayBuffer> | null = null;
   if (hasFile) {
     const ext = path.extname(file.name).toLowerCase();
     if (!ALLOWED.includes(ext)) return jsonError(`File type not accepted. Use ${ALLOWED.join(", ")}.`);
@@ -74,9 +75,9 @@ export async function POST(req: Request) {
       storedFile = `${Date.now()}-${Math.random().toString(36).slice(2, 8)}${ext}`;
       await writeFile(path.join(dir, storedFile), bytes);
     } catch {
-      // Read-only hosting (e.g. Vercel): the file is kept in Sanity instead
+      // Read-only hosting (e.g. Vercel): the file is kept in Sanity, or in the database when Sanity is not configured
       storedFile = null;
-      if (!sanityFile) return jsonError("The manuscript file could not be stored. Please try again later.", 502);
+      if (!sanityFile) fileData = new Uint8Array(bytes);
     }
   }
 
@@ -100,7 +101,7 @@ export async function POST(req: Request) {
       { _type: "manuscriptSubmission", reference, submissionStatus: status, ...fields, manuscriptFile: sanityFile, accountEmail: user?.email ?? null, status: "received" },
       () =>
         db.submission.create({
-          data: { reference, status, userId: user?.id ?? null, ...fields, fileName: hasFile ? file.name : null, fileSize: hasFile ? file.size : null, storedFile },
+          data: { reference, status, userId: user?.id ?? null, ...fields, fileName: hasFile ? file.name : null, fileSize: hasFile ? file.size : null, storedFile, fileData, fileType: hasFile ? file.type || null : null },
         }),
     );
   } catch {

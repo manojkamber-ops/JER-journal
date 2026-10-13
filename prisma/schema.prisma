@@ -1,7 +1,8 @@
-// Journal of Economic Research — portal database (Supabase Postgres).
+// Journal of Economic Research — portal database (Neon Postgres, connected through Vercel Storage).
 // Accounts, sessions, saved articles and a copy of each form entry. Papers and form entries also live in Sanity.
-//   DATABASE_URL: Supabase "Transaction pooler" connection string (port 6543) + ?pgbouncer=true&connection_limit=1
-//   DIRECT_URL:   Supabase "Session pooler" / direct connection string (port 5432), used by `prisma db push`
+// Vercel sets both variables when the database is connected to the project:
+//   DATABASE_URL:          pooled connection, used by the site
+//   DATABASE_URL_UNPOOLED: direct connection, used by `prisma db push` (run on every deploy by scripts/vercel-build.mjs)
 
 generator client {
   provider = "prisma-client-js"
@@ -10,7 +11,7 @@ generator client {
 datasource db {
   provider  = "postgresql"
   url       = env("DATABASE_URL")
-  directUrl = env("DIRECT_URL")
+  directUrl = env("DATABASE_URL_UNPOOLED")
 }
 
 model User {
@@ -62,6 +63,9 @@ model Submission {
   fileName     String?
   fileSize     Int?
   storedFile   String?
+  /// The manuscript itself when it could not be stored in Sanity or on disk (e.g. Vercel without a Sanity token)
+  fileData     Bytes?
+  fileType     String?
   createdAt    DateTime @default(now())
   updatedAt    DateTime @updatedAt
   user         User?    @relation(fields: [userId], references: [id], onDelete: SetNull)
