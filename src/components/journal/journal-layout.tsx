@@ -16,6 +16,7 @@ import { NewsPage } from "./pages/news-page";
 import { ContactPage } from "./pages/contact-page";
 import { AccountPage } from "./pages/account-page";
 import { LegalPage } from "./pages/legal-page";
+import { ApcPage } from "./pages/apc-page";
 import { SessionProvider } from "./session";
 import { ReaderPage } from "./pages/reader-page";
 import { articleByDoi } from "@/lib/doi";
@@ -50,6 +51,8 @@ function PageRouter() {
       return <ContactPage />;
     case "account":
       return <AccountPage />;
+    case "apc":
+      return <ApcPage />;
     case "legal":
       return <LegalPage />;
     case "doi":

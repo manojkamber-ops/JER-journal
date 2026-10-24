@@ -516,7 +516,10 @@ export function SubmissionPage() {
                   </li>
                   <li className="flex items-start gap-2">
                     <Heart className="w-3.5 h-3.5 mt-0.5 text-accent flex-shrink-0" />
-                    <span>APC {JOURNAL_INFO.apcAmount}, payable only if accepted</span>
+                    <span>
+                      APC {JOURNAL_INFO.apcAmount}, payable only if accepted ·{" "}
+                      <button type="button" onClick={() => navigate("apc")} className="underline hover:text-primary">How to pay</button>
+                    </span>
                   </li>
                 </ul>
               </div>

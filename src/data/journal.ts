@@ -29,6 +29,11 @@ export const JOURNAL_INFO = {
   /** Article processing charge per accepted article, in US dollars. */
   apcUsd: 1250,
   apcAmount: "USD 1,250",
+  /**
+   * Hosted payment page for the APC (a Razorpay or Stripe payment link). Set NEXT_PUBLIC_APC_PAYMENT_URL in Vercel, or
+   * put the link here. Until it is set, the Pay APC page asks authors to contact the editorial office for an invoice.
+   */
+  apcPaymentUrl: process.env.NEXT_PUBLIC_APC_PAYMENT_URL ?? "",
   language: "English",
 };
 

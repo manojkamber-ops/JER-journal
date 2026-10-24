@@ -16,12 +16,13 @@ export type PageId =
   | "news"
   | "account"
   | "legal"
+  | "apc"
   | "reader"
   | "doi";
 
 const PAGES: PageId[] = [
   "home", "about", "editorial-board", "current-issue", "archive", "article", "submission",
-  "author-guidelines", "policies", "contact", "news", "account", "legal", "reader", "doi",
+  "author-guidelines", "policies", "contact", "news", "account", "legal", "apc", "reader", "doi",
 ];
 
 export type NavOptions = {

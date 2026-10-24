@@ -224,7 +224,10 @@ export function AuthorGuidelinesPage() {
                 </div>
                 <div className="flex justify-between gap-2 border-b border-border pb-2">
                   <dt className="text-muted-foreground">APC</dt>
-                  <dd className="font-medium text-accent text-right text-xs">{JOURNAL_INFO.apcAmount} per accepted article</dd>
+                  <dd className="font-medium text-accent text-right text-xs">
+                    {JOURNAL_INFO.apcAmount} per accepted article ·{" "}
+                    <button onClick={() => navigate("apc")} className="underline hover:text-primary">How to pay</button>
+                  </dd>
                 </div>
                 <div className="flex justify-between gap-2">
                   <dt className="text-muted-foreground">Licence</dt>

@@ -27,6 +27,7 @@ export function Footer() {
       links: [
         { label: "Submit a Manuscript", page: "submission" },
         { label: "Author Guidelines", page: "author-guidelines" },
+        { label: "Pay APC", page: "apc" },
         { label: "Peer Review Process", page: "policies", anchor: "peer-review" },
         { label: "Open Access", page: "policies", anchor: "open-access" },
         { label: "Current Issue", page: "current-issue" },
