@@ -9,6 +9,7 @@ import {
   NEWS_ITEMS,
   JOURNAL_INFO,
   JOURNAL_STATS,
+  siteStats,
   INDEXING_SERVICES,
   EDITORIAL_BOARD,
   CURRENT_ISSUE,
@@ -45,7 +46,7 @@ export function HomePage() {
   const publishedLabel = new Date(CURRENT_ISSUE.published).toLocaleDateString("en-GB", { day: "numeric", month: "long", year: "numeric" });
 
   // Featured = the new AI paper
-  const featuredArticle = (ARTICLES.find((a) => a.volume === CURRENT_ISSUE.volume && a.issue === CURRENT_ISSUE.issue && a.type !== "Editorial" && a.sample === false) ?? ARTICLES.find((a) => a.id === "2026-v31-i2-02")) ?? ARTICLES[0];
+  const featuredArticle = (ARTICLES.find((a) => a.volume === CURRENT_ISSUE.volume && a.issue === CURRENT_ISSUE.issue && a.type !== "Editorial" && a.sample === false) ?? ARTICLES.find((a) => a.type !== "Editorial")) ?? ARTICLES[0];
   const featuredActions = useArticleActions(featuredArticle);
 
   // Most recent (latest published, top 6)
@@ -151,10 +152,10 @@ export function HomePage() {
               {/* Quick stats bar */}
               <div className="mt-8 grid grid-cols-2 sm:grid-cols-4 gap-4 border-t border-gray-200 pt-6">
                 {[
-                  { icon: FileText, label: "Articles published", value: JOURNAL_STATS.totalArticles.toString() },
-                  { icon: Download, label: "2024 downloads", value: JOURNAL_STATS.totalDownloads2024.toLocaleString() },
-                  { icon: Quote, label: "Total citations", value: JOURNAL_STATS.totalCitations.toLocaleString() },
-                  { icon: Users, label: "h5-index", value: JOURNAL_STATS.h5Index.toString() },
+                  { icon: FileText, label: "Articles online", value: String(siteStats().articles) },
+                  { icon: Download, label: "Issues online", value: String(siteStats().issues) },
+                  { icon: Quote, label: "Founded", value: JOURNAL_INFO.founded },
+                  { icon: Users, label: "ABDC rating", value: JOURNAL_INFO.abdcRating },
                 ].map((s) => {
                   const Icon = s.icon;
                   return (

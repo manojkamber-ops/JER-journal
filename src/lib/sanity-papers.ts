@@ -92,7 +92,11 @@ export async function fetchSanityPapers(): Promise<PaperSpec[] | null> {
     const res = await fetch(url, { next: { revalidate: SANITY_REFRESH_SECONDS, tags: ["sanity-papers"] } });
     if (!res.ok) return null;
     const docs = ((await res.json()) as { result?: SanityDoc[] }).result ?? [];
-    return docs.map(fromSanityPaper).filter((p): p is PaperSpec => p !== null);
+    // Only genuine papers are shown: documents with "Sample / demonstration content" switched on are skipped
+    return docs
+      .filter((d) => d.sampleContent !== true)
+      .map(fromSanityPaper)
+      .filter((p): p is PaperSpec => p !== null);
   } catch {
     return null;
   }

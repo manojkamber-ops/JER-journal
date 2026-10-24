@@ -5,6 +5,7 @@ import {
   JOURNAL_INFO,
   JOURNAL_TIMELINE,
   JOURNAL_STATS,
+  siteStats,
   INDEXING_SERVICES,
   JOURNAL_INFO as JI,
 } from "@/data/journal";
@@ -28,11 +29,12 @@ import {
 export function AboutPage() {
   const { navigate } = useNav();
 
+  const { articles, issues } = siteStats();
   const stats = [
-    { icon: FileText, label: "Articles published (since 1996)", value: JOURNAL_STATS.totalArticles },
-    { icon: Download, label: "Downloads in 2024", value: JOURNAL_STATS.totalDownloads2024.toLocaleString() },
-    { icon: Quote, label: "Total citations", value: JOURNAL_STATS.totalCitations.toLocaleString() },
-    { icon: Users, label: "h5-index (Google Scholar)", value: JOURNAL_STATS.h5Index },
+    { icon: FileText, label: "Articles online", value: articles },
+    { icon: Download, label: "Issues online", value: issues },
+    { icon: Quote, label: "Founded", value: JOURNAL_INFO.founded },
+    { icon: Users, label: "ABDC rating", value: JOURNAL_INFO.abdcRating },
   ];
 
   return (

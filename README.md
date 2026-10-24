@@ -64,4 +64,4 @@ Vercel builds with `node scripts/vercel-build.mjs` (`vercel.json`): database sch
 Environment variables in Vercel: `DATABASE_URL` and `DATABASE_URL_UNPOOLED` (set by the Neon integration) and
 `SANITY_API_WRITE_TOKEN` (Sanity, added by hand; the project id and datasets have defaults).
 
-All papers, authors and results are realistic **sample content**; DOIs are not registered with Crossref.
+The site shows only genuine papers (sample papers were removed in October 2026; Sanity documents marked "Sample / demonstration content" are never shown). DOIs are not yet registered with Crossref.
