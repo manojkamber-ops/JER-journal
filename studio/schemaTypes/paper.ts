@@ -1,9 +1,10 @@
 import { defineArrayMember, defineField, defineType } from "sanity";
-import { ARTICLE_ID_PATTERN, CURRENT_ISSUE, MANAGED_ISSUES } from "../current-issue";
+import { ARTICLE_ID_PATTERN, CURRENT_ISSUE, volumeYear } from "../current-issue";
 
 /**
- * A paper in one of the issues managed in Sanity (studio/current-issue.ts). The website reads published papers live
- * (within about a minute) and shows each managed issue from Sanity, replacing the copies in the repository. Leave "Full text" empty for an abstract-only paper:
+ * A paper in any volume and issue (studio/current-issue.ts). The website reads published papers live (within about a
+ * minute) and shows each issue that has papers here from Sanity, replacing any copies in the repository. Leave "Full
+ * text" empty for a paper whose full text is not on the site (e.g. past issues):
  * the site then shows the abstract and references, with a lock and a "request the full paper" form.
  */
 
@@ -146,11 +147,16 @@ export const paper = defineType({
       title: "Article id",
       type: "string",
       group: "meta",
-      description: `Format ${CURRENT_ISSUE.year}-v${CURRENT_ISSUE.volume}-i<issue>-<NN>, e.g. "${CURRENT_ISSUE.year}-v${CURRENT_ISSUE.volume}-i${CURRENT_ISSUE.issue}-15". The issue number in the id must match the Issue field. The DOI is derived from it.`,
+      description: `Format <year>-v<volume>-i<issue>-<NN>, e.g. "${CURRENT_ISSUE.year}-v${CURRENT_ISSUE.volume}-i${CURRENT_ISSUE.issue}-15" or "2015-v20-i3-02". Year, volume and issue must match the fields below. The DOI is derived from it.`,
       validation: (r) =>
-        r.required().custom((v) =>
-          typeof v === "string" && ARTICLE_ID_PATTERN.test(v) ? true : `Use the format ${CURRENT_ISSUE.year}-v${CURRENT_ISSUE.volume}-i<issue>-<NN>`,
-        ),
+        r.required().custom((v, ctx) => {
+          if (typeof v !== "string" || !ARTICLE_ID_PATTERN.test(v)) return "Use the format <year>-v<volume>-i<issue>-<NN>";
+          const d = ctx.document as { year?: number; volume?: number; issue?: number } | undefined;
+          const [, y, vol, iss] = /^(\d{4})-v(\d+)-i(\d)-/.exec(v) ?? [];
+          if (d?.volume && (Number(vol) !== d.volume || Number(iss) !== d.issue || Number(y) !== volumeYear(d.volume)))
+            return `For Volume ${d.volume}, Issue ${d.issue} the id starts with ${volumeYear(d.volume)}-v${d.volume}-i${d.issue}-`;
+          return true;
+        }),
     }),
     defineField({ name: "title", type: "string", group: "meta", validation: (r) => r.required() }),
     defineField({
@@ -173,22 +179,41 @@ export const paper = defineType({
       options: { list: ["Research Article", "Review Article", "Short Communication"] },
       initialValue: "Research Article",
     }),
-    defineField({ name: "year", type: "number", group: "meta", initialValue: CURRENT_ISSUE.year, readOnly: true }),
-    defineField({ name: "volume", type: "number", group: "meta", initialValue: CURRENT_ISSUE.volume, readOnly: true }),
+    defineField({
+      name: "volume",
+      type: "number",
+      group: "meta",
+      description: "Volume 1 = 1996 … Volume 31 = 2026",
+      initialValue: CURRENT_ISSUE.volume,
+      validation: (r) => r.required().integer().min(1).max(CURRENT_ISSUE.volume),
+    }),
+    defineField({
+      name: "year",
+      type: "number",
+      group: "meta",
+      description: "Year of the volume (Volume 1 = 1996)",
+      initialValue: CURRENT_ISSUE.year,
+      validation: (r) =>
+        r.required().custom((y, ctx) => {
+          const vol = (ctx.document as { volume?: number } | undefined)?.volume;
+          return vol && y !== volumeYear(vol) ? `Volume ${vol} is ${volumeYear(vol)}` : true;
+        }),
+    }),
     defineField({
       name: "issue",
       type: "number",
       group: "meta",
       initialValue: CURRENT_ISSUE.issue,
-      options: { list: MANAGED_ISSUES.map((i) => ({ title: i.label, value: i.issue })), layout: "radio" },
+      description: "1–2 per year until 2004, 1–4 (January, April, July, October) from 2005",
+      options: { list: [1, 2, 3, 4], layout: "radio", direction: "horizontal" },
       validation: (r) => r.required(),
     }),
-    defineField({ name: "pages", type: "string", group: "meta", description: 'Length only matters, e.g. "1–28" (the site renumbers pages per volume)', initialValue: "1–24" }),
+    defineField({ name: "pages", type: "string", group: "meta", description: 'Printed page range, e.g. "45–72". For the current volume only the length matters (the site numbers its pages continuously).', initialValue: "1–24" }),
 
-    defineField({ name: "received", type: "date", group: "dates", validation: (r) => r.required() }),
-    defineField({ name: "accepted", type: "date", group: "dates", validation: (r) => r.required() }),
+    defineField({ name: "received", type: "date", group: "dates" }),
+    defineField({ name: "accepted", type: "date", group: "dates" }),
     defineField({ name: "publishedOnline", title: "Published online", type: "date", group: "dates" }),
-    defineField({ name: "published", title: "Issue published", type: "date", group: "dates", initialValue: CURRENT_ISSUE.published, validation: (r) => r.required() }),
+    defineField({ name: "published", title: "Issue published", type: "date", group: "dates", description: "Publication date of the issue (for past issues, e.g. the first day of the issue month)", initialValue: CURRENT_ISSUE.published, validation: (r) => r.required() }),
     defineField({ name: "citations", type: "number", group: "dates", initialValue: 0 }),
     defineField({ name: "downloads", type: "number", group: "dates", initialValue: 0 }),
     defineField({ name: "pdfSize", title: "PDF size label", type: "string", group: "dates", initialValue: "1.50 MB" }),

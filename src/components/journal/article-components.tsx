@@ -1,6 +1,7 @@
 "use client";
 
 import { Article, isSampleArticle } from "@/data/journal";
+import { hasFullText } from "@/data/article-bodies";
 import { useNav } from "./nav-context";
 import { Badge } from "@/components/ui/badge";
 
@@ -16,7 +17,20 @@ export function SampleTag({ article, className = "" }: { article: Pick<Article, 
     </span>
   );
 }
-import { FileText, Download, Quote, ChevronRight, Mail } from "lucide-react";
+import { FileText, Download, Quote, ChevronRight, Mail, Lock } from "lucide-react";
+
+/** Lock shown on papers whose full text is not on the site (title, authors and abstract only). */
+export function LockTag({ article, className = "" }: { article: Pick<Article, "id" | "type">; className?: string }) {
+  if (article.type === "Editorial" || hasFullText(article.id)) return null;
+  return (
+    <span
+      title="Full text available with the author's permission"
+      className={`inline-flex items-center gap-1 rounded-sm border border-gray-300 bg-gray-50 px-1.5 py-0.5 font-sans text-[10px] font-semibold uppercase tracking-wide text-gray-700 ${className}`}
+    >
+      <Lock className="w-3 h-3" aria-hidden /> Author’s permission
+    </span>
+  );
+}
 
 export function ArticleCard({ article, compact = false }: { article: Article; compact?: boolean }) {
   const { navigate } = useNav();
@@ -33,6 +47,7 @@ export function ArticleCard({ article, compact = false }: { article: Article; co
           {article.type}
         </Badge>
         <SampleTag article={article} />
+        <LockTag article={article} />
         <span className="font-sans text-[11px] text-gray-500">
           Vol. {article.volume}, No. {article.issue} ({article.year}) · pp. {article.pages}
         </span>
@@ -88,6 +103,7 @@ export function ArticleListItem({ article }: { article: Article }) {
           {article.type}
         </Badge>
         <SampleTag article={article} />
+        <LockTag article={article} />
         <span className="font-sans text-[11px] text-gray-500">
           Vol. {article.volume}, No. {article.issue} · pp. {article.pages}
         </span>

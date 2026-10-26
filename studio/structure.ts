@@ -1,23 +1,37 @@
 import type { StructureResolver } from "sanity/structure";
-import { MANAGED_ISSUES } from "./current-issue";
+import { ALL_ISSUES } from "./current-issue";
 
-/** Papers workspace: one list per issue managed in Sanity. */
-export const papersStructure: StructureResolver = (S) =>
-  S.list()
+/** Papers workspace: Volume → Issue → papers, newest volume first. */
+export const papersStructure: StructureResolver = (S) => {
+  const volumes = Array.from(new Set(ALL_ISSUES.map((i) => i.volume)));
+  return S.list()
     .title("Papers")
     .items(
-      MANAGED_ISSUES.map((i) =>
+      volumes.map((v) =>
         S.listItem()
-          .title(i.label)
+          .id(`volume-${v}`)
+          .title(`Volume ${v} (${ALL_ISSUES.find((i) => i.volume === v)!.year})`)
           .child(
-            S.documentTypeList("paper")
-              .title(i.label)
-              .filter('_type == "paper" && volume == $v && issue == $i')
-              .params({ v: i.volume, i: i.issue })
-              .defaultOrdering([{ field: "articleId", direction: "asc" }]),
+            S.list()
+              .title(`Volume ${v}`)
+              .items(
+                ALL_ISSUES.filter((i) => i.volume === v).map((i) =>
+                  S.listItem()
+                    .id(`issue-${v}-${i.issue}`)
+                    .title(i.label)
+                    .child(
+                      S.documentTypeList("paper")
+                        .title(i.label)
+                        .filter('_type == "paper" && volume == $v && issue == $i')
+                        .params({ v: i.volume, i: i.issue })
+                        .defaultOrdering([{ field: "articleId", direction: "asc" }]),
+                    ),
+                ),
+              ),
           ),
       ),
     );
+};
 
 /** Forms workspace: one list per website form. */
 export const formsStructure: StructureResolver = (S) =>

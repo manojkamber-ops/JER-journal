@@ -655,7 +655,8 @@ export function repaginate() {
     const [from, to] = pages.split(/[–-]/).map((x) => parseInt(x, 10));
     return Number.isFinite(from) && Number.isFinite(to) && to >= from ? to - from + 1 : 28;
   };
-  const volumes = Array.from(new Set(ARTICLES.map((a) => a.volume))).sort((x, y) => x - y);
+  // Earlier volumes keep the page ranges they were printed with; the current volume is numbered continuously
+  const volumes = Array.from(new Set(ARTICLES.map((a) => a.volume))).filter((v) => v >= CURRENT_ISSUE.volume).sort((x, y) => x - y);
   for (const v of volumes) {
     const inVolume = ARTICLES.filter((a) => a.volume === v && Number.isFinite(parseInt(a.pages, 10)));
     inVolume.sort((x, y) => x.issue - y.issue || parseInt(x.pages, 10) - parseInt(y.pages, 10) || x.id.localeCompare(y.id));

@@ -457,7 +457,7 @@ function RequestForm({
         <DialogHeader>
           <div className="flex items-center gap-2">
             <Lock className="w-5 h-5 text-accent" aria-hidden />
-            <DialogTitle className="font-serif text-2xl text-primary">Request the full paper</DialogTitle>
+            <DialogTitle className="font-serif text-2xl text-primary">Full text: author’s permission needed</DialogTitle>
           </div>
           <DialogDescription className="font-serif line-clamp-3">{article.title}</DialogDescription>
         </DialogHeader>
@@ -477,8 +477,8 @@ function RequestForm({
         ) : (
           <form onSubmit={submit} className="space-y-3.5">
             <p className="font-sans text-sm text-gray-600 leading-relaxed">
-              Only the abstract and references of this article are public. The authors share the full paper on request — tell us who you are and
-              why you would like to read it.
+              The full text of this article is available with the author’s permission. Tell us who you are and why you would like to read
+              it; the editorial office passes your request to the corresponding author.
             </p>
             <div className="grid sm:grid-cols-2 gap-3">
               <div>

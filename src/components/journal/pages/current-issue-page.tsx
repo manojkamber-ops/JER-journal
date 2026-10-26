@@ -250,7 +250,7 @@ function TocItem({ article: a }: { article: Article }) {
             <button onClick={openReader} className="hover:text-primary">Full text</button>
           ) : (
             <button onClick={actions.requestFullText} className="flex items-center gap-1 hover:text-primary" title="Full text is available from the authors on request">
-              <Lock className="w-3.5 h-3.5" aria-hidden /> Full text
+              <Lock className="w-3.5 h-3.5" aria-hidden /> Full text (author’s permission)
             </button>
           )}
           <span className="mx-2.5 text-[#c9c9c9]">|</span>

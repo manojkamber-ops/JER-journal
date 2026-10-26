@@ -239,7 +239,7 @@ export function ArticleViewPage({ articleId }: { articleId: string | null }) {
                 ) : (
                   <Button size="sm" variant="outline" onClick={actions.requestFullText} className="font-sans rounded-sm border-accent text-accent hover:bg-accent hover:text-white transition-colors duration-200">
                     <Lock className="w-4 h-4 mr-1.5" />
-                    Full Text: Request from Authors
+                    Full text: author’s permission needed
                   </Button>
                 )}
                 <Button size="sm" variant="outline" onClick={actions.cite} className="font-sans rounded-sm">
@@ -479,7 +479,7 @@ export function ArticleViewPage({ articleId }: { articleId: string | null }) {
                         onClick={() => navigate("reader", { articleId: article.id })}
                       />
                     ) : (
-                      <ToolItem icon={Lock} label="Request full paper" sub="Sent to the authors" onClick={actions.requestFullText} />
+                      <ToolItem icon={Lock} label="Full text with author’s permission" sub="Ask the authors" onClick={actions.requestFullText} />
                     )}
                     <ToolItem icon={Quote} label="Cite this article" onClick={actions.cite} />
                     <ToolItem
