@@ -411,7 +411,7 @@ export const JOURNAL_TIMELINE = [
     year: "2025",
     title: "30th Anniversary Volume",
     description:
-      "With the publication of Volume 30, the journal enters its fourth decade. The 30th anniversary volume opens with articles spanning monetary economics, climate finance, and place-based industrial policy — areas that have come to define the journal's editorial identity.",
+      "With the publication of Volume 30, the journal entered its fourth decade.",
   },
   {
     year: "2026",
@@ -706,6 +706,39 @@ export function refreshCurrentIssue() {
 refreshCurrentIssue();
 
 /** All issues, newest volume/issue first. Computed on demand so issues added from Sanity are included. */
+// Publication pattern used to list every volume and issue in the archive, including issues whose contents are not
+// online yet: Volume 1 appeared in 1996; the journal was semi-annual until 2004 and quarterly from 2005
+// (January, April, July, October). Issues of the current volume are listed only once they have articles.
+export const ARCHIVE_PATTERN = {
+  firstYear: 1996,
+  quarterlyFrom: 2005,
+  quarterlyMonths: ["January", "April", "July", "October"],
+};
+
+export type ArchiveIssue = { volume: number; issue: number; year: number; label: string; articles: Article[] };
+
+/** Every volume and issue from Volume 1 to the current volume, newest first, with the articles online for each. */
+export function archiveIssues(): ArchiveIssue[] {
+  const byKey = new Map<string, Article[]>();
+  for (const a of ARTICLES) byKey.set(`${a.volume}-${a.issue}`, [...(byKey.get(`${a.volume}-${a.issue}`) ?? []), a]);
+  const out: ArchiveIssue[] = [];
+  const { firstYear, quarterlyFrom, quarterlyMonths } = ARCHIVE_PATTERN;
+  for (let volume = 1; volume < CURRENT_ISSUE.volume; volume++) {
+    const year = firstYear + volume - 1;
+    const count = year < quarterlyFrom ? 2 : 4;
+    for (let issue = 1; issue <= count; issue++) {
+      out.push({ volume, issue, year, label: year < quarterlyFrom ? String(year) : `${quarterlyMonths[issue - 1]} ${year}`, articles: byKey.get(`${volume}-${issue}`) ?? [] });
+    }
+  }
+  for (const [volume, issue] of listIssues().filter(([v]) => v >= CURRENT_ISSUE.volume)) {
+    const articles = byKey.get(`${volume}-${issue}`) ?? [];
+    const first = articles.find((a) => a.type !== "Editorial") ?? articles[0];
+    const label = first ? new Date(first.published).toLocaleDateString("en-GB", { month: "long", year: "numeric" }) : String(CURRENT_ISSUE.year);
+    out.push({ volume, issue, year: first?.year ?? CURRENT_ISSUE.year, label, articles });
+  }
+  return out.sort((a, b) => b.volume - a.volume || b.issue - a.issue);
+}
+
 export function listIssues(): [number, number][] {
   return Array.from(new Set(ARTICLES.map((a) => `${a.volume}-${a.issue}`)))
     .map((k) => k.split("-").map(Number) as [number, number])

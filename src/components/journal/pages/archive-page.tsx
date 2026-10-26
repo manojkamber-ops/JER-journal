@@ -3,10 +3,9 @@
 import { useState, useMemo } from "react";
 import { useNav } from "../nav-context";
 import { JournalBanner } from "../journal-banner";
-import { ARTICLES } from "@/data/journal";
+import { ARTICLES, archiveIssues, type ArchiveIssue } from "@/data/journal";
 import { ArticleListItem } from "../article-components";
 import { Button } from "@/components/ui/button";
-import { Badge } from "@/components/ui/badge";
 import {
   Select,
   SelectContent,
@@ -26,28 +25,15 @@ export function ArchivePage() {
   const [search, setSearch] = useState(params.q ?? "");
   const onlineFirst = params.view === "online-first";
   const [sort, setSort] = useState<SortKey>("newest");
-  const [expandedIssues, setExpandedIssues] = useState<Set<string>>(new Set(["30-3", "30-2", "30-1"]));
-
-  // All issues (volume-issue), newest first
-  const issues = useMemo(() => {
-    const issueMap = new Map<string, { volume: number; issue: number; year: number; articles: typeof ARTICLES }>();
-    for (const article of ARTICLES) {
-      const key = `${article.volume}-${article.issue}`;
-      if (!issueMap.has(key)) {
-        issueMap.set(key, {
-          volume: article.volume,
-          issue: article.issue,
-          year: article.year,
-          articles: [],
-        });
-      }
-      issueMap.get(key)!.articles.push(article);
-    }
-    return Array.from(issueMap.values()).sort((a, b) => {
-      if (b.volume !== a.volume) return b.volume - a.volume;
-      return b.issue - a.issue;
-    });
+  // Every volume and issue (newest first); issues without articles online are listed without contents
+  const volumes = useMemo(() => {
+    const byVolume = new Map<number, ArchiveIssue[]>();
+    for (const i of archiveIssues()) byVolume.set(i.volume, [...(byVolume.get(i.volume) ?? []), i]);
+    return Array.from(byVolume.entries()).map(([volume, issues]) => ({ volume, year: issues[0].year, issues }));
   }, []);
+  const [expandedIssues, setExpandedIssues] = useState<Set<string>>(
+    () => new Set([`v${volumes[0]?.volume}`, ...(volumes[0]?.issues.filter((i) => i.articles.length).map((i) => `${i.volume}-${i.issue}`) ?? [])]),
+  );
 
   const filteredArticles = useMemo(() => {
     let result = ARTICLES;
@@ -186,56 +172,78 @@ export function ArchivePage() {
         ) : (
           <div>
             <h2 className="font-serif text-xl font-bold text-primary mb-4 border-b border-border pb-2">
-              All Issues
+              All Volumes and Issues
             </h2>
-            <div className="space-y-4">
-              {issues.map((issue) => {
-                const issueKey = `${issue.volume}-${issue.issue}`;
-                const expanded = expandedIssues.has(issueKey);
+            <div className="space-y-3">
+              {volumes.map(({ volume, year, issues }) => {
+                const volKey = `v${volume}`;
+                const open = expandedIssues.has(volKey);
+                const online = issues.reduce((n, i) => n + i.articles.length, 0);
                 return (
-                  <div
-                    key={issueKey}
-                    className="bg-card border border-border rounded-md overflow-hidden"
-                  >
+                  <div key={volKey} className="bg-card border border-border rounded-md overflow-hidden">
                     <button
-                      onClick={() => toggleIssue(issueKey)}
+                      onClick={() => toggleIssue(volKey)}
                       className="w-full flex items-center justify-between px-5 py-4 hover:bg-secondary/50 transition-colors text-left"
                     >
                       <div className="flex items-center gap-3">
-                        {expanded ? (
-                          <ChevronDown className="w-4 h-4 text-accent" />
-                        ) : (
-                          <ChevronRight className="w-4 h-4 text-accent" />
-                        )}
+                        {open ? <ChevronDown className="w-4 h-4 text-accent" /> : <ChevronRight className="w-4 h-4 text-accent" />}
                         <div>
-                          <div className="font-serif text-base font-semibold text-primary">
-                            Volume {issue.volume}, Issue {issue.issue}
-                          </div>
+                          <div className="font-serif text-base font-semibold text-primary">Volume {volume} ({year})</div>
                           <div className="font-sans text-xs text-muted-foreground">
-                            {issue.year} · {issue.articles.length} articles
+                            {issues.length} {issues.length === 1 ? "issue" : "issues"}
+                            {online ? ` · ${online} ${online === 1 ? "article" : "articles"} online` : " · contents not yet online"}
                           </div>
                         </div>
                       </div>
-                      <Badge variant="outline" className="font-sans text-[10px]">
-                        {issue.articles.reduce((s, a) => s + a.downloads, 0).toLocaleString()} downloads
-                      </Badge>
                     </button>
-                    {expanded && (
-                      <div className="px-5 pb-3">
-                        <button
-                          onClick={() =>
-                            navigate("current-issue", { params: { volume: String(issue.volume), issue: String(issue.issue) } })
-                          }
-                          className="font-sans text-sm text-accent hover:underline flex items-center gap-1 pt-1"
-                        >
-                          View table of contents, issue PDF &amp; citations
-                          <ChevronRight className="w-3.5 h-3.5" />
-                        </button>
-                        <div className="divide-y divide-border">
-                          {issue.articles.map((article) => (
-                            <ArticleListItem key={article.id} article={article} />
-                          ))}
-                        </div>
+                    {open && (
+                      <div className="border-t border-border divide-y divide-border">
+                        {issues.map((issue) => {
+                          const issueKey = `${issue.volume}-${issue.issue}`;
+                          const expanded = expandedIssues.has(issueKey);
+                          const hasArticles = issue.articles.length > 0;
+                          return (
+                            <div key={issueKey} className="px-5">
+                              <button
+                                disabled={!hasArticles}
+                                onClick={() => toggleIssue(issueKey)}
+                                className="w-full flex items-center justify-between py-3 text-left disabled:cursor-default"
+                              >
+                                <div className="flex items-center gap-3">
+                                  {hasArticles ? (
+                                    expanded ? <ChevronDown className="w-3.5 h-3.5 text-accent" /> : <ChevronRight className="w-3.5 h-3.5 text-accent" />
+                                  ) : (
+                                    <span className="w-3.5 h-3.5" />
+                                  )}
+                                  <span className="font-sans text-sm font-semibold text-foreground">
+                                    Issue {issue.issue} · {issue.label}
+                                  </span>
+                                </div>
+                                <span className="font-sans text-xs text-muted-foreground">
+                                  {hasArticles ? `${issue.articles.length} ${issue.articles.length === 1 ? "article" : "articles"}` : "Contents not yet online"}
+                                </span>
+                              </button>
+                              {hasArticles && expanded && (
+                                <div className="pb-3">
+                                  <button
+                                    onClick={() =>
+                                      navigate("current-issue", { params: { volume: String(issue.volume), issue: String(issue.issue) } })
+                                    }
+                                    className="font-sans text-sm text-accent hover:underline flex items-center gap-1 pt-1"
+                                  >
+                                    View table of contents, issue PDF &amp; citations
+                                    <ChevronRight className="w-3.5 h-3.5" />
+                                  </button>
+                                  <div className="divide-y divide-border">
+                                    {issue.articles.map((article) => (
+                                      <ArticleListItem key={article.id} article={article} />
+                                    ))}
+                                  </div>
+                                </div>
+                              )}
+                            </div>
+                          );
+                        })}
                       </div>
                     )}
                   </div>
@@ -245,9 +253,7 @@ export function ArchivePage() {
 
             <div className="mt-8 text-center font-sans text-sm text-muted-foreground">
               <FileText className="w-5 h-5 mx-auto text-accent mb-2" />
-              Showing {issues.length} most recent issues. Earlier volumes (Vols. 1–25,
-              1996–2020) are available in our back-catalogue on request from the
-              editorial office.
+              Tables of contents of earlier issues will be added as the archive is digitised.
             </div>
           </div>
         )}
