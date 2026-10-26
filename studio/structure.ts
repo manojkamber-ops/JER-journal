@@ -24,6 +24,7 @@ export const papersStructure: StructureResolver = (S) => {
                         .title(i.label)
                         .filter('_type == "paper" && volume == $v && issue == $i')
                         .params({ v: i.volume, i: i.issue })
+                        .initialValueTemplates([S.initialValueTemplateItem("paper-in-issue", { volume: i.volume, issue: i.issue })])
                         .defaultOrdering([{ field: "articleId", direction: "asc" }]),
                     ),
                 ),

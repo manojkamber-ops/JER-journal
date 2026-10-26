@@ -30,3 +30,14 @@ export const ALL_ISSUES: IssueOption[] = (() => {
 export const volumeYear = (volume: number) => FIRST_YEAR + volume - 1;
 
 export const ARTICLE_ID_PATTERN = /^\d{4}-v\d{1,2}-i[1-4]-\d{2}$/;
+
+/**
+ * Issue date pre-filled for a new paper: the first day of the issue month for quarterly issues (from 2005), the known
+ * dates for Volume 31. Semi-annual issues (1996–2004) are left empty for the editor to fill in.
+ */
+export function issueDate(volume: number, issue: number): string | undefined {
+  if (volume === CURRENT_ISSUE.volume) return issue === 1 ? "2026-10-08" : issue === 2 ? "2026-08-15" : undefined;
+  const year = volumeYear(volume);
+  if (year < QUARTERLY_FROM || issue < 1 || issue > 4) return undefined;
+  return `${year}-${String((issue - 1) * 3 + 1).padStart(2, "0")}-01`;
+}
