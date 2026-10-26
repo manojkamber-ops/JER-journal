@@ -14,7 +14,7 @@ import {
   SelectValue,
 } from "@/components/ui/select";
 import { Input } from "@/components/ui/input";
-import { Search, Filter, FileText, ChevronDown, ChevronRight } from "lucide-react";
+import { Search, Filter, ChevronDown, ChevronRight, Lock } from "lucide-react";
 
 type SortKey = "newest" | "oldest" | "most-cited" | "most-downloaded";
 
@@ -189,9 +189,13 @@ export function ArchivePage() {
                         {open ? <ChevronDown className="w-4 h-4 text-accent" /> : <ChevronRight className="w-4 h-4 text-accent" />}
                         <div>
                           <div className="font-serif text-base font-semibold text-primary">Volume {volume} ({year})</div>
-                          <div className="font-sans text-xs text-muted-foreground">
+                          <div className="font-sans text-xs text-muted-foreground flex items-center gap-1.5">
                             {issues.length} {issues.length === 1 ? "issue" : "issues"}
-                            {online ? ` · ${online} ${online === 1 ? "article" : "articles"} online` : " · contents not yet online"}
+                            {online ? (
+                              ` · ${online} ${online === 1 ? "article" : "articles"} online`
+                            ) : (
+                              <Lock className="w-3.5 h-3.5 text-muted-foreground" aria-label="Locked" />
+                            )}
                           </div>
                         </div>
                       </div>
@@ -220,7 +224,11 @@ export function ArchivePage() {
                                   </span>
                                 </div>
                                 <span className="font-sans text-xs text-muted-foreground">
-                                  {hasArticles ? `${issue.articles.length} ${issue.articles.length === 1 ? "article" : "articles"}` : "Contents not yet online"}
+                                  {hasArticles ? (
+                                    `${issue.articles.length} ${issue.articles.length === 1 ? "article" : "articles"}`
+                                  ) : (
+                                    <Lock className="w-4 h-4 text-muted-foreground" aria-label="Locked" />
+                                  )}
                                 </span>
                               </button>
                               {hasArticles && expanded && (
@@ -251,10 +259,6 @@ export function ArchivePage() {
               })}
             </div>
 
-            <div className="mt-8 text-center font-sans text-sm text-muted-foreground">
-              <FileText className="w-5 h-5 mx-auto text-accent mb-2" />
-              Tables of contents of earlier issues will be added as the archive is digitised.
-            </div>
           </div>
         )}
       </section>
