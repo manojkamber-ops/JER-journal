@@ -2,6 +2,7 @@
 
 import { useState, useMemo } from "react";
 import { useNav } from "../nav-context";
+import { useSession } from "../session";
 import { JournalBanner } from "../journal-banner";
 import { ARTICLES, archiveIssues, type ArchiveIssue } from "@/data/journal";
 import { ArticleListItem } from "../article-components";
@@ -14,12 +15,16 @@ import {
   SelectValue,
 } from "@/components/ui/select";
 import { Input } from "@/components/ui/input";
+import { Dialog, DialogContent, DialogDescription, DialogFooter, DialogHeader, DialogTitle } from "@/components/ui/dialog";
 import { Search, Filter, ChevronDown, ChevronRight, Lock } from "lucide-react";
 
 type SortKey = "newest" | "oldest" | "most-cited" | "most-downloaded";
 
 export function ArchivePage() {
   const { navigate, params } = useNav();
+  const { user, openAuth } = useSession();
+  // Locked past issue the reader clicked: a members-only notice, then sign-in
+  const [lockedIssue, setLockedIssue] = useState<ArchiveIssue | null>(null);
   const [year, setYear] = useState<string>("all");
   // Searches submitted from the header arrive as ?q= (the page is re-keyed on q, see journal-layout)
   const [search, setSearch] = useState(params.q ?? "");
@@ -209,9 +214,8 @@ export function ArchivePage() {
                           return (
                             <div key={issueKey} className="px-5">
                               <button
-                                disabled={!hasArticles}
-                                onClick={() => toggleIssue(issueKey)}
-                                className="w-full flex items-center justify-between py-3 text-left disabled:cursor-default"
+                                onClick={() => (hasArticles ? toggleIssue(issueKey) : setLockedIssue(issue))}
+                                className="w-full flex items-center justify-between py-3 text-left"
                               >
                                 <div className="flex items-center gap-3">
                                   {hasArticles ? (
@@ -262,6 +266,40 @@ export function ArchivePage() {
           </div>
         )}
       </section>
+
+      <Dialog open={lockedIssue !== null} onOpenChange={(o) => !o && setLockedIssue(null)}>
+        <DialogContent className="sm:max-w-md rounded-sm">
+          <DialogHeader>
+            <div className="flex items-center gap-2">
+              <Lock className="w-5 h-5 text-accent" aria-hidden />
+              <DialogTitle className="font-serif text-2xl text-primary">Members only</DialogTitle>
+            </div>
+            <DialogDescription className="font-sans text-sm text-gray-600 leading-relaxed pt-1">
+              {lockedIssue &&
+                (user
+                  ? `You are signed in. The research papers published in Volume ${lockedIssue.volume}, Issue ${lockedIssue.issue} (${lockedIssue.label}) will appear here for members.`
+                  : `Only members can open the research papers published in Volume ${lockedIssue.volume}, Issue ${lockedIssue.issue} (${lockedIssue.label}). Please sign in to continue.`)}
+            </DialogDescription>
+          </DialogHeader>
+          <DialogFooter className="gap-2 sm:gap-0">
+            <Button variant="outline" className="font-sans rounded-sm" onClick={() => setLockedIssue(null)}>
+              {user ? "Close" : "Cancel"}
+            </Button>
+            {!user && (
+              <Button
+                className="font-sans rounded-sm bg-primary hover:bg-primary/90"
+                onClick={() => {
+                  const i = lockedIssue!;
+                  setLockedIssue(null);
+                  openAuth("signin", `Sign in to open the research papers in Volume ${i.volume}, Issue ${i.issue} (${i.label}).`);
+                }}
+              >
+                Continue to login
+              </Button>
+            )}
+          </DialogFooter>
+        </DialogContent>
+      </Dialog>
     </div>
   );
 }
