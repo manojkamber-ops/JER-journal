@@ -19,7 +19,7 @@ export const JOURNAL_INFO = {
   frequency: "Quarterly (4 issues per year)",
   founded: "1996",
   editorInChiefOffice: "Hanyang University, 222 Wangsimni-ro, Seongdong-gu, Seoul 04763, Republic of Korea",
-  contactEmail: "jer@hanyang.ac.kr",
+  contactEmail: "journal@jer-journal.org",
   phone: "+82-2-2220-0294",
   fax: "+82-2-2220-0295",
   website: "https://jer.hanyang.ac.kr",
