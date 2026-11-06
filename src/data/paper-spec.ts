@@ -11,7 +11,8 @@ export type Affiliation = { department: string; institution: string; city: strin
 
 export type PaperSpec = Omit<Article, "authors" | "structuredAuthors" | "affiliations" | "references" | "doi"> & {
   /** `affiliation` may be given inline; otherwise it is looked up in AUTHOR_AFFILIATIONS by name. */
-  authors: { name: string; corresponding?: boolean; affiliation?: Affiliation }[];
+  /** role (e.g. "Research scholar"), title (e.g. "Dr.") and email are optional; when given, the article page lists each author with them. */
+  authors: { name: string; corresponding?: boolean; affiliation?: Affiliation; role?: string; title?: string; email?: string }[];
   /** Cited as [n] / {n} in the body, numbered in the order listed here. */
   refs: RefSpec[];
   /** Full text. Omit for an abstract-only paper: the site then shows its abstract and references, and the full paper is requested from the authors. */

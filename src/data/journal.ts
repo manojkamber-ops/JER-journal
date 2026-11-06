@@ -61,6 +61,9 @@ export type ArticleAuthor = {
   affiliationIds: string[];     // which Affiliation.id entries apply to this author
   corresponding?: boolean;
   orcid?: string;
+  role?: string;                // e.g. "Research scholar"
+  title?: string;               // e.g. "Dr.", shown before the name in the author block
+  email?: string;
 };
 
 export type ArticleReference = {
@@ -568,7 +571,7 @@ export function paperToArticle(paper: PaperSpec): Article {
       entry = { id: String.fromCharCode(97 + affiliations.length), ...aff };
       affiliations.push(entry);
     }
-    return { name: au.name, affiliationIds: [entry.id], corresponding: au.corresponding };
+    return { name: au.name, affiliationIds: [entry.id], corresponding: au.corresponding, role: au.role, title: au.title, email: au.email };
   });
   const seq = paper.id.split("-").pop()!;
   return {

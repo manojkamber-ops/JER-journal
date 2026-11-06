@@ -116,8 +116,41 @@ export function ArticleViewPage({ articleId }: { articleId: string | null }) {
                 {article.title}
               </h1>
 
-              {/* AOM-style authors with affiliation superscripts */}
-              {hasStructured ? (
+              {/* Authors listed one per line with role, institution and email (when the paper provides them) */}
+              {hasStructured && article.structuredAuthors!.some((au) => au.role || au.email) ? (
+                <div className="mb-4 space-y-2.5">
+                  {article.structuredAuthors!.map((au, idx) => {
+                    const af = article.affiliations!.find((x) => au.affiliationIds.includes(x.id));
+                    const where = [au.role, af?.department, af?.institution].filter(Boolean).join(", ");
+                    return (
+                      <div key={idx}>
+                        <p className="font-serif text-lg font-bold text-gray-900">
+                          {au.title ? `${au.title} ` : ""}
+                          {au.name}
+                          <sup className="text-accent ml-0.5">{idx + 1}</sup>
+                          {au.corresponding && <sup className="text-accent">*</sup>}
+                        </p>
+                        <p className="font-serif text-base text-gray-700">
+                          {where}
+                          {au.email && (
+                            <>
+                              {" "}
+                              <a href={`mailto:${au.email}`} className="text-accent hover:underline break-all">
+                                {au.email}
+                              </a>
+                            </>
+                          )}
+                        </p>
+                      </div>
+                    );
+                  })}
+                  {article.structuredAuthors!.some((au) => au.corresponding) && (
+                    <p className="font-sans text-xs text-gray-500">
+                      <sup className="text-accent">*</sup> Corresponding author
+                    </p>
+                  )}
+                </div>
+              ) : hasStructured ? (
                 <div className="mb-3">
                   <p className="font-serif text-base text-gray-800">
                     {article.structuredAuthors!.map((au, idx) => (

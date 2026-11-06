@@ -81,7 +81,7 @@ export function toSanityPaper(spec, affiliations = {}) {
     sampleContent: spec.sample !== false,
     authors: spec.authors.map((a, i) => {
       const aff = a.affiliation ?? affiliations[a.name] ?? {};
-      return { _key: key("a", i), _type: "author", name: a.name, corresponding: Boolean(a.corresponding), department: aff.department ?? "", institution: aff.institution ?? "", city: aff.city ?? "", country: aff.country ?? "" };
+      return { _key: key("a", i), _type: "author", name: a.name, title: a.title, role: a.role, email: a.email, corresponding: Boolean(a.corresponding), department: aff.department ?? "", institution: aff.institution ?? "", city: aff.city ?? "", country: aff.country ?? "" };
     }),
     abstract: spec.abstract,
     keywords: spec.keywords,
@@ -137,7 +137,7 @@ export function fromSanityPaper(doc) {
     id: doc.articleId,
     title: doc.title,
     authors: (doc.authors ?? []).map((a) =>
-      clean({ name: a.name, corresponding: a.corresponding || undefined, affiliation: { department: a.department ?? "", institution: a.institution ?? "", city: a.city ?? "", country: a.country ?? "" } }),
+      clean({ name: a.name, corresponding: a.corresponding || undefined, role: a.role, title: a.title, email: a.email, affiliation: { department: a.department ?? "", institution: a.institution ?? "", city: a.city ?? "", country: a.country ?? "" } }),
     ),
     abstract: doc.abstract ?? "",
     keywords: doc.keywords ?? [],

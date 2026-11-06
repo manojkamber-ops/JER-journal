@@ -8,6 +8,8 @@ export const paper: PaperSpec = {
   "authors": [
     {
       "name": "Rahul Pareek",
+      "role": "Research scholar",
+      "email": "rahulpareekphdwork@gmail.com",
       "corresponding": true,
       "affiliation": {
         "department": "",
@@ -18,6 +20,8 @@ export const paper: PaperSpec = {
     },
     {
       "name": "Payal Mehta",
+      "title": "Dr.",
+      "email": "payal.mehta@glsuniversity.ac.in",
       "affiliation": {
         "department": "",
         "institution": "Gujarat Law Society University",

@@ -48,7 +48,14 @@ export function fromSanityPaper(doc: SanityDoc): PaperSpec | null {
     id: doc.articleId,
     title: doc.title,
     authors: doc.authors.map((a: SanityDoc) =>
-      clean({ name: a.name, corresponding: a.corresponding || undefined, affiliation: { department: a.department ?? "", institution: a.institution ?? "", city: a.city ?? "", country: a.country ?? "" } }),
+      clean({
+        name: a.name,
+        corresponding: a.corresponding || undefined,
+        role: a.role,
+        title: a.title,
+        email: a.email,
+        affiliation: { department: a.department ?? "", institution: a.institution ?? "", city: a.city ?? "", country: a.country ?? "" },
+      }),
     ),
     abstract: doc.abstract ?? "",
     keywords: doc.keywords ?? [],

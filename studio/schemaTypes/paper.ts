@@ -13,8 +13,11 @@ const author = defineArrayMember({
   name: "author",
   fields: [
     defineField({ name: "name", type: "string", validation: (r) => r.required() }),
+    defineField({ name: "title", title: "Title (optional)", type: "string", description: 'Shown before the name, e.g. "Dr." or "Prof."' }),
+    defineField({ name: "role", title: "Role (optional)", type: "string", description: 'e.g. "Research scholar", "Assistant Professor"' }),
+    defineField({ name: "email", title: "Email (optional)", type: "string", description: "Shown under the author's name on the article page", validation: (r) => r.email() }),
     defineField({ name: "corresponding", title: "Corresponding author", type: "boolean", initialValue: false }),
-    defineField({ name: "department", type: "string", validation: (r) => r.required() }),
+    defineField({ name: "department", type: "string" }),
     defineField({ name: "institution", type: "string", validation: (r) => r.required() }),
     defineField({ name: "city", type: "string", validation: (r) => r.required() }),
     defineField({ name: "country", type: "string", validation: (r) => r.required() }),

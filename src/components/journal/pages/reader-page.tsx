@@ -352,6 +352,9 @@ export function ReaderPage({ articleId, defaultView = "epub" }: { articleId: str
   const authorsWithInst = (article.structuredAuthors ?? article.authors.map((a) => ({ name: a.name, affiliationIds: [] as string[] }))).map(
     (au, i) => ({
       name: au.name,
+      title: article.structuredAuthors?.[i]?.title,
+      role: article.structuredAuthors?.[i]?.role,
+      email: article.structuredAuthors?.[i]?.email,
       institution:
         institutionName(article.affiliations?.find((af) => au.affiliationIds.includes(af.id))) ?? article.authors[i]?.affiliation.split(",")[0] ?? "",
     })
@@ -767,6 +770,31 @@ export function ReaderPage({ articleId, defaultView = "epub" }: { articleId: str
 
                 {/* Editorials are signed at the end instead (journal template) */}
                 {!isEditorial && (
+                authorsWithInst.some((au) => au.role || au.email) ? (
+                  // Name with a superscript number, then "role, institution email" (as in the authors' manuscript)
+                  <div className="mt-12 space-y-5 text-center">
+                    {authorsWithInst.map((au, i) => (
+                      <div key={au.name} style={{ lineHeight: 1.35 }}>
+                        <p className="font-bold" style={{ fontSize: settings.size * 1.08 }}>
+                          {au.title ? `${au.title} ` : ""}
+                          {au.name}
+                          <sup>{i + 1}</sup>
+                        </p>
+                        <p style={{ fontSize: settings.size * 1.0 }}>
+                          {[au.role, au.institution].filter(Boolean).join(", ")}
+                          {au.email && (
+                            <>
+                              {" "}
+                              <a href={`mailto:${au.email}`} style={{ color: TEAL }} className="break-all">
+                                {au.email}
+                              </a>
+                            </>
+                          )}
+                        </p>
+                      </div>
+                    ))}
+                  </div>
+                ) : (
                 <div className="mt-12 space-y-6 text-center font-bold">
                   {authorsWithInst.map((au) => (
                     <p key={au.name} style={{ lineHeight: 1.3 }}>
@@ -776,6 +804,7 @@ export function ReaderPage({ articleId, defaultView = "epub" }: { articleId: str
                     </p>
                   ))}
                 </div>
+                )
                 )}
 
                 {/* Abstract (editorials have none, as in the journal's template) */}
