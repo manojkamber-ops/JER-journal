@@ -322,7 +322,7 @@ export const NEWS_ITEMS: NewsItem[] = [
     date: "2026-10-08",
     title: "Volume 31, Issue 1 (October 2026) is now published",
     summary:
-      "The October 2026 issue contains six research articles: the financial risk exposure of MSMEs in Nashik District (Laxman Arjun Patil and Amardeep Bajpai), data-driven approaches to self-regulated learning among working professionals (Pranav Prashant Godle and Amit Aggrawal), the contribution of AI technologies to start-up growth and innovation in Maharashtra (Ritu Bothara and Amit Aggrawal), generative AI in cross-cultural negotiations (Saif Matin Patel and Manoj Kamber), and two companion papers on assessing industry-level AI impact, AIRS 2.0 and SAIM 2.0 (Aniket M. Alvekar and Shivalika P. Singh).",
+      "The October 2026 issue contains five research articles: the financial risk exposure of MSMEs in Nashik District (Laxman Arjun Patil and Amardeep Bajpai), data-driven approaches to self-regulated learning among working professionals (Pranav Prashant Godle and Amit Aggrawal), the contribution of AI technologies to start-up growth and innovation in Maharashtra (Ritu Bothara and Amit Aggrawal), and two companion papers on assessing industry-level AI impact, AIRS 2.0 and SAIM 2.0 (Aniket M. Alvekar and Shivalika P. Singh).",
     category: "Issue",
   },
   {
