@@ -5,7 +5,8 @@ import { paper as p_2026_v31_i1_15 } from "./2026-v31-i1-15";
 import { paper as p_2026_v31_i1_16 } from "./2026-v31-i1-16";
 import { paper as p_2026_v31_i1_18 } from "./2026-v31-i1-18";
 import { paper as p_2026_v31_i1_19 } from "./2026-v31-i1-19";
+import { paper as p_2026_v31_i1_20 } from "./2026-v31-i1-20";
 
-export const ALL_PAPERS: PaperSpec[] = [p_2026_v31_i1_14, p_2026_v31_i1_15, p_2026_v31_i1_16, p_2026_v31_i1_18, p_2026_v31_i1_19];
+export const ALL_PAPERS: PaperSpec[] = [p_2026_v31_i1_14, p_2026_v31_i1_15, p_2026_v31_i1_16, p_2026_v31_i1_18, p_2026_v31_i1_19, p_2026_v31_i1_20];
 
 export const ALL_FULLTEXTS: FulltextSpec[] = [];
