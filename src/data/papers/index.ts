@@ -8,7 +8,8 @@ import { paper as p_2026_v31_i1_19 } from "./2026-v31-i1-19";
 import { paper as p_2026_v31_i1_20 } from "./2026-v31-i1-20";
 import { paper as p_2026_v31_i1_21 } from "./2026-v31-i1-21";
 import { paper as p_2026_v31_i1_22 } from "./2026-v31-i1-22";
+import { paper as p_2026_v31_i1_23 } from "./2026-v31-i1-23";
 
-export const ALL_PAPERS: PaperSpec[] = [p_2026_v31_i1_14, p_2026_v31_i1_15, p_2026_v31_i1_16, p_2026_v31_i1_18, p_2026_v31_i1_19, p_2026_v31_i1_20, p_2026_v31_i1_21, p_2026_v31_i1_22];
+export const ALL_PAPERS: PaperSpec[] = [p_2026_v31_i1_14, p_2026_v31_i1_15, p_2026_v31_i1_16, p_2026_v31_i1_18, p_2026_v31_i1_19, p_2026_v31_i1_20, p_2026_v31_i1_21, p_2026_v31_i1_22, p_2026_v31_i1_23];
 
 export const ALL_FULLTEXTS: FulltextSpec[] = [];
