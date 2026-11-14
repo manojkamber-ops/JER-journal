@@ -1,6 +1,6 @@
 # Journal of Economic Research (JER) website — handoff
 
-State as of **9 November 2026** (last commit `f29a807`). This file sits alongside the website's full source.
+State as of **14 November 2026**. This file sits alongside the website's full source.
 
 ---
 
@@ -65,7 +65,7 @@ Key files:
 
 ## 4. Current content
 
-**Volume 31, Issue 1 (October 2026)** — the current issue, 7 research papers, all with full text:
+**Volume 31, Issue 1 (October 2026)** — the current issue, 9 research papers, all with full text:
 
 | ID | Paper | Authors |
 |---|---|---|
@@ -76,6 +76,8 @@ Key files:
 | 2026-v31-i1-19 | SAIM 2.0 and the Case for Systematic Comparative Framework Analysis | Aniket M. Alvekar, Shivalika P. Singh (Sandip University) |
 | 2026-v31-i1-20 | Assessing the Economic Impact of Government Initiatives on Startup Ecosystem Development in Gujarat | Rahul Pareek, Dr. Payal Mehta (Gujarat Law Society University) |
 | 2026-v31-i1-21 | Investment Patterns and Their Economic Impact on Startup Development in Gujarat: A Quantitative Assessment | Rahul Pareek, Dr. Payal Mehta (Gujarat Law Society University) |
+| 2026-v31-i1-22 | An Empirical Assessment of Household Wealth Accumulation, Savings Propensity and Investment Portfolio Behaviour in Rural Central Gujarat | Dipali Jadav, Dr. Ashwinkumar Patel (Parul University) |
+| 2026-v31-i1-23 | Income Elasticity of Savings, Risk Preferences and Financial Asset Allocation among Rural Households: An Econometric Analysis of Central Gujarat | Dipali Jadav, Dr. Ashwinkumar Patel (Parul University) |
 
 - **Archive:** Volumes 1–31 are listed. All past issues are empty and show a 🔒; clicking one shows a
   members-only notice, then sign-in. Pattern used: semi-annual 1996–2004, quarterly (Jan/Apr/Jul/Oct) from 2005.
@@ -142,3 +144,22 @@ cd studio && npx sanity deploy           # publish Studio changes (needs the San
   `jer-journal-db` → Quickstart (see `.env.example`).
 - Ask before deleting content or changing accounts; never paste secret keys into chat or commit them.
 - After a change: build, push, then check https://www.jer-journal.org (hard refresh).
+
+---
+
+## 7. Starting prompt for a new Claude session
+
+Open this folder in Claude Code (or clone the repo) and paste:
+
+```text
+You are continuing work on the Journal of Economic Research (JER) website. Read HANDOFF.md in this folder first:
+it describes the project, accounts and IDs, current content (Vol. 31 No. 1, October 2026), how papers are added
+through Sanity, and the open items. Also read AGENTS.md (Next.js 16 differs from older versions).
+
+Rules: publish only genuine papers with their real authors; never invent papers, authors, data or statistics;
+keep the site hidden from search engines until the items in HANDOFF.md §5 (6–8) are resolved; ask before deleting
+content or changing accounts; never handle or print secret keys. After each change run `npx tsc --noEmit` and
+`npx next build`, push to main (Vercel deploys), and check https://www.jer-journal.org.
+
+Start by running `git pull` and `npm install`, then tell me you're ready.
+```
